@@ -8,6 +8,7 @@
  * @property string $name
  * @property string $dob
  * @property string $gender
+ * @property integer $patient_id
  */
 class Patient extends CActiveRecord
 {
@@ -27,10 +28,11 @@ class Patient extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('patient_id', 'numerical', 'integerOnly'=>true),
 			array('name, dob, gender', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, dob, gender', 'safe', 'on'=>'search'),
+			array('id, name, dob, gender, patient_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,6 +57,7 @@ class Patient extends CActiveRecord
 			'name' => 'Name',
 			'dob' => 'Dob',
 			'gender' => 'Gender',
+			'patient_id' => 'Patient',
 		);
 	}
 
@@ -80,6 +83,7 @@ class Patient extends CActiveRecord
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('dob',$this->dob,true);
 		$criteria->compare('gender',$this->gender,true);
+		$criteria->compare('patient_id',$this->patient_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

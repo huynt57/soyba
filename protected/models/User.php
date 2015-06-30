@@ -11,6 +11,7 @@
  * @property string $gender
  * @property string $facebook_access_token
  * @property string $photo
+ * @property integer $user_id
  */
 class User extends CActiveRecord
 {
@@ -30,11 +31,12 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('user_id', 'numerical', 'integerOnly'=>true),
 			array('facebook_id, google_id, dob, gender, photo', 'length', 'max'=>255),
 			array('facebook_access_token', 'length', 'max'=>500),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, facebook_id, google_id, dob, gender, facebook_access_token, photo', 'safe', 'on'=>'search'),
+			array('id, facebook_id, google_id, dob, gender, facebook_access_token, photo, user_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,6 +64,7 @@ class User extends CActiveRecord
 			'gender' => 'Gender',
 			'facebook_access_token' => 'Facebook Access Token',
 			'photo' => 'Photo',
+			'user_id' => 'User',
 		);
 	}
 
@@ -90,6 +93,7 @@ class User extends CActiveRecord
 		$criteria->compare('gender',$this->gender,true);
 		$criteria->compare('facebook_access_token',$this->facebook_access_token,true);
 		$criteria->compare('photo',$this->photo,true);
+		$criteria->compare('user_id',$this->user_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
