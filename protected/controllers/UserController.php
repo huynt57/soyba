@@ -37,6 +37,21 @@ class UserController extends Controller {
         }
     }
 
+    public function actionGetUser() {
+        $this->retVal = new stdClass();
+        $request = Yii::app()->request;
+        if ($request->isPostRequest && isset($_POST)) {
+            try {
+                $user_id = StringHelper::filterString($request->getPost('user_id'));
+                $this->retVal->user_data = User::model()->findByAttributes(array('user_id' => $user_id));
+            } catch (exception $e) {
+                $this->retVal->message = $e->getMessage();
+            }
+            echo CJSON::encode($this->retVal);
+            Yii::app()->end();
+        }
+    }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()
