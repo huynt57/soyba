@@ -13,7 +13,7 @@ class UserController extends Controller {
 
     public function actionLogin() {
         $this->layoutPath = Yii::getPathOfAlias('webroot') . "/themes/classic/views/layouts";
-        $this->layout = 'nosidebar';
+        $this->layout = 'empty';
         $this->render('login');
     }
 

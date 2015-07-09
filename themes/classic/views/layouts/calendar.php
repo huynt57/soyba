@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,28 +16,29 @@
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="description" content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
         <meta name="keywords" content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
-        <title>Materialize - Material Design Admin Template</title>
+        <title>Calendar | Materialize - Material Design Admin Template</title>
 
         <!-- Favicons-->
         <link rel="icon" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/images/favicon/favicon-32x32.png" sizes="32x32">
         <!-- Favicons-->
-        <link rel="apple-touch-icon-precomposed" href="images/favicon/apple-touch-icon-152x152.png">
+        <link rel="apple-touch-icon-precomposed" href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/images/favicon/apple-touch-icon-152x152.png">
         <!-- For iPhone -->
         <meta name="msapplication-TileColor" content="#00bcd4">
         <meta name="msapplication-TileImage" content="<?php echo Yii::app()->theme->baseUrl; ?>/assets/images/favicon/mstile-144x144.png">
         <!-- For Windows Phone -->
 
 
-        <!-- CORE CSS-->    
+        <!-- CORE CSS-->
+
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
 
 
         <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-        <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/material-preloader/materialPreloader.css" type="text/css" rel="stylesheet" media="screen,projection">
-        <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
-        <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/jvectormap/jquery-jvectormap.css" type="text/css" rel="stylesheet" media="screen,projection">
+        <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/css/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+        <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
+        <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/fullcalendar/css/fullcalendar.min.css" type="text/css" rel="stylesheet" media="screen,projection">
     </head>
 
     <body>
@@ -86,18 +88,32 @@
             <!-- START WRAPPER -->
             <div class="wrapper">
 
-               <?php $this->renderPartial('//layouts/leftSideBar')?>
+                <?php $this->renderPartial('//layouts/leftSideBar') ?>
 
                 <!-- //////////////////////////////////////////////////////////////////////////// -->
 
                 <!-- START CONTENT -->
                 <section id="content">
 
-                    <!--start container-->
-                    <div class="container">
-                        <?php echo $content; ?>
+                    <!--breadcrumbs start-->
+                    <div id="breadcrumbs-wrapper" class=" grey lighten-3">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col s12 m12 l12">
+                                    <h5 class="breadcrumbs-title">Calendar</h5>
+                                    <ol class="breadcrumb">
+                                        <li><a href="index.html">Dashboard</a></li>
+                                        <li><a href="#">Pages</a></li>
+                                        <li class="active">Calendar</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <!--end container-->
+                    <!--breadcrumbs end-->
+
+                    <?php echo $content; ?>
+
                 </section>
                 <!-- END CONTENT -->
 
@@ -193,7 +209,7 @@
                                     <div class="collapsible-header red white-text"><i class="mdi-action-stars"></i>Favorite Associates</div>
                                     <div class="collapsible-body favorite-associates">
                                         <div class="favorite-associate-list chat-out-list row">
-                                            <div class="col s4"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
+                                            <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
                                             </div>
                                             <div class="col s8">
                                                 <p>Eileen Sideways</p>
@@ -201,7 +217,7 @@
                                             </div>
                                         </div>
                                         <div class="favorite-associate-list chat-out-list row">
-                                            <div class="col s4"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
+                                            <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
                                             </div>
                                             <div class="col s8">
                                                 <p>Zaham Sindil</p>
@@ -209,7 +225,7 @@
                                             </div>
                                         </div>
                                         <div class="favorite-associate-list chat-out-list row">
-                                            <div class="col s4"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/images/avatar.jpg" alt="" class="circle responsive-img offline-user valign profile-image">
+                                            <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img offline-user valign profile-image">
                                             </div>
                                             <div class="col s8">
                                                 <p>Renov Leongal</p>
@@ -217,7 +233,7 @@
                                             </div>
                                         </div>
                                         <div class="favorite-associate-list chat-out-list row">
-                                            <div class="col s4"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
+                                            <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
                                             </div>
                                             <div class="col s8">
                                                 <p>Weno Carasbong</p>
@@ -254,12 +270,13 @@
         <footer class="page-footer">
             <div class="footer-copyright">
                 <div class="container">
-                    Copyright © 2015 <a class="grey-text text-lighten-4" href="http://themeforest.net/user/geekslabs/portfolio?ref=geekslabs" target="_blank">GeeksLabs</a> All rights reserved.
+                    <span>Copyright © 2015 <a class="grey-text text-lighten-4" href="http://themeforest.net/user/geekslabs/portfolio?ref=geekslabs" target="_blank">GeeksLabs</a> All rights reserved.</span>
                     <span class="right"> Design and Developed by <a class="grey-text text-lighten-4" href="http://geekslabs.com/">GeeksLabs</a></span>
                 </div>
             </div>
         </footer>
         <!-- END FOOTER -->
+
 
 
         <!-- ================================================
@@ -269,46 +286,25 @@
         <!-- jQuery Library -->
         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery-1.11.2.min.js"></script>    
         <!--materialize js-->
-        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/materialize.min.js"></script>
+        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/materialize.js"></script>
+        <!--prism-->
+        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/prism.js"></script>
         <!--scrollbar-->
         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/material-preloader/materialPreloader.js"></script>   
 
         <!-- chartist -->
         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/chartist-js/chartist.min.js"></script>   
 
-        <!-- chartjs -->
-        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/chartjs/chart.min.js"></script>
-        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/chartjs/chart-script.js"></script>
-
-        <!-- sparkline -->
-        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/sparkline/jquery.sparkline.min.js"></script>
-        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/sparkline/sparkline-script.js"></script>
-
-        <!--jvectormap-->
-        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/jvectormap/vectormap-script.js"></script>
-
+        <!-- Calendar Script -->
+        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/fullcalendar/lib/jquery-ui.custom.min.js"></script>
+        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/fullcalendar/lib/moment.min.js"></script>
+        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/fullcalendar/js/fullcalendar.min.js"></script>
+        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/fullcalendar/fullcalendar-script.js"></script>
 
         <!--plugins.js - Some Specific JS codes for Plugin Settings-->
         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins.js"></script>
-        <!-- Toast Notification -->
-        <script type="text/javascript">
-            // Toast Notification
-//            $(window).load(function() {
-//                setTimeout(function() {
-//                    Materialize.toast('<span>Hiya! I am a toast.</span>', 1500);
-//                }, 1500);
-//                setTimeout(function() {
-//                    Materialize.toast('<span>You can swipe me too!</span>', 3000);
-//                }, 5000);
-//                setTimeout(function() {
-//                    Materialize.toast('<span>You have new order.</span><a class="btn-flat yellow-text" href="#">Read<a>', 3000);
-//                }, 15000);
-//            });
 
-        </script>
+
     </body>
 
 </html>
