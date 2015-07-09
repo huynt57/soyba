@@ -3,9 +3,18 @@
 class UserController extends Controller {
 
     public $retVal;
+    public $title;
+    public $layoutPath;
+    public $layout;
 
     public function actionIndex() {
         $this->render('index');
+    }
+
+    public function actionLogin() {
+        $this->layoutPath = Yii::getPathOfAlias('webroot') . "/themes/classic/views/layouts";
+        $this->layout = 'nosidebar';
+        $this->render('login');
     }
 
     public function actionCreateUser() {
