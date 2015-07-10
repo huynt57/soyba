@@ -17,6 +17,10 @@ class UserController extends Controller {
         $this->render('login');
     }
 
+    public function actionLoginGoogle() {
+        
+    }
+
     public function actionCreateUser() {
         $this->retVal = new stdClass();
         $request = Yii::app()->request;
