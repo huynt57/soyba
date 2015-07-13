@@ -14,36 +14,37 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>FacebookID</th>
-                                <th>GoogleID</th>
-                                <th>DOB</th>
-                                <th>Gender</th>
-                                <th>Photo</th>
-                                <th>Detail</th>
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>Laititude</th>
+                                <th>Longtitude</th>
+                                <th>State</th>
+                                <th>Phone</th>
                             </tr>
                         </thead>
 
                         <tfoot>
                             <tr>
-                                <th>ID</th>
-                                <th>FacebookID</th>
-                                <th>GoogleID</th>
-                                <th>DOB</th>
-                                <th>Gender</th>
-                                <th>Photo</th>
-                                <th>Detail</th>
+                               <th>ID</th>
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>Laititude</th>
+                                <th>Longtitude</th>
+                                <th>State</th>
+                                <th>Phone</th>
                             </tr>
                         </tfoot>
 
                         <tbody>
-                            <?php foreach ($users as $user): ?>
+                            <?php foreach ($phars as $phar): ?>
                                 <tr>
-                                    <td><?php echo $user->id ?></td>
-                                    <td><?php echo $user->facebook_id ?></td>
-                                    <td><?php echo $user->google_id ?></td>
-                                    <td><?php echo $user->dob ?></td>
-                                    <td><?php echo $user->gender ?></td>
-                                    <td><?php echo $user->photo ?></td>
+                                    <td><?php echo $phar->id ?></td>
+                                    <td><?php echo $phar->name ?></td>
+                                    <td><?php echo $phar->address ?></td>
+                                    <td><?php echo $phar->laititude ?></td>
+                                    <td><?php echo $phar->longtitude ?></td>
+                                    <td><?php echo $phar->state ?></td>
+                                    <td><?php echo $phar->contact_num ?></td>
                                     <td>Detail</td>
                                 </tr>
                             <?php endforeach; ?>
