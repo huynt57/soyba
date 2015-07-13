@@ -25,10 +25,25 @@
                 </div>
             </div>
         </li>
-    
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
-                <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Calender</a>
+                <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-maps-directions"></i>Quản lý thành viên</a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a href="css-typography.html">Thành viên 1</a>
+                            </li>                                        
+                            <li><a href="css-icons.html">Thành viên 2</a>
+                            </li>
+                            <li><a href="css-shadow.html">Thành viên 3</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li class="no-padding">
+            <ul class="collapsible collapsible-accordion">
+                <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Lịch</a>
                     <div class="collapsible-body">
                         <ul>
                             <li><a href="css-typography.html">Sổ tiêm chủng</a>

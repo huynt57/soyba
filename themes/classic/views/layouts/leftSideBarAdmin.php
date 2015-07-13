@@ -25,50 +25,23 @@
                 </div>
             </div>
         </li>
-        
-        <li class="bold"><a href="app-calendar.html" class="waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Calender</a>
+        <li class="no-padding">
+            <ul class="collapsible collapsible-accordion">
+                <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-account-child"></i>Quản lý người dùng</a>
+
+                </li>
+            </ul>
         </li>
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
-                <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-invert-colors"></i> CSS</a>
-                    <div class="collapsible-body">
-                        <ul>
-                            <li><a href="css-typography.html">Typography</a>
-                            </li>                                        
-                            <li><a href="css-icons.html">Icons</a>
-                            </li>
-                            <li><a href="css-shadow.html">Shadow</a>
-                            </li>
-                            <li><a href="css-media.html">Media</a>
-                            </li>
-                            <li><a href="css-sass.html">Sass</a>
-                            </li>
-                        </ul>
-                    </div>
+                <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-maps-directions"></i> Quản lý nhà thuốc</a>
+
                 </li>
             </ul>
         </li>
         <li class="li-hover"><div class="divider"></div></li>
-        <li class="li-hover"><p class="ultra-small margin more-text">MORE</p></li>
-        <li><a href="css-grid.html"><i class="mdi-image-grid-on"></i> Grid</a>
-        </li>
-        <li><a href="css-color.html"><i class="mdi-editor-format-color-fill"></i> Color</a>
-        </li>
-        <li><a href="css-helpers.html"><i class="mdi-communication-live-help"></i> Helpers</a>
-        </li>
-        <li><a href="changelogs.html"><i class="mdi-action-swap-vert-circle"></i> Changelogs</a>
-        </li>                    
-        <li class="li-hover"><div class="divider"></div></li>
-        <li class="li-hover"><p class="ultra-small margin more-text">Daily Sales</p></li>
-        <li class="li-hover">
-            <div class="row">
-                <div class="col s12 m12 l12">
-                    <div class="sample-chart-wrapper">                            
-                        <div class="ct-chart ct-golden-section" id="ct2-chart"></div>
-                    </div>
-                </div>
-            </div>
-        </li>
+
+
     </ul>
     <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only darken-2"><i class="mdi-navigation-menu" ></i></a>
 </aside>
