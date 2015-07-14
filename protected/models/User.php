@@ -4,14 +4,13 @@
  * This is the model class for table "tbl_user".
  *
  * The followings are the available columns in table 'tbl_user':
- * @property integer $id
+ * @property integer $user_id
  * @property string $facebook_id
  * @property string $google_id
  * @property string $dob
  * @property string $gender
  * @property string $facebook_access_token
  * @property string $photo
- * @property integer $user_id
  */
 class User extends CActiveRecord
 {
@@ -31,12 +30,11 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id', 'numerical', 'integerOnly'=>true),
 			array('facebook_id, google_id, dob, gender, photo', 'length', 'max'=>255),
 			array('facebook_access_token', 'length', 'max'=>500),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, facebook_id, google_id, dob, gender, facebook_access_token, photo, user_id', 'safe', 'on'=>'search'),
+			array('user_id, facebook_id, google_id, dob, gender, facebook_access_token, photo', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,14 +55,13 @@ class User extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
+			'user_id' => 'User',
 			'facebook_id' => 'Facebook',
 			'google_id' => 'Google',
 			'dob' => 'Dob',
 			'gender' => 'Gender',
 			'facebook_access_token' => 'Facebook Access Token',
 			'photo' => 'Photo',
-			'user_id' => 'User',
 		);
 	}
 
@@ -86,14 +83,13 @@ class User extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
+		$criteria->compare('user_id',$this->user_id);
 		$criteria->compare('facebook_id',$this->facebook_id,true);
 		$criteria->compare('google_id',$this->google_id,true);
 		$criteria->compare('dob',$this->dob,true);
 		$criteria->compare('gender',$this->gender,true);
 		$criteria->compare('facebook_access_token',$this->facebook_access_token,true);
 		$criteria->compare('photo',$this->photo,true);
-		$criteria->compare('user_id',$this->user_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

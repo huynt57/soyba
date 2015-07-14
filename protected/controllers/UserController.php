@@ -55,8 +55,19 @@ class UserController extends Controller {
         $request = Yii::app()->request;
         if ($request->isPostRequest && isset($_POST)) {
             try {
-                $user_id = StringHelper::filterString($request->getPost('user_id'));
-                $this->retVal->user_data = User::model()->findByAttributes(array('user_id' => $user_id));
+                
+                if (isset($_POST['facebook_id'])) {
+                    $facebook_id = StringHelper::filterString($request->getPost('facebook_id'));
+                    $user_id = User::model()->findByAttributes(array('facebook_id'=>$facebook_id));
+                    $this->retVal->user_data = User::model()->findByAttributes(array('user_id' => $user_id->user_id));
+                } else if (isset($_POST['google_id'])) {
+                    $google_id = StringHelper::filterString($request->getPost('google_id'));
+                    $user_id = User::model()->findByAttributes(array('google_id'=>$google_id));
+                    $this->retVal->user_data = User::model()->findByAttributes(array('user_id' => $user_id->user_id));
+                } else {
+                    $user_id = StringHelper::filterString($request->getPost('user_id'));
+                    $this->retVal->user_data = User::model()->findByAttributes(array('user_id' => $user_id));
+                }
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
             }
