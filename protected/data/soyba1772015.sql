@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 14, 2015 at 09:36 AM
+-- Generation Time: Jul 17, 2015 at 11:06 AM
 -- Server version: 5.5.34
 -- PHP Version: 5.4.22
 
@@ -19,6 +19,70 @@ SET time_zone = "+00:00";
 --
 -- Database: `soyba`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_doctor`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_doctor` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `address` text,
+  `description` text,
+  `province` int(11) DEFAULT NULL,
+  `laititude` varchar(200) DEFAULT NULL,
+  `longitude` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_drug`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_drug` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `type` int(15) DEFAULT NULL,
+  `description` text,
+  `producer` text,
+  `province` int(11) DEFAULT NULL,
+  `laititude` varchar(200) DEFAULT NULL,
+  `longitude` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_drug_type`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_drug_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_hospital`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_hospital` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `province` int(11) DEFAULT NULL,
+  `address` text,
+  `contact` varchar(255) DEFAULT NULL,
+  `laititude` varchar(200) DEFAULT NULL,
+  `longtitude` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -41,13 +105,12 @@ CREATE TABLE IF NOT EXISTS `tbl_injection_scheduler` (
 --
 
 CREATE TABLE IF NOT EXISTS `tbl_patient` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `patient_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `dob` varchar(255) DEFAULT NULL,
   `gender` varchar(255) DEFAULT NULL,
-  `patient_id` int(11) DEFAULT NULL,
   `last_updated` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`patient_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -102,9 +165,34 @@ CREATE TABLE IF NOT EXISTS `tbl_pharmacy` (
   `name` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `laititude` varchar(255) DEFAULT NULL,
-  `longtitude` varchar(255) DEFAULT NULL,
+  `longitude` varchar(255) DEFAULT NULL,
   `state` varchar(255) DEFAULT NULL,
   `contact_num` varchar(255) DEFAULT NULL,
+  `type` int(2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_pharmacy_type`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_pharmacy_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_province`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_province` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `province` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 

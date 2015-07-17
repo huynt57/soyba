@@ -23,7 +23,7 @@ class AdminModule extends CWebModule {
             if ($action->id != "login") {
                 if (Yii::app()->session['username'] == "") {
                     //  die();
-                    $controller->redirect(Yii::app()->createUrl('admin/home/login'));
+                //    $controller->redirect(Yii::app()->createUrl('admin/home/login'));
                 } else {
                     return true;
                 }

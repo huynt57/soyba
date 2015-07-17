@@ -1,22 +1,20 @@
 <?php
 
 /**
- * This is the model class for table "tbl_user_patient".
+ * This is the model class for table "tbl_province".
  *
- * The followings are the available columns in table 'tbl_user_patient':
+ * The followings are the available columns in table 'tbl_province':
  * @property integer $id
- * @property integer $user_id
- * @property integer $patient_id
- * @property string $last_updated
+ * @property string $province
  */
-class UserPatient extends CActiveRecord
+class Province extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'tbl_user_patient';
+		return 'tbl_province';
 	}
 
 	/**
@@ -27,11 +25,10 @@ class UserPatient extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, patient_id', 'numerical', 'integerOnly'=>true),
-			array('last_updated', 'length', 'max'=>200),
+			array('province', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, user_id, patient_id, last_updated', 'safe', 'on'=>'search'),
+			array('id, province', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -53,9 +50,7 @@ class UserPatient extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'user_id' => 'User',
-			'patient_id' => 'Patient',
-			'last_updated' => 'Last Updated',
+			'province' => 'Province',
 		);
 	}
 
@@ -78,9 +73,7 @@ class UserPatient extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('patient_id',$this->patient_id);
-		$criteria->compare('last_updated',$this->last_updated,true);
+		$criteria->compare('province',$this->province,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -91,7 +84,7 @@ class UserPatient extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return UserPatient the static model class
+	 * @return Province the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

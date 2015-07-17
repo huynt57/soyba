@@ -13,6 +13,7 @@
  * @property string $month
  * @property string $vaccine_name
  * @property string $note
+ * @property string $last_updated
  */
 class PatientInjection extends CActiveRecord
 {
@@ -34,9 +35,10 @@ class PatientInjection extends CActiveRecord
 		return array(
 			array('patient_id, sick_id, number, done', 'numerical', 'integerOnly'=>true),
 			array('inject_day, month, vaccine_name, note', 'length', 'max'=>255),
+			array('last_updated', 'length', 'max'=>200),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, patient_id, sick_id, number, inject_day, done, month, vaccine_name, note', 'safe', 'on'=>'search'),
+			array('id, patient_id, sick_id, number, inject_day, done, month, vaccine_name, note, last_updated', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,6 +68,7 @@ class PatientInjection extends CActiveRecord
 			'month' => 'Month',
 			'vaccine_name' => 'Vaccine Name',
 			'note' => 'Note',
+			'last_updated' => 'Last Updated',
 		);
 	}
 
@@ -96,6 +99,7 @@ class PatientInjection extends CActiveRecord
 		$criteria->compare('month',$this->month,true);
 		$criteria->compare('vaccine_name',$this->vaccine_name,true);
 		$criteria->compare('note',$this->note,true);
+		$criteria->compare('last_updated',$this->last_updated,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

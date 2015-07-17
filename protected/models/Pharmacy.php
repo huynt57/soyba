@@ -8,9 +8,10 @@
  * @property string $name
  * @property string $address
  * @property string $laititude
- * @property string $longtitude
+ * @property string $longitude
  * @property string $state
  * @property string $contact_num
+ * @property integer $type
  */
 class Pharmacy extends CActiveRecord
 {
@@ -30,10 +31,11 @@ class Pharmacy extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, address, laititude, longtitude, state, contact_num', 'length', 'max'=>255),
+			array('type', 'numerical', 'integerOnly'=>true),
+			array('name, address, laititude, longitude, state, contact_num', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, address, laititude, longtitude, state, contact_num', 'safe', 'on'=>'search'),
+			array('id, name, address, laititude, longitude, state, contact_num, type', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,9 +60,10 @@ class Pharmacy extends CActiveRecord
 			'name' => 'Name',
 			'address' => 'Address',
 			'laititude' => 'Laititude',
-			'longtitude' => 'Longtitude',
+			'longitude' => 'Longitude',
 			'state' => 'State',
 			'contact_num' => 'Contact Num',
+			'type' => 'Type',
 		);
 	}
 
@@ -86,9 +89,10 @@ class Pharmacy extends CActiveRecord
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('address',$this->address,true);
 		$criteria->compare('laititude',$this->laititude,true);
-		$criteria->compare('longtitude',$this->longtitude,true);
+		$criteria->compare('longitude',$this->longitude,true);
 		$criteria->compare('state',$this->state,true);
 		$criteria->compare('contact_num',$this->contact_num,true);
+		$criteria->compare('type',$this->type);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
