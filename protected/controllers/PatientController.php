@@ -68,11 +68,14 @@ class PatientController extends Controller {
                 $dob = StringHelper::filterString($request->getPost('dob'));
                 $gender = StringHelper::filterString($request->getPost('gender'));
                 $user_id = StringHelper::filterString($request->getPost('user_id'));
+                $relation = StringHelper::filterString($request->getPost('relationshipWithUser'));
+                $blood = StringHelper::filterString($request->getPost('bloodType'));
 
                 $patient_model = new Patient;
                 $patient_model->name = $name;
                 $patient_model->dob = $dob;
                 $patient_model->gender = $gender;
+                $patient_model->last_updated = time();
                 $patient_model->save(FALSE);
 
                 $user_patient = new UserPatient;

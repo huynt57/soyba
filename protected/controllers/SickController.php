@@ -8,7 +8,7 @@ class SickController extends Controller {
         $this->render('index');
     }
 
-    public function createSickUser() {
+    public function actionCreateSickUser() {
         $this->retVal = new stdClass();
         $request = Yii::app()->request;
         if ($request->isPostRequest && isset($_POST)) {
