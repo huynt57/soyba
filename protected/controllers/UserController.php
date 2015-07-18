@@ -26,8 +26,8 @@ class UserController extends Controller {
         $request = Yii::app()->request;
         if ($request->isPostRequest && isset($_POST)) {
             try {
-                $facebook_id = StringHelper::filterString($request->getPost('facebook_id'));
                 $google_id = StringHelper::filterString($request->getPost('google_id'));
+                $facebook_id = StringHelper::filterString($request->getPost('facebook_id'));
                 $user_id = StringHelper::filterString($request->getPost('user_id'));
                 $gender = StringHelper::filterString($request->getPost('gender'));
                 $facebook_access_token = StringHelper::filterString($request->getPost('facebook_access_token'));
@@ -35,14 +35,21 @@ class UserController extends Controller {
                 $name = StringHelper::filterString($request->getPost('name'));
                 $email = StringHelper::filterString($request->getPost('email'));
                 $attr = array('facebook_id' => $facebook_id, 'google_id' => $google_id,
-                     'user_id' => $user_id, 'gender' => $gender,
+                    'user_id' => $user_id, 'gender' => $gender,
                     'facebook_access_token' => $facebook_access_token, 'photo' => $photo, 'name' => $name,
-                    'email' => $email, 'last_updated'=>time());
-
-                $user_model = new User;
-                $user_model->setAttributes($attr);
-                if ($user_model->save(FALSE)) {
-                    $this->retVal->message = "Success";
+                    'email' => $email, 'last_updated' => time());
+                $user_exist_facebook = User::model()->findByAttributes(array('facebook_id' => $facebook_id));
+                if ($user_exist_facebook) {
+                    $user_exist_facebook->setAttributes($attr);
+                    if ($user_exist_facebook->save(FALSE)) {
+                        $this->retVal->message = "Success";
+                    }
+                } else {
+                    $user_model = new User;
+                    $user_model->setAttributes($attr);
+                    if ($user_model->save(FALSE)) {
+                        $this->retVal->message = "Success";
+                    }
                 }
                 $this->retVal->user_data = $user_model->user_id;
             } catch (exception $e) {

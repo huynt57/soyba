@@ -33,7 +33,7 @@ class PatientController extends Controller {
         if ($request->isPostRequest && isset($_POST)) {
             try {
                 $user_id = StringHelper::filterString($request->getPost('user_id'));
-                $patient_data = UserPatient::model()->findAllByAttributes(array('user_id' => $user_id));
+                $patient_data = Patient::model()->getPatientInfo($user_id);
                 $this->retVal->patient_data = $patient_data;
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
