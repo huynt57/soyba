@@ -156,6 +156,61 @@ class PatientController extends Controller {
         }
     }
 
+    public function actionGetHeightWeight() {
+        $this->retVal = new stdClass();
+        $request = Yii::app()->request;
+        if ($request->isPostRequest && isset($_POST)) {
+            try {
+                $id = StringHelper::filterString($request->getPost('patient_id'));
+                $data = BiographyStat::model()->findAllByAttributes(array('patient_id' => $id));
+                $this->retVal->data = $data;
+            } catch (exception $e) {
+                $this->retVal->message = $e->getMessage();
+            }
+            echo CJSON::encode($this->retVal);
+            Yii::app()->end();
+        }
+    }
+
+    public function actionCreateHeightWeight() {
+        $this->retVal = new stdClass();
+        $request = Yii::app()->request;
+        if ($request->isPostRequest && isset($_POST)) {
+            try {
+                $id = StringHelper::filterString($request->getPost('patient_id'));
+                $height = StringHelper::filterString($request->getPost('height'));
+                $weight = StringHelper::filterString($request->getPost('weight'));
+                $timestamp = StringHelper::filterString($request->getPost('timestamp'));
+
+                $exist = BiographyStat::model()->findByAttibutes(array('timestamp' => $timestamp));
+                if ($exist) {
+                    $exist->height = $height;
+                    $exist->weight = $weight;
+                    $exist->patient_id = $id;
+                    $exist->timestamp = $timestamp;
+                    $exist->last_updated = time();
+                    if ($exist->save(FALSE)) {
+                        $this->retVal->message = "Success";
+                    }
+                } else {
+                    $model = new BiographyStat;
+                    $model->height = $height;
+                    $model->weight = $weight;
+                    $model->patient_id = $id;
+                    $model->timestamp = $timestamp;
+                    $model->last_updated = time();
+                    if ($model->save(FALSE)) {
+                        $this->retVal->message = "Success";
+                    }
+                }
+            } catch (exception $e) {
+                $this->retVal->message = $e->getMessage();
+            }
+            echo CJSON::encode($this->retVal);
+            Yii::app()->end();
+        }
+    }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()

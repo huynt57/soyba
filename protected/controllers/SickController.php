@@ -22,6 +22,7 @@ class SickController extends Controller {
                     $model->patient_id = $patient_id;
                     $model->sick_id = $sick;
                     $model->save(FALSE);
+                    $this->createScheduleSick($sick, $patient_id);
                 }
 
                 $this->retVal->message = "Success";
@@ -31,6 +32,15 @@ class SickController extends Controller {
             echo CJSON::encode($this->retVal);
             Yii::app()->end();
         }
+    }
+
+    public function createScheduleSick($sick_id, $patient_id) {
+        $sick_info = InjectionScheduler::model()->findByAttributes(array('sick_id' => $sick_id));
+
+        $model = new PatientInjection;
+        $model->sick_id = $sick_id;
+        $model->patient_id = $patient_id;
+        $model->month = $sick_info->month;
     }
 
     // Uncomment the following methods and override them if needed
