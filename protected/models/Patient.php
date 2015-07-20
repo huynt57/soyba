@@ -111,7 +111,8 @@ class Patient extends CActiveRecord {
 
     public function getPatientDetail($patient_id) {
         $patient_id = StringHelper::filterString($patient_id);
-        $sql = "SELECT * FROM tbl_patient_injection JOIN tbl_patient_sick ON tbl_patient_injection.patient_id = tbl_patient_sick.patient_id WHERE tbl_patient_injection.patient_id = $patient_id";
+        $sql = "SELECT * FROM tbl_patient_injection JOIN tbl_patient_sick ON tbl_patient_injection.patient_id = tbl_patient_sick.patient_id "
+                . " JOIN tbl_patient ON tbl_patient_injection.patient_id = tbl_patient.patient_id WHERE tbl_patient_injection.patient_id = $patient_id";
         $patient_info = Yii::app()->db->createCommand($sql)->queryAll();
         return $patient_info;
     }

@@ -11,6 +11,7 @@ class PatientController extends Controller {
         $patient_id = $request->getQuery("patient_id");
 
         $patient_info = Patient::model()->getPatientDetail($patient_id);
+     
         // echo CJSON::encode($patient_info);
         $this->render('detail', array('patient_info' => $patient_info));
     }

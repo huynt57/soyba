@@ -4,11 +4,11 @@
 
         <!--DataTables example-->
         <div id="table-datatables" ng-app="" ng-controller="GetDetailCtrl">
-            <h4 class="header">User Management</h4>
+            <h4 class="header">Detail Patient: <?php echo $patient_info->name; ?></h4>
             <div id="modals-demo">
                 <a class="waves-effect waves-light btn modal-trigger  light-blue" href="#modal1" style="margin-bottom: 15px">Add User</a>
             </div>
-            <?php $this->renderPartial('add') ?>
+            <?php //$this->renderPartial('add') ?>
             <div class="row">
                 <div class="col s12">
                     <table id="data-table-simple" class="responsive-table display" cellspacing="0">

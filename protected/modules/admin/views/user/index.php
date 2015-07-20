@@ -90,3 +90,20 @@
     <!-- Floating Action Button -->
 </div>
 
+<script type="text/javascript">
+    function GetDetailCtrl($scope, $http) {
+        $scope.getDetail = function(id) {
+            $http({
+                method: 'POST',
+                url: 'user/detail',
+                data: $.param({id: id}),
+                headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+            }).success(function(response) {
+                $scope.info = response;
+            }).error(function(response) {
+
+            });
+        };
+
+    }
+</script>
