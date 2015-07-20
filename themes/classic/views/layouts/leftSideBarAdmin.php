@@ -27,14 +27,14 @@
         </li>
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
-                <li class="bold"><a class="collapsible-header waves-effect waves-cyan" href="<?php echo Yii::app()->createUrl("admin/user")?>"><i class="mdi-action-account-child"></i>Quản lý người dùng</a>
+                <li class="bold"><a class="collapsible-header waves-effect waves-cyan" href="<?php echo Yii::app()->createUrl("admin/user")?>"><i class="mdi-action-account-child"></i>User management</a>
 
                 </li>
             </ul>
         </li>
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
-                <li class="bold"><a class="collapsible-header waves-effect waves-cyan" href="<?php echo Yii::app()->createUrl("admin/pharmacy")?>"><i class="mdi-maps-directions"></i> Quản lý nhà thuốc</a>
+                <li class="bold"><a class="collapsible-header waves-effect waves-cyan" href="<?php echo Yii::app()->createUrl("admin/pharmacy")?>"><i class="mdi-maps-directions"></i>Pharmacy management</a>
 
                 </li>
             </ul>

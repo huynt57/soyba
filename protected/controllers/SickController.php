@@ -16,7 +16,7 @@ class SickController extends Controller {
                 $patient_id = StringHelper::filterString($request->getPost('patient_id'));
                 $sicks = StringHelper::filterString($request->getPost('sicks'));
 
-                $sick_arr = explode(",", $sicks);
+                $sick_arr = json_decode($sicks);
                 foreach ($sick_arr as $sick) {
                     $model = new PatientSick();
                     $model->patient_id = $patient_id;
@@ -36,11 +36,18 @@ class SickController extends Controller {
 
     public function createScheduleSick($sick_id, $patient_id) {
         $sick_info = InjectionScheduler::model()->findByAttributes(array('sick_id' => $sick_id));
-
+        $patient_info = Patient::model()->findByAttributes(array('patient_id' => $patient_id));
         $model = new PatientInjection;
         $model->sick_id = $sick_id;
         $model->patient_id = $patient_id;
+        $model->number = $sick_info->number;
+        $model->done = 0;
         $model->month = $sick_info->month;
+        $date = new DateTime($patient_info->dob);
+        $date->modify('+1 month');
+        $model->inject_day = $date->format('Y-m-d');
+        $model->last_updated = time();
+        $model->save(FALSE);
     }
 
     // Uncomment the following methods and override them if needed

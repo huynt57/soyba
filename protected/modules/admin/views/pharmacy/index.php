@@ -1,37 +1,35 @@
 <!--start container-->
 <div class="container">
     <div class="section">
-
-        <p class="caption">Tables are a nice way to organize a lot of data. We provide a few utility classes to help you style your table as easily as possible. In addition, to improve mobile experience, all tables on mobile-screen widths are centered automatically.</p>
-        <div class="divider"></div>
-
         <!--DataTables example-->
         <div id="table-datatables">
-            <h4 class="header">DataTables example</h4>
+            <h4 class="header">Pharmacy Management</h4>
             <div class="row">
-                <div class="col s12 m8 l9">
+                <div class="full-width">
                     <table id="data-table-simple" class="responsive-table display" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Address</th>
-                                <th>Laititude</th>
-                                <th>Longtitude</th>
+<!--                                <th>Laititude</th>
+                                <th>Longtitude</th>-->
                                 <th>State</th>
                                 <th>Phone</th>
+                                <th>Detail</th>
                             </tr>
                         </thead>
 
                         <tfoot>
                             <tr>
-                               <th>ID</th>
+                                <th>ID</th>
                                 <th>Name</th>
                                 <th>Address</th>
-                                <th>Laititude</th>
-                                <th>Longtitude</th>
+<!--                                <th>Laititude</th>
+                                <th>Longitude</th>-->
                                 <th>State</th>
                                 <th>Phone</th>
+                                <th>Detail</th>
                             </tr>
                         </tfoot>
 
@@ -41,13 +39,22 @@
                                     <td><?php echo $phar->id ?></td>
                                     <td><?php echo $phar->name ?></td>
                                     <td><?php echo $phar->address ?></td>
-                                    <td><?php echo $phar->laititude ?></td>
-                                    <td><?php echo $phar->longtitude ?></td>
+    <!--                                    <td><?php //echo $phar->laititude  ?></td>
+                                    <td><?php //echo $phar->longitude  ?></td>-->
                                     <td><?php echo $phar->state ?></td>
                                     <td><?php echo $phar->contact_num ?></td>
-                                    <td>Detail</td>
+                                    <td>
+                                        <i class="mdi-image-edit"></i>
+
+                                        <a href="<?php echo Yii::app()->createUrl('admin/pharmacy/delete?id=' . $phar->id) ?> " onclick="if (!confirm('Sure ?? Cannot rollback')) {
+                                                    return false;
+                                                }" id="del_phar"><i class="mdi-action-delete"></i></a>
+                                        <a class="waves-effect waves-light modal-trigger" href="#modal2" user_id = "<?php echo $phar->id ?>" onclick = "getPhar(<?php echo $phar->id ?>)"><i class="mdi-image-details"></i></a>
+
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
+                            <?php $this->renderPartial('detail'); ?>
                         </tbody>
                     </table>
                 </div>

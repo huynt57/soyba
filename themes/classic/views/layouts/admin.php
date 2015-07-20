@@ -35,10 +35,15 @@
         <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/material-preloader/materialPreloader.css" type="text/css" rel="stylesheet" media="screen,projection">
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
-        <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/jvectormap/jquery-jvectormap.css" type="text/css" rel="stylesheet" media="screen,projection">
+
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+        
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+        <script src = "https://hpneo.github.io/gmaps/gmaps.js" ></script>
+        <!-- jQuery Library -->
+        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery-1.11.2.min.js"></script>   
     </head>
 
     <body>
@@ -58,7 +63,7 @@
             <div class="navbar-fixed">
                 <nav class="cyan">
                     <div class="nav-wrapper">
-                        <h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/images/materialize-logo.png" alt="materialize logo"></a> <span class="logo-text">Materialize</span></h1>
+                        <h1 class="logo-wrapper"><a href="<?php echo Yii::app()->createUrl('admin/user') ?>" class="brand-logo darken-1"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/images/materialize-logo.png" alt="materialize logo"></a> <span class="logo-text">Materialize</span></h1>
                         <ul class="right hide-on-med-and-down">
                             <li class="search-out">
                                 <input type="text" class="search-out-text">
@@ -67,11 +72,6 @@
                                 <a href="javascript:void(0);" class="waves-effect waves-block waves-light show-search"><i class="mdi-action-search"></i></a>                              
                             </li>
                             <li><a href="javascript:void(0);" class="waves-effect waves-block waves-light toggle-fullscreen"><i class="mdi-action-settings-overscan"></i></a>
-                            </li>
-                            <li><a href="javascript:void(0);" class="waves-effect waves-block waves-light"><i class="mdi-social-notifications"></i></a>
-                            </li>
-                            <!-- Dropdown Trigger -->                        
-                            <li><a href="#" data-activates="chat-out" class="waves-effect waves-block waves-light chat-collapse"><i class="mdi-communication-chat"></i></a>
                             </li>
                         </ul>
                     </div>
@@ -117,7 +117,7 @@
             <div class="footer-copyright">
                 <div class="container">
                     Copyright © 2015 <a class="grey-text text-lighten-4" href="http://themeforest.net/user/geekslabs/portfolio?ref=geekslabs" target="_blank">Meboo Team</a> All rights reserved.
-                  
+
                 </div>
             </div>
         </footer>
@@ -128,8 +128,7 @@
         Scripts
         ================================================ -->
 
-        <!-- jQuery Library -->
-        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery-1.11.2.min.js"></script>    
+         
         <!--materialize js-->
         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/materialize.min.js"></script>
         <!--scrollbar-->

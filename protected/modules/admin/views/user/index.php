@@ -47,21 +47,26 @@
                                     <td><?php echo $user->facebook_id ?></td>
                                     <td><?php echo $user->google_id ?></td>
 
-                                    <td><?php echo $user->gender ?></td>
-                                    <td><?php echo $user->photo ?></td>
+                                    <td><?php if ($user->gender == 0) {
+                                                echo 'Nam';
+                                            } else
+                                                echo 'Nữ';
+                                            ?></td>
+                                    <td><img src="<?php echo $user->photo ?>" alt="<?php echo $user->name ?>"/></td>
                                     <td><?php echo $user->email ?></td>
                                     <td><?php echo $user->name ?></td>
                                     <td>
                                         <i class="mdi-image-edit"></i>
 
                                         <a href="<?php echo Yii::app()->createUrl('admin/user/delete?user_id=' . $user->user_id) ?> " onclick="if (!confirm('Sure ?? Cannot rollback')) {
-                                                    return false;
-                                                }" id="del_user"><i class="mdi-action-delete"></i></a>
+                                                            return false;
+                                                        }" id="del_user"><i class="mdi-action-delete"></i></a>
                                         <a class="waves-effect waves-light modal-trigger" href="#modal2" user_id = "<?php echo $user->user_id ?>" ng-click = "getDetail(<?php echo $user->user_id ?>)"><i class="mdi-image-details"></i></a>
-                                        <?php $this->renderPartial('detail', array('id' => $user->user_id)) ?>
+                                       
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
+                                 <?php $this->renderPartial('detail') ?>
                         </tbody>
                     </table>
                 </div>
