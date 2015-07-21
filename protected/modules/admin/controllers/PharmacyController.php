@@ -3,7 +3,7 @@
 class PharmacyController extends Controller {
 
     public $retVal;
-    
+
     public function actionIndex() {
         $phars = Pharmacy::model()->findAll();
         $this->render('index', array('phars' => $phars));
@@ -23,6 +23,14 @@ class PharmacyController extends Controller {
             echo CJSON::encode($this->retVal);
             Yii::app()->end();
         }
+    }
+
+    public function actionDelete() {
+        $request = Yii::app()->request;
+        $id = $request->getQuery("id");
+
+        $delete = Pharmacy::model()->findByAttributes(array('id' => $id));
+        $delete->delete();
     }
 
     // Uncomment the following methods and override them if needed

@@ -39,8 +39,8 @@
                                     <td><?php echo $phar->id ?></td>
                                     <td><?php echo $phar->name ?></td>
                                     <td><?php echo $phar->address ?></td>
-    <!--                                    <td><?php //echo $phar->laititude  ?></td>
-                                    <td><?php //echo $phar->longitude  ?></td>-->
+    <!--                                    <td><?php //echo $phar->laititude   ?></td>
+                                    <td><?php //echo $phar->longitude   ?></td>-->
                                     <td><?php echo $phar->state ?></td>
                                     <td><?php echo $phar->contact_num ?></td>
                                     <td>
@@ -49,7 +49,7 @@
                                         <a href="<?php echo Yii::app()->createUrl('admin/pharmacy/delete?id=' . $phar->id) ?> " onclick="if (!confirm('Sure ?? Cannot rollback')) {
                                                     return false;
                                                 }" id="del_phar"><i class="mdi-action-delete"></i></a>
-                                        <a class="waves-effect waves-light modal-trigger" href="#modal2" user_id = "<?php echo $phar->id ?>" onclick = "getPhar(<?php echo $phar->id ?>)"><i class="mdi-image-details"></i></a>
+                                        <a class="waves-effect waves-light modal-trigger" href="#modal2" phar_id = "<?php echo $phar->id ?>" onclick = "getPhar(<?php echo $phar->id ?>)"><i class="mdi-image-details"></i></a>
 
                                     </td>
                                 </tr>

@@ -1,7 +1,7 @@
 <div id="modal2" class="modal" style="width: 50%; height: auto;" >
 
     <div class="full-width" id="map">
-
+        test
     </div>
 </div>
 
@@ -16,34 +16,20 @@
             success: function(response)
             {
                 var obj = response.data;
+               // alert(response);
             //    prettyPrint();
+            console.log(obj.id);
                 var map;
                 map = new GMaps({
                     div: '#map',
-                    lat: obj[0].laititude,
-                    lng: -77.028333
+                    lat: obj.laititude,
+                    lng: obj.longitude,
                 });
                 map.addMarker({
-                    lat: -12.043333,
-                    lng: -77.03,
-                    title: 'Lima',
-                    details: {
-                        database_id: 42,
-                        author: 'HPNeo'
-                    },
-                    click: function(e) {
-                        if (console.log)
-                            console.log(e);
-                        alert('You clicked in this marker');
-                    }
-                });
-                map.addMarker({
-                    lat: -12.042,
-                    lng: -77.028333,
-                    title: 'Marker with InfoWindow',
-                    infoWindow: {
-                        content: '<p>HTML Content</p>'
-                    }
+                    lat: obj.laititude,
+                    lng: obj.longitude,
+                    title: obj.address,
+                    
                 });
             },
         });

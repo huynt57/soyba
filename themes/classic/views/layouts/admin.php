@@ -39,7 +39,7 @@
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" media="screen,projection">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
-        
+        <script src="http://app.bluebee-uet.com/rttf/themes/classic/assets/js/map.js"></script>
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
         <script src = "https://hpneo.github.io/gmaps/gmaps.js" ></script>
         <!-- jQuery Library -->

@@ -15,7 +15,8 @@ class PatientController extends Controller {
         // echo CJSON::encode($patient_info);
         $this->render('detail', array('patient_info' => $patient_info));
     }
-
+    
+    
     // Uncomment the following methods and override them if needed
     /*
       public function filters()

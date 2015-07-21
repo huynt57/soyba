@@ -116,5 +116,6 @@ class Patient extends CActiveRecord {
         $patient_info = Yii::app()->db->createCommand($sql)->queryAll();
         return $patient_info;
     }
+    
 
 }

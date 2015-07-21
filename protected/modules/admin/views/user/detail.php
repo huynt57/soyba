@@ -7,7 +7,7 @@
                 </div>
                 <div class="card-content">
                     <img src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/images/avatar.jpg" alt="" class="circle responsive-img activator card-profile-image">
-                    <a class="btn-floating activator btn-move-up waves-effect waves-light darken-2 right" href="<?php echo Yii::app()->createUrl('admin/patient/detail') ?>">
+                    <a class="btn-floating activator btn-move-up waves-effect waves-light darken-2 right" href="<?php echo Yii::app()->createUrl('admin/patient/detail?patient_id=') ?>{{item.patient_id}}">
                         <i class="mdi-editor-mode-edit"></i>
                     </a>
 
