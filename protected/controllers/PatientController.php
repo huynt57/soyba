@@ -76,6 +76,8 @@ class PatientController extends Controller {
                 $patient_model->dob = $dob;
                 $patient_model->gender = $gender;
                 $patient_model->last_updated = time();
+                $patient_model->bloodType = $blood;
+                $patient_model->relationshipWithUser = $relation;
                 $patient_model->save(FALSE);
 
                 $user_patient = new UserPatient;
@@ -138,7 +140,7 @@ class PatientController extends Controller {
 
                 $last_updated = StringHelper::filterString($request->getPost('last_updated'));
                 $inject_day = StringHelper::filterString($request->getPost('inject_day'));
-                $done = StringHelper::filterString($request->getPost('done'));
+                $done = StringHelper::filterString($request->getPost('is_done'));
                 $vac_name = StringHelper::filterString($request->getPost('vac_name'));
                 $note = StringHelper::filterString($request->getPost('note'));
 

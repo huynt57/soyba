@@ -37,6 +37,7 @@ class SickController extends Controller {
     public function createScheduleSick($sick_id, $patient_id) {
         $sick_infos = InjectionScheduler::model()->findAllByAttributes(array('sick_id' => $sick_id));
         $patient_info = Patient::model()->findByAttributes(array('patient_id' => $patient_id));
+      
         foreach ($sick_infos as $sick_info) {
             $model = new PatientInjection;
             $model->sick_id = $sick_id;
@@ -60,7 +61,10 @@ class SickController extends Controller {
                 $patient_id = StringHelper::filterString($request->getPost('patient_id'));
                 $sicks = StringHelper::filterString($request->getPost('sicks'));
                 $sick_del = PatientSick::model()->findAllByAttributes(array('patient_id' => $patient_id));
-                $sick_del->deleteAll();
+                foreach ($sick_del as $sick)
+                {
+                    $sick->delete();
+                }
                 $sick_arr = json_decode($sicks);
 
                 foreach ($sick_arr as $sick) {
