@@ -10,16 +10,10 @@ class SuperController extends Controller {
 
     public function actionNuclearPower() {
         $patient = Patient::model()->deleteAll();
-
-
         $patient_injection = PatientInjection::model()->deleteAll();
-
-
         $patient_sick = PatientSick::model()->deleteAll();
-
-
         $patient_user = UserPatient::model()->deleteAll();
-          Yii::app()->end();
+        Yii::app()->end();
     }
 
     public function actionSuperAPI() {

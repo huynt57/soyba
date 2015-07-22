@@ -52,6 +52,34 @@ class SickController extends Controller {
         }
     }
 
+    public function actionUpdateSickPatient() {
+        $this->retVal = new stdClass();
+        $request = Yii::app()->request;
+        if ($request->isPostRequest && isset($_POST)) {
+            try {
+                $patient_id = StringHelper::filterString($request->getPost('patient_id'));
+                $sicks = StringHelper::filterString($request->getPost('sicks'));
+                $sick_del = PatientSick::model()->findAllByAttributes(array('patient_id' => $patient_id));
+                $sick_del->deleteAll();
+                $sick_arr = json_decode($sicks);
+
+                foreach ($sick_arr as $sick) {
+                    $model = new PatientSick();
+                    $model->patient_id = $patient_id;
+                    $model->sick_id = $sick;
+                    $model->save(FALSE);
+                    $this->createScheduleSick($sick, $patient_id);
+                }
+
+                $this->retVal->message = "Success";
+            } catch (exception $e) {
+                $this->retVal->message = $e->getMessage();
+            }
+            echo CJSON::encode($this->retVal);
+            Yii::app()->end();
+        }
+    }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()

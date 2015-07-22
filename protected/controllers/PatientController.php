@@ -100,11 +100,18 @@ class PatientController extends Controller {
             try {
                 $patient_name = StringHelper::filterString($request->getPost('patient_name'));
                 $patient_id = StringHelper::filterString($request->getPost('patient_id'));
-                $last_updated = StringHelper::filterString($request->getPost('ast_updated'));
-                $patient = Patient::model()->findByAttributes(array('id' => $patient_id));
+                $last_updated = StringHelper::filterString($request->getPost('last_updated'));
+                $blood = StringHelper::filterString($request->getPost('bloodType'));
+                $relation = StringHelper::filterString($request->getPost('relationshipWithUser'));
+                $patient = Patient::model()->findByAttributes(array('patient_id' => $patient_id));
+
                 if ($patient) {
                     if ($patient->last_updated < $last_updated) {
                         $patient->name = $patient_name;
+                        $patient->last_updated = $last_updated;
+                        $patient->relationshipWithUser = $relation;
+                        $patient->bloodType = $blood;
+                        $patient->save(FALSE);
                         $this->retVal->message = "Success";
                     } else {
                         $this->retVal->message = "Cannot modify because of time";
@@ -125,13 +132,17 @@ class PatientController extends Controller {
         $request = Yii::app()->request;
         if ($request->isPostRequest && isset($_POST)) {
             try {
-                $id = StringHelper::filterString($request->getPost('injection_schedule_id'));
+                $patient_id = StringHelper::filterString($request->getPost('patient_id'));
+                $sick_id = StringHelper::filterString($request->getPost('sick_id'));
+                $number = StringHelper::filterString($request->getPost('number'));
 
                 $last_updated = StringHelper::filterString($request->getPost('last_updated'));
                 $inject_day = StringHelper::filterString($request->getPost('inject_day'));
                 $done = StringHelper::filterString($request->getPost('done'));
                 $vac_name = StringHelper::filterString($request->getPost('vac_name'));
                 $note = StringHelper::filterString($request->getPost('note'));
+
+                $schedule = PatientInjection::model()->findByAttributes(array('patient_id' => $patient_id, 'sick_id' => $sick_id, 'number' => $number));
                 if ($schedule) {
                     if ($schedule->last_updated < $last_updated) {
                         $schedule->done = $done;
@@ -143,7 +154,7 @@ class PatientController extends Controller {
                         $schedule->save(FALSE);
                         $this->retVal->message = "Success";
                     } else {
-                        $this->retVal->message = "Cannot modify because of time";
+                        $this->retVal->message = "Cannot modify because of wrong time";
                     }
                 } else {
                     $this->retVal->message = "Schedule not exist";
@@ -203,6 +214,29 @@ class PatientController extends Controller {
                         $this->retVal->message = "Success";
                     }
                 }
+            } catch (exception $e) {
+                $this->retVal->message = $e->getMessage();
+            }
+            echo CJSON::encode($this->retVal);
+            Yii::app()->end();
+        }
+    }
+
+    public function actionDeleteAPatient() {
+        $this->retVal = new stdClass();
+        $request = Yii::app()->request;
+        if ($request->isPostRequest && isset($_POST)) {
+            try {
+                $id = StringHelper::filterString($request->getPost('patient_id'));
+                $patient = Patient::model()->findByAttributes(array('patient_id' => $id));
+                $patient->delete();
+                $patient_injection = PatientInjection::model()->findAllByAttributes(array('patient_id' => $id));
+                $patient_injection->deleteAll();
+                $patient_sick = PatientSick::model()->findAllByAttributes(array('patient_id' => $id));
+                $patient_sick->deleteAll();
+                $patient_user = UserPatient::model()->findAllByAttributes(array('patient_id' => $id));
+                $patient_user->deleteAll();
+                $this->retVal->message = "Success";
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
             }
