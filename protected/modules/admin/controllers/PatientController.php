@@ -8,15 +8,14 @@ class PatientController extends Controller {
 
     public function actionDetail() {
         $request = Yii::app()->request;
-        $patient_id = $request->getQuery("patient_id");
+        $patient_id = StringHelper::filterString($request->getQuery("patient_id"));
 
-        $patient_info = Patient::model()->getPatientDetail($patient_id);
-     
+        $patient_info = Patient::model()->findByAttributes(array('patient_id' => $patient_id));
+       // $patient_info = Patient::model()->getPatientDetailAdmin($patient_id);
         // echo CJSON::encode($patient_info);
         $this->render('detail', array('patient_info' => $patient_info));
     }
-    
-    
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()

@@ -46,7 +46,7 @@ class SickController extends Controller {
             $model->month = $sick_info->month;
             $date = new DateTime($patient_info->dob);
             $date->modify('+' . $sick_info->month . ' month');
-            $model->inject_day = $date->format('Y-m-d');
+            $model->inject_day = $date->format('d-m-Y');
             $model->last_updated = time();
             $model->save(FALSE);
         }

@@ -39,19 +39,27 @@ class UserController extends Controller {
                     'facebook_access_token' => $facebook_access_token, 'photo' => $photo, 'name' => $name,
                     'email' => $email, 'last_updated' => time());
                 $user_exist_facebook = User::model()->findByAttributes(array('facebook_id' => $facebook_id));
-                if ($user_exist_facebook) {
+                $user_exist_google = User::model()->findByAttributes(array('google_id' => $google_id));
+                if ($user_exist_facebook && $user_exist_facebook->facebook_id != NULL && $facebook_id != NULL) {
                     $user_exist_facebook->setAttributes($attr);
                     if ($user_exist_facebook->save(FALSE)) {
                         $this->retVal->message = "Success";
+                        $this->retVal->user_data = $user_exist_facebook->user_id;
+                    }
+                } else if ($user_exist_google && $user_exist_google->google_id != NULL && $google_id != NULL) {
+                    $user_exist_google->setAttributes($attr);
+                    if ($user_exist_google->save(FALSE)) {
+                        $this->retVal->message = "Success";
+                        $this->retVal->user_data = $user_exist_google->user_id;
                     }
                 } else {
                     $user_model = new User;
                     $user_model->setAttributes($attr);
                     if ($user_model->save(FALSE)) {
                         $this->retVal->message = "Success";
+                        $this->retVal->user_data = $user_model->user_id;
                     }
                 }
-                $this->retVal->user_data = $user_model->user_id;
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
             }
