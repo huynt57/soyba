@@ -45,12 +45,17 @@ class UserController extends Controller {
                     if ($user_exist_facebook->save(FALSE)) {
                         $this->retVal->message = "Success";
                         $this->retVal->user_data = $user_exist_facebook->user_id;
+                        $this->retVal->data = $user_exist_facebook->user_id;
+                        $this->retVal->status = 1;
+                        
                     }
                 } else if ($user_exist_google && $user_exist_google->google_id != NULL && $google_id != NULL) {
                     $user_exist_google->setAttributes($attr);
                     if ($user_exist_google->save(FALSE)) {
                         $this->retVal->message = "Success";
                         $this->retVal->user_data = $user_exist_google->user_id;
+                         $this->retVal->data = $user_exist_google->user_id;
+                        $this->retVal->status = 1;
                     }
                 } else {
                     $user_model = new User;
@@ -58,6 +63,8 @@ class UserController extends Controller {
                     if ($user_model->save(FALSE)) {
                         $this->retVal->message = "Success";
                         $this->retVal->user_data = $user_model->user_id;
+                        $this->retVal->data = $user_model->user_id;
+                        $this->retVal->status = 1;
                     }
                 }
             } catch (exception $e) {
@@ -76,14 +83,26 @@ class UserController extends Controller {
                 if (isset($_POST['facebook_id'])) {
                     $facebook_id = StringHelper::filterString($request->getPost('facebook_id'));
                     $user_id = User::model()->findByAttributes(array('facebook_id' => $facebook_id));
-                    $this->retVal->user_data = User::model()->findByAttributes(array('user_id' => $user_id->user_id));
+                    $data = User::model()->findByAttributes(array('user_id' => $user_id->user_id));
+                    $this->retVal->user_data = $data;
+                    $this->retVal->data = $data;
+                    $this->retVal->status = 1;
+                    $this->retVal->message = "Success";
                 } else if (isset($_POST['google_id'])) {
                     $google_id = StringHelper::filterString($request->getPost('google_id'));
                     $user_id = User::model()->findByAttributes(array('google_id' => $google_id));
-                    $this->retVal->user_data = User::model()->findByAttributes(array('user_id' => $user_id->user_id));
+                    $data = User::model()->findByAttributes(array('user_id' => $user_id->user_id));
+                    $this->retVal->user_data = $data;
+                    $this->retVal->data = $data;
+                    $this->retVal->status = 1;
+                    $this->retVal->message = "Success";
                 } else {
                     $user_id = StringHelper::filterString($request->getPost('user_id'));
-                    $this->retVal->user_data = User::model()->findByAttributes(array('user_id' => $user_id));
+                    $data = User::model()->findByAttributes(array('user_id' => $user_id));
+                    $this->retVal->user_data = $data;
+                    $this->retVal->data = $data;
+                    $this->retVal->status = 1;
+                    $this->retVal->message = "Success";
                 }
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();

@@ -37,10 +37,49 @@ class SuperController extends Controller {
                 $this->retVal->patient_data = $patient_data;
                 $this->retVal->sick_data = $sick_data;
                 $this->retVal->inject_data = $inject_data;
+                $data = array();
+                $patient_arr = array("patient_data" => $patient_data);
+                $sick_arr = array("sick_data" => $sick_data);
+                $inject_arr = array("inject_data" => $inject_data);
+                array_push($data, $patient_arr);
+                array_push($data, $sick_arr);
+                array_push($data, $inject_arr);
+                $data_arr = array('data' => $data);
+                $this->retVal->message = "Success";
+                $this->retVal->status = 1;
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
             }
             echo CJSON::encode($this->retVal);
+
+            Yii::app()->end();
+        }
+    }
+
+    public function actionSuperAPIiOS() {
+
+        $request = Yii::app()->request;
+        if ($request->isPostRequest && isset($_POST)) {
+            try {
+                $user_id = StringHelper::filterString($request->getPost('user_id'));
+                $patient_data = Patient::model()->getPatientInfo($user_id);
+                $sick_data = array();
+                $inject_data = array();
+                foreach ($patient_data as $patient) {
+                    $sick = PatientSick::model()->findAllByAttributes(array('patient_id' => $patient["patient_id"]));
+                    // var_dump($sick);
+                    $inject = PatientInjection::model()->findAllByAttributes(array('patient_id' => $patient["patient_id"]));
+                    // var_dump($inject);
+                    array_push($inject_data, $inject);
+                    array_push($sick_data, $sick);
+                    // die();
+                }
+                $data = array("patient_data" => $patient_data, "sick_data" => $sick_data, "inject_data" => $inject_data);
+                $data_arr = array('data' => $data, 'message' => 'Success', 'status' => 1);
+            } catch (exception $e) {
+                
+            }
+            echo CJSON::encode($data_arr);
             Yii::app()->end();
         }
     }

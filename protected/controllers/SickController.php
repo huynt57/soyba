@@ -26,6 +26,8 @@ class SickController extends Controller {
                 }
 
                 $this->retVal->message = "Success";
+                $this->retVal->data = "";
+                $this->retVal->status = 1;
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
             }

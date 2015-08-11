@@ -87,6 +87,8 @@ class PatientController extends Controller {
 
                 $this->retVal->message = "Success";
                 $this->retVal->patient_id = $patient_model->patient_id;
+                $this->retVal->data = $patient_model->patient_id;
+                $this->retVal->status = 1;
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
             }
@@ -233,12 +235,20 @@ class PatientController extends Controller {
                 $patient = Patient::model()->findByAttributes(array('patient_id' => $id));
                 $patient->delete();
                 $patient_injection = PatientInjection::model()->findAllByAttributes(array('patient_id' => $id));
-                $patient_injection->deleteAll();
+                foreach ($patient_injection as $patient) {
+                    $patient->delete();
+                }
                 $patient_sick = PatientSick::model()->findAllByAttributes(array('patient_id' => $id));
-                $patient_sick->deleteAll();
+                foreach ($patient_sick as $patient) {
+                    $patient->delete();
+                }
                 $patient_user = UserPatient::model()->findAllByAttributes(array('patient_id' => $id));
-                $patient_user->deleteAll();
+                foreach ($patient_user as $patient) {
+                    $patient->delete();
+                }
                 $this->retVal->message = "Success";
+                $this->retVal->status = 1;
+                $this->retVal->data = "";
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
             }
