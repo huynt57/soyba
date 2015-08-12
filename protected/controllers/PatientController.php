@@ -34,6 +34,10 @@ class PatientController extends Controller {
             try {
                 $user_id = StringHelper::filterString($request->getPost('user_id'));
                 $patient_data = Patient::model()->getPatientInfo($user_id);
+                foreach ($patient_data as $patient) {
+                    $patient["patient_id"] = (int) $patient["patient_id"];
+                    // echo $patient["patient_id"];
+                }
                 $this->retVal->patient_data = $patient_data;
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
