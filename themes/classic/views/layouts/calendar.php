@@ -39,6 +39,31 @@
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/fullcalendar/css/fullcalendar.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+        
+        <!-- ================================================
+        Scripts
+        ================================================ -->
+
+        <!-- jQuery Library -->
+        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery-1.11.2.min.js"></script>    
+        <!--materialize js-->
+        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/materialize.js"></script>
+        <!--prism-->
+        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/prism.js"></script>
+        <!--scrollbar-->
+        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
+        <!-- chartist -->
+        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/chartist-js/chartist.min.js"></script>   
+
+        <!-- Calendar Script -->
+        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/fullcalendar/lib/jquery-ui.custom.min.js"></script>
+        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/fullcalendar/lib/moment.min.js"></script>
+        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/fullcalendar/js/fullcalendar.min.js"></script>
+    
+
+        <!--plugins.js - Some Specific JS codes for Plugin Settings-->
+        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins.js"></script>
     </head>
 
     <body>
@@ -279,30 +304,7 @@
 
 
 
-        <!-- ================================================
-        Scripts
-        ================================================ -->
-
-        <!-- jQuery Library -->
-        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/jquery-1.11.2.min.js"></script>    
-        <!--materialize js-->
-        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/materialize.js"></script>
-        <!--prism-->
-        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/prism.js"></script>
-        <!--scrollbar-->
-        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-
-        <!-- chartist -->
-        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/chartist-js/chartist.min.js"></script>   
-
-        <!-- Calendar Script -->
-        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/fullcalendar/lib/jquery-ui.custom.min.js"></script>
-        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/fullcalendar/lib/moment.min.js"></script>
-        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/fullcalendar/js/fullcalendar.min.js"></script>
-        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/fullcalendar/fullcalendar-script.js"></script>
-
-        <!--plugins.js - Some Specific JS codes for Plugin Settings-->
-        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins.js"></script>
+        
 
 
     </body>

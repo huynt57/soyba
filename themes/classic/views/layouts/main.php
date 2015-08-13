@@ -37,6 +37,7 @@
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/jvectormap/jquery-jvectormap.css" type="text/css" rel="stylesheet" media="screen,projection">
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+        <link href="css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css" />
     </head>
 
     <body>

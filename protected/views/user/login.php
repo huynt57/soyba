@@ -40,7 +40,7 @@
                     <p class="margin right-align medium-small"><a href="page-forgot-password.html">Forgot password ?</a></p>
                 </div>          
             </div>
-
+<i class="mdi mdi-facebook-box"></i>  <!-- facebook box -->
         </form>
     </div>
 </div>

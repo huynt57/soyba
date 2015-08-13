@@ -111,6 +111,8 @@ class UserController extends Controller {
             Yii::app()->end();
         }
     }
+    
+    
 
     // Uncomment the following methods and override them if needed
     /*

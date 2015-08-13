@@ -33,7 +33,7 @@ class Patient extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('patient_id', 'numerical', 'integerOnly'=>true),
+            array('patient_id', 'numerical', 'integerOnly' => true),
             array('name, dob, gender', 'length', 'max' => 255),
             array('last_updated', 'length', 'max' => 200),
             array('relationshipWithUser, bloodType', 'safe'),
@@ -112,7 +112,7 @@ class Patient extends CActiveRecord {
         $id = StringHelper::filterString($id);
         $sql = "SELECT * FROM tbl_patient JOIN tbl_user_patient ON tbl_patient.patient_id = tbl_user_patient.patient_id WHERE tbl_user_patient.user_id = $id";
         $patient_info = Yii::app()->db->createCommand($sql)->queryAll();
-         
+
         return $patient_info;
     }
 
@@ -128,10 +128,17 @@ class Patient extends CActiveRecord {
         $patient_id = StringHelper::filterString($patient_id);
         $sql = "SELECT * FROM tbl_patient JOIN tbl_biography_stat ON tbl_patient.patient_id = tbl_biography_stat.patient_id WHERE tbl_patient.patient_id = $patient_id";
         $patient_info = Yii::app()->db->createCommand($sql)->queryAll();
-        foreach($patient_info as $patient) {
+        foreach ($patient_info as $patient) {
             $patient["patient_id"] = (int) $patient["patient_id"];
         }
         return $patient_info;
+    }
+
+    public function getDetailCalendar($id) {
+        $id = StringHelper::filterString($id);
+        $sql = "SELECT * FROM tbl_patient_injection JOIN tbl_sick ON tbl_patient_injection.sick_id = tbl_sick.id WHERE tbl_patient_injection.id = $id";
+        $data = Yii::app()->db->createCommand($sql)->queryAll();
+        return $data;
     }
 
 }
