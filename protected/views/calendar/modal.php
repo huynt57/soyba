@@ -58,7 +58,7 @@
                     <div class="card-panel">
                         <h4 class="header2">Chi tiết mũi tiêm</h4>
                         <div class="row">
-                            <form class="col s12">
+                            <form class="col s12" id="calendar-form">
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <input id="name" type="text"  placeholder="Placeholder">
@@ -94,7 +94,7 @@
                                 </div>                                 
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <button class="btn cyan waves-effect waves-light right" type="submit" name="action">Lưu
+                                        <button class="btn cyan waves-effect waves-light right" type="button" name="action" id="save-calendar">Lưu
                                             <i class="mdi-content-send right"></i>
                                         </button>
                                     </div>

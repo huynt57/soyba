@@ -83,6 +83,9 @@
                         $('#name').val(json[0].name);
                         $('#number').val(json[0].number);
                         $('#date').val(json[0].inject_day);
+                        if(json[0].done == 1) {
+                            $('#isDone').attr('checked', 'true');
+                        }
 
                     },
                 });
@@ -91,6 +94,21 @@
 
             }
         });
+                $('#save-calendar').click(function () {
+            var form = $('#calendar-form');
+            var data = form.serialize();
+            $.ajax({
+                
+                                url: '<?php echo Yii::app()->createUrl('calendar/updateDetailCalendar') ?>',
+                                type: 'post',
+                                data: data,
+                                dataType: 'json',
+                                success: function (response) {
+
+
+                                },
+                            });
+                        });
     });
 
 </script>
