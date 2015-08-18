@@ -42,17 +42,18 @@
                 var title = event.title;
                 var start = event.start.format();
                 var end = (event.end === null) ? start : event.end.format();
+                var id = event.id;
                 $.ajax({
                     url: '<?php echo Yii::app()->createUrl('calendar/updateCalendar'); ?>',
-                    data: {title: title, start: start, end: end},
+                    data: {title: title, start: start, end: end, id:id},
                     type: 'POST',
                     dataType: 'json',
                     success: function (response) {
 
-                        //revertFunc();
+                       Materialize.toast('Cập nhật thành công', 3000, 'rounded');
                     },
                     error: function () {
-                        // revertFunc();
+                       Materialize.toast('Có lỗi xảy ra, vui lòng thử lại sau', 3000, 'rounded')
 
                     }
                 });
@@ -81,10 +82,13 @@
                         $('#loading').hide();
                         $('#basic-form').show();
                         $('#name').val(json[0].name);
+                        $('#id').val(calEvent.id);
                         $('#number').val(json[0].number);
                         $('#date').val(json[0].inject_day);
-                        if(json[0].done == 1) {
-                            $('#isDone').attr('checked', 'true');
+                        if (json[0].done == "1") {
+                            $('#isDone').prop('checked', true);
+                        } else {
+                            $('#isDone').prop('checked', false);
                         }
 
                     },
@@ -94,21 +98,32 @@
 
             }
         });
-                $('#save-calendar').click(function () {
-            var form = $('#calendar-form');
-            var data = form.serialize();
+        $('#save-calendar').click(function () {
+            //  var form = $('#calendarform');
+            var done;
+            var date = $('#date').val();
+            if ($('#isDone').is(':checked')) {
+                done = 1;
+            } else {
+                done = 0;
+            }
+            var note = $('#note').val();
+            var id = $('#id').val();
             $.ajax({
-                
-                                url: '<?php echo Yii::app()->createUrl('calendar/updateDetailCalendar') ?>',
-                                type: 'post',
-                                data: data,
-                                dataType: 'json',
-                                success: function (response) {
-
-
-                                },
-                            });
-                        });
+                url: '<?php echo Yii::app()->createUrl('calendar/updateDetailCalendar') ?>',
+                type: 'post',
+                data: {date: date, done: done, id: id, note: note},
+                dataType: 'json',
+                success: function (response) {
+                    $("#modal1").closeModal();
+                    Materialize.toast('Cập nhật thành công', 3000, 'rounded');
+                },
+                error: function () {
+                    $("#modal1").closeModal();
+                    Materialize.toast('Có lỗi xảy ra, vui lòng thử lại sau', 3000, 'rounded');
+                },
+            });
+        });
     });
 
 </script>

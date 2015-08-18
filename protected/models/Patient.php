@@ -140,5 +140,15 @@ class Patient extends CActiveRecord {
         $data = Yii::app()->db->createCommand($sql)->queryAll();
         return $data;
     }
+    
+    public function updatePatientCalendar($id, $done, $date, $note)
+    {
+        $calendar = PatientInjection::model()->findByAttributes(array('id' => $id));
+        $calendar->done = $done;
+        $calendar->inject_day = $date;
+        $calendar->note = $note;
+        
+        $calendar->save(FALSE);
+    }
 
 }

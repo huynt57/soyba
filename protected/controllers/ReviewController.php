@@ -19,7 +19,6 @@ class ReviewController extends Controller {
                 $object_type = $request->getPost('object_type');
                 $rating = $request->getPost('rating');
 
-
                 $model = new Review;
                 $model->user_id = $user_id;
                 $model->comment = $comment;
@@ -53,7 +52,7 @@ class ReviewController extends Controller {
             $object_id = $request->getQuery('object_id');
             $object_type = $request->getQuery('object_type');
 
-            $review = Review::model()->findAllByAttributes(array('object_id' => $object_id, 'object_type' => $object_type));
+            $review = Review::model()->getReview($object_id, $object_type);
             $count = $this->countReviewByStar();
             $rating = $this->countRating();
             $this->retVal->mesage = "Success";

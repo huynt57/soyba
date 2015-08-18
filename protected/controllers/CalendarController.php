@@ -44,13 +44,15 @@ class CalendarController extends Controller {
         if ($request->isPostRequest && isset($_POST)) {
             try {
                 $update = StringHelper::filterString($request->getPost('start'));
-                $model = PatientInjection::model()->findByAttributes(array('id' => 1));
+                $id = StringHelper::filterString($request->getPost('id'));
+                $model = PatientInjection::model()->findByAttributes(array('id' => $id));
                 $model->inject_day = $update;
                 $model->save();
             } catch (Exception $ex) {
                 $this->retVal->message = $ex->getMessage();
             }
         }
+        echo CJSON::encode($this->retVal);
         Yii::app()->end();
     }
 
@@ -62,6 +64,26 @@ class CalendarController extends Controller {
                 $id = StringHelper::filterString($request->getPost('id'));
                 $data = Patient::model()->getDetailCalendar($id);
                 $this->retVal->data = $data;
+            } catch (Exception $ex) {
+                $this->retVal->message = $ex->getMessage();
+            }
+        }
+        echo CJSON::encode($this->retVal);
+        Yii::app()->end();
+    }
+
+    public function actionUpdateDetailCalendar() {
+        $this->retVal = new stdClass;
+        $request = Yii::app()->request;
+        if ($request->isPostRequest && isset($_POST)) {
+            try {
+                $id = StringHelper::filterString($request->getPost('id'));
+                //   $name = StringHelper::filterString($request->getPost('name'));
+                $date = StringHelper::filterString($request->getPost('date'));
+                $note = StringHelper::filterString($request->getPost('note'));
+                $done = StringHelper::filterString($request->getPost('done'));
+
+                Patient::model()->updatePatientCalendar($id, $done, $date, $note);
             } catch (Exception $ex) {
                 $this->retVal->message = $ex->getMessage();
             }

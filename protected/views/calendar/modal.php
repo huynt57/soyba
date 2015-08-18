@@ -1,4 +1,4 @@
-<div id="modal1" class="modal col s12 m12 l6">
+<div id="modal1" class="modal col s12 m12 l6" style="height: 80%">
     <div class="modal-content">
         <div class="col center">
         <div class="preloader-wrapper big active" id="loading">
@@ -58,20 +58,20 @@
                     <div class="card-panel">
                         <h4 class="header2">Chi tiết mũi tiêm</h4>
                         <div class="row">
-                            <form class="col s12" id="calendar-form">
+                            <form class="col s12" id="calendarform">
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <input id="name" type="text"  placeholder="Placeholder">
+                                        <input id="name" type="text"  placeholder="Placeholder" disabled>
                                         <label for="name">Tên bệnh</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <input id="number" type="number" placeholder="Placeholder">
+                                        <input id="number" type="number" placeholder="Placeholder" disabled>
                                         <label for="number">Mũi tiêm số:</label>
                                     </div>
                                 </div>
-
+                                <input id="id" type="hidden">
                                 <div class="row">
 
                                     <div class="input-field col s12">
