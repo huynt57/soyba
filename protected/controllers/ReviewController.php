@@ -69,7 +69,8 @@ class ReviewController extends Controller {
     public function countReviewByStar() {
         $data = array();
         for ($i = 1; $i <= 5; $i++) {
-            $data = array($i => Review::model()->count(array('rating' => $i)));
+            $elem = array($i => Review::model()->count(array('rating' => $i)));
+            $data = array_push($data, $elem);
         }
         return $data;
 //        $five = Review::model()->count(array('rating' => 5));
@@ -87,6 +88,7 @@ class ReviewController extends Controller {
         $sum = Review::model()->sumRating();
         return $sum / $count;
     }
+    
 
     // Uncomment the following methods and override them if needed
     /*

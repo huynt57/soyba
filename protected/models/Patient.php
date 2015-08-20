@@ -140,15 +140,21 @@ class Patient extends CActiveRecord {
         $data = Yii::app()->db->createCommand($sql)->queryAll();
         return $data;
     }
-    
-    public function updatePatientCalendar($id, $done, $date, $note)
-    {
+
+    public function updatePatientCalendar($id, $done, $date, $note) {
         $calendar = PatientInjection::model()->findByAttributes(array('id' => $id));
         $calendar->done = $done;
         $calendar->inject_day = $date;
         $calendar->note = $note;
-        
+
         $calendar->save(FALSE);
+    }
+
+    public function getCalendar() {
+        $sql = "SELECT tbl_patient_injection.*, tbl_sick.name FROM tbl_patient_injection INNER JOIN tbl_sick ON tbl_patient_injection.sick_id = tbl_sick.id WHERE "
+                . "tbl_patient_injection.patient_id = 1";
+        $data = Yii::app()->db->createCommand($sql)->queryAll();
+        return $data;
     }
 
 }

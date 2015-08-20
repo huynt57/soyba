@@ -9,7 +9,7 @@
             // store data so the calendar knows to render an event upon drop
             $(this).data('event', {
                 title: $.trim($(this).text()), // use the element's text as the event title
-               // stick: true, // maintain when user navigates (see docs on the renderEvent method)
+                // stick: true, // maintain when user navigates (see docs on the renderEvent method)
                 color: '#00bcd4'
             });
             // make the event draggable using jQuery UI
@@ -28,7 +28,6 @@
                 center: 'title',
                 right: 'month,basicWeek,basicDay'
             },
-            defaultDate: '2015-05-12',
             editable: true,
             droppable: true, // this allows things to be dropped onto the calendar
             eventLimit: true, // allow "more" link when too many events
@@ -120,6 +119,9 @@
             var note = $('#note').val();
             var id = $('#id').val();
             $.ajax({
+                beforeSend: function () {
+                    Materialize.toast('Đang cập nhật', 3000, 'rounded');
+                },
                 url: '<?php echo Yii::app()->createUrl('calendar/updateDetailCalendar') ?>',
                 type: 'post',
                 data: {date: date, done: done, id: id, note: note},

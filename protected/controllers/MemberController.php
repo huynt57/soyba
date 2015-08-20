@@ -11,6 +11,8 @@ class MemberController extends Controller
         {
             $this->render();
         }
+        
+        
 
 	// Uncomment the following methods and override them if needed
 	/*

@@ -18,12 +18,7 @@ class CalendarController extends Controller {
     }
 
     public function actionGetCalendar() {
-        $calendars = Yii::app()->db->createCommand()
-                ->select('*')
-                ->from('tbl_patient_injection p')
-                ->where('patient_id = 1')
-                ->join('tbl_sick s', 'p.sick_id=s.id')
-                ->queryAll();
+        $calendars = Patient::model()->getCalendar();
         foreach ($calendars as $i => $calendar) {
 
             $calendars[$i]["start"] = date("Y-m-d", strtotime($calendars[$i]["inject_day"]));
