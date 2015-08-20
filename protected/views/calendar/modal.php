@@ -1,7 +1,7 @@
 <div id="modal1" class="modal col s12 m12 l6" style="height: 80%">
     <div class="modal-content">
         <div class="col center">
-        <div class="preloader-wrapper big active" id="loading">
+            <div class="preloader-wrapper big active" id="loading">
             <div class="spinner-layer spinner-blue">
                 <div class="circle-clipper left">
                     <div class="circle"></div>

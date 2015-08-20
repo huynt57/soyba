@@ -14,7 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="msapplication-tap-highlight" content="no">
-        <meta name="description" content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
+        <meta name="description" content="<?php echo Yii::app()->params['meta_des'] ?>">
         <meta name="keywords" content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
         <title>Calendar | Materialize - Material Design Admin Template</title>
 
@@ -39,7 +39,7 @@
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/fullcalendar/css/fullcalendar.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-        
+
         <!-- ================================================
         Scripts
         ================================================ -->
@@ -60,7 +60,7 @@
         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/fullcalendar/lib/jquery-ui.custom.min.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/fullcalendar/lib/moment.min.js"></script>
         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/fullcalendar/js/fullcalendar.min.js"></script>
-    
+        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins/fullcalendar/js/lang-all.js"></script>
 
         <!--plugins.js - Some Specific JS codes for Plugin Settings-->
         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/plugins.js"></script>
@@ -91,7 +91,7 @@
                             <li>    
                                 <a href="javascript:void(0);" class="waves-effect waves-block waves-light show-search"><i class="mdi-action-search"></i></a>                              
                             </li>
-                           
+
                         </ul>
                     </div>
                 </nav>
@@ -120,7 +120,7 @@
                             <div class="row">
                                 <div class="col s12 m12 l12">
                                     <h5 class="breadcrumbs-title">Lịch tiêm</h5>
-                                   
+
                                 </div>
                             </div>
                         </div>
@@ -134,7 +134,7 @@
 
                 <!-- //////////////////////////////////////////////////////////////////////////// -->
                 <!-- START RIGHT SIDEBAR NAV-->
-                
+
                 <!-- LEFT RIGHT SIDEBAR NAV-->
 
             </div>
@@ -151,8 +151,8 @@
         <footer class="page-footer">
             <div class="footer-copyright">
                 <div class="container">
-                    Copyright © 2015 <a class="grey-text text-lighten-4" href="http://themeforest.net/user/geekslabs/portfolio?ref=geekslabs" target="_blank">Meboo Team</a> All rights reserved.
-                  
+                    Copyright © 2015 <a class="grey-text text-lighten-4" href="http://meboo.vn" target="_blank">Meboo Team</a> All rights reserved.
+
                 </div>
             </div>
         </footer>
@@ -160,7 +160,7 @@
 
 
 
-        
+
 
 
     </body>

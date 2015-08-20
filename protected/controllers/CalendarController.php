@@ -22,12 +22,13 @@ class CalendarController extends Controller {
                 ->select('*')
                 ->from('tbl_patient_injection p')
                 ->where('patient_id = 1')
+                ->join('tbl_sick s', 'p.sick_id=s.id')
                 ->queryAll();
         foreach ($calendars as $i => $calendar) {
 
             $calendars[$i]["start"] = date("Y-m-d", strtotime($calendars[$i]["inject_day"]));
             $calendars[$i]["end"] = "";
-            $calendars[$i]["title"] = "test";
+            $calendars[$i]["title"] =  $calendars[$i]["name"];
             if ($calendars[$i]["done"] == 0) {
                 $calendars[$i]["color"] = "#E29E19";
             } else {

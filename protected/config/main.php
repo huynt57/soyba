@@ -70,8 +70,7 @@ return array(
     'params' => array(
         // this is used in contact page
         'adminEmail' => 'webmaster@example.com',
-       
     ),
-    'theme'=>'classic',
-    
+    'theme' => 'classic',
+    'params' => include (dirname(__FILE__) . '/params.php'),
 );
