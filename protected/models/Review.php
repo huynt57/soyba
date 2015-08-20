@@ -109,7 +109,7 @@ class Review extends CActiveRecord {
 
     public function getReview($object_id, $object_type) {
         $sql = "SELECT tbl_review.* , tbl_user.name, tbl_user.photo FROM tbl_review INNER JOIN tbl_user ON tbl_review.user_id = tbl_user.user_id WHERE tbl_review.object_id = $object_id"
-                . "AND tbl_review.object_type = $object_type";
+                . " AND tbl_review.object_type = $object_type";
         $result = Yii::app()->db->createCommand($sql)->queryAll();
         return $result;
     }

@@ -21,7 +21,7 @@ class ReviewController extends Controller {
 
                 $model = new Review;
                 $model->user_id = $user_id;
-                $model->comment = $comment;
+                $model->review = $comment;
                 $model->object_id = $object_id;
                 $model->object_type = $object_type;
                 $model->rate = $rating;
@@ -56,7 +56,7 @@ class ReviewController extends Controller {
             $count = $this->countReviewByStar();
             $rating = $this->countRating();
             $this->retVal->mesage = "Success";
-            $this->retVal->data = array('review' => $review, 'count' => $count, 'rating' => $rating);
+            $this->retVal->data = array('review' => $review, 'count' => $count, 'rate' => $rating);
             $this->retVal->status = 1;
         } catch (Exception $ex) {
             $this->retVal->message = $ex->getMessage();
@@ -68,9 +68,10 @@ class ReviewController extends Controller {
 
     public function countReviewByStar() {
         $data = array();
+        
         for ($i = 1; $i <= 5; $i++) {
-            $elem = array($i => Review::model()->count(array('rating' => $i)));
-            $data = array_push($data, $elem);
+            $elem = array($i."r" => Review::model()->countByAttributes(array('rate' => $i)));
+            $data = array_merge($data, $elem);
         }
         return $data;
 //        $five = Review::model()->count(array('rating' => 5));
@@ -88,7 +89,6 @@ class ReviewController extends Controller {
         $sum = Review::model()->sumRating();
         return $sum / $count;
     }
-    
 
     // Uncomment the following methods and override them if needed
     /*
