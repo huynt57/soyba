@@ -53,8 +53,8 @@ class ReviewController extends Controller {
             $object_type = $request->getQuery('object_type');
 
             $review = Review::model()->getReview($object_id, $object_type);
-            $count = $this->countReviewByStar();
-            $rating = $this->countRating();
+            $count = $this->countReviewByStar($object_id, $object_type);
+            $rating = $this->countRating($object_id, $object_type);
             $this->retVal->mesage = "Success";
             $this->retVal->data = array('review' => $review, 'count' => $count, 'rate' => $rating);
             $this->retVal->status = 1;
@@ -66,28 +66,24 @@ class ReviewController extends Controller {
         Yii::app()->end();
     }
 
-    public function countReviewByStar() {
+    public function countReviewByStar($object_id, $object_type) {
         $data = array();
-        
+
         for ($i = 1; $i <= 5; $i++) {
-            $elem = array($i."r" => Review::model()->countByAttributes(array('rate' => $i)));
+            $elem = array($i . "r" => Review::model()->countByAttributes(array('rate' => $i, "object_id" => $object_id, "object_type" => $object_type)));
             $data = array_merge($data, $elem);
         }
         return $data;
-//        $five = Review::model()->count(array('rating' => 5));
-//        $four = Review::model()->count(array('rating' => 4));
-//        $three = Review::model()->count(array('rating' => 3));
-//        $two = Review::model()->count(array('rating' => 2));
-//        $one = Review::model()->count(array('rating' => 1));
-//
-//        return array('five' => $five, 'four' => $four, 'three' => $three
-//            , 'two' => $two, 'one' => $one);
     }
 
-    public function countRating() {
-        $count = Review::model()->count();
-        $sum = Review::model()->sumRating();
-        return $sum / $count;
+    public function countRating($object_id, $object_type) {
+        $count = Review::model()->countByAttributes(array("object_id" => $object_id, "object_type" => $object_type));
+        $sum = Review::model()->sumRating($object_id, $object_type);
+        if ($count == 0) {
+            return 0;
+        } else {
+            return $sum / $count;
+        }
     }
 
     // Uncomment the following methods and override them if needed

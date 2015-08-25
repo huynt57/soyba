@@ -101,8 +101,8 @@ class Review extends CActiveRecord {
         return parent::model($className);
     }
 
-    public function sumRating() {
-        $sql = "SELECT SUM(rate) FROM tbl_review";
+    public function sumRating($object_id, $object_type) {
+        $sql = "SELECT SUM(rate) FROM tbl_review WHERE object_id = $object_id AND object_type = $object_type";
         $sum = Yii::app()->db->createCommand($sql)->queryScalar();
         return $sum;
     }
