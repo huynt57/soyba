@@ -51,10 +51,32 @@ class ReviewController extends Controller {
         try {
             $object_id = $request->getQuery('object_id');
             $object_type = $request->getQuery('object_type');
+            $limit = $request->getQuery('limit');
+            $offset = $request->getQuery('offset');
 
-            $review = Review::model()->getReview($object_id, $object_type);
+            $review = Review::model()->getReview($object_id, $object_type, $limit, $offset);
             $count = $this->countReviewByStar($object_id, $object_type);
             $rating = $this->countRating($object_id, $object_type);
+            $this->retVal->mesage = "Success";
+            $this->retVal->data = array('review' => $review, 'count' => $count, 'rate' => $rating);
+            $this->retVal->status = 1;
+        } catch (Exception $ex) {
+            $this->retVal->message = $ex->getMessage();
+        }
+
+        echo CJSON::encode($this->retVal);
+        Yii::app()->end();
+    }
+    
+    public function actionGetObjectStar() {
+        $this->retVal = new stdClass();
+        $request = Yii::app()->request;
+
+        try {
+            $object_id = $request->getQuery('object_id');
+            $object_type = $request->getQuery('object_type');
+            $rating = $this->countRating($object_id, $object_type);
+            $count = $this->countReviewByStar($object_id, $object_type);
             $this->retVal->mesage = "Success";
             $this->retVal->data = array('review' => $review, 'count' => $count, 'rate' => $rating);
             $this->retVal->status = 1;
@@ -74,6 +96,36 @@ class ReviewController extends Controller {
             $data = array_merge($data, $elem);
         }
         return $data;
+    }
+
+    public function actionUpdateReview() {
+        $this->retVal = new stdClass();
+        $request = Yii::app()->request;
+        if ($request->isPostRequest && isset($_POST)) {
+            try {
+                $review_id = $request->getPost('review_id');
+                $content = $request->getPost('content');
+                $rate = $request->getPost('rate');
+                $model = Review::model()->findByAttributes(array('id' => $review_id));
+                if (!empty($rate))
+                    $model->rate = $rate;
+                if (!empty($content))
+                    $model->review = $content;
+                if ($model->save(FALSE)) {
+                    $this->retVal->status = 1;
+                    $this->retVal->data = "";
+                    $this->retVal->message = "Success";
+                } else {
+                    $this->retVal->status = 0;
+                    $this->retVal->data = "";
+                    $this->retVal->message = "Fail";
+                }
+            } catch (Exception $ex) {
+                $this->retVal->message = $ex->getMessage();
+            }
+        }
+        echo CJSON::encode($this->retVal);
+        Yii::app()->end();
     }
 
     public function countRating($object_id, $object_type) {

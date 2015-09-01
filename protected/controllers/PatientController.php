@@ -121,10 +121,16 @@ class PatientController extends Controller {
                         $patient->bloodType = $blood;
                         $patient->save(FALSE);
                         $this->retVal->message = "Success";
+                        $this->retVal->status = 1;
+                        $this->retVal->data = "";
                     } else {
+                        $this->retVal->status = 0;
+                        $this->retVal->data = "";
                         $this->retVal->message = "Cannot modify because of time";
                     }
                 } else {
+                    $this->retVal->status = 0;
+                    $this->retVal->data = "";
                     $this->retVal->message = "Patient not exist";
                 }
             } catch (exception $e) {
@@ -160,11 +166,17 @@ class PatientController extends Controller {
                         $schedule->last_updated = $last_updated;
 
                         $schedule->save(FALSE);
+                        $this->retVal->status = 1;
+                        $this->retVal->data = "";
                         $this->retVal->message = "Success";
                     } else {
+                        $this->retVal->status = 0;
+                        $this->retVal->data = "";
                         $this->retVal->message = "Cannot modify because of wrong time";
                     }
                 } else {
+                    $this->retVal->status = 0;
+                        $this->retVal->data = "";
                     $this->retVal->message = "Schedule not exist";
                 }
             } catch (exception $e) {
@@ -209,6 +221,8 @@ class PatientController extends Controller {
                     $exist->timestamp = $timestamp;
                     $exist->last_updated = time();
                     if ($exist->save(FALSE)) {
+                        $this->retVal->status = 1;
+                        $this->retVal->data = "";
                         $this->retVal->message = "Success";
                     }
                 } else {
@@ -219,6 +233,8 @@ class PatientController extends Controller {
                     $model->timestamp = $timestamp;
                     $model->last_updated = time();
                     if ($model->save(FALSE)) {
+                        $this->retVal->status = 1;
+                        $this->retVal->data = "";
                         $this->retVal->message = "Success";
                     }
                 }
