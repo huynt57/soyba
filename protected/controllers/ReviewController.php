@@ -67,7 +67,7 @@ class ReviewController extends Controller {
         echo CJSON::encode($this->retVal);
         Yii::app()->end();
     }
-    
+
     public function actionGetObjectStar() {
         $this->retVal = new stdClass();
         $request = Yii::app()->request;
