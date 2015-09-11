@@ -8,7 +8,7 @@ class ReviewController extends Controller {
         $this->render('index');
     }
 
-     public function actionAddReview() {
+    public function actionAddReview() {
         $this->retVal = new stdClass();
         $request = Yii::app()->request;
         if ($request->isPostRequest && isset($_POST)) {
@@ -57,7 +57,6 @@ class ReviewController extends Controller {
         echo CJSON::encode($this->retVal);
         Yii::app()->end();
     }
-
 
     public function actionGetReview() {
         $this->retVal = new stdClass();
