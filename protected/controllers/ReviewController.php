@@ -19,22 +19,38 @@ class ReviewController extends Controller {
                 $object_type = $request->getPost('object_type');
                 $rating = $request->getPost('rating');
 
-                $model = new Review;
-                $model->user_id = $user_id;
-                $model->review = $comment;
-                $model->object_id = $object_id;
-                $model->object_type = $object_type;
-                $model->rate = $rating;
-                $model->time = time();
-
-                if ($model->save(FALSE)) {
-                    $this->retVal->mesage = "Success";
-                    $this->retVal->data = "";
-                    $this->retVal->status = 1;
+                $check = Review::model()->findByAttributes(array('user_id' => $user_id, 'object_id' => $object_id, 'object_type' => $object_type));
+                if ($check) {
+                    $check->review = $comment;
+                    $check->rate = $rating;
+                    $check->time = time();
+                    if ($check->save(FALSE)) {
+                        $this->retVal->mesage = "Success";
+                        $this->retVal->data = "";
+                        $this->retVal->status = 1;
+                    } else {
+                        $this->retVal->mesage = "Fail";
+                        $this->retVal->data = "";
+                        $this->retVal->status = 0;
+                    }
                 } else {
-                    $this->retVal->mesage = "Fail";
-                    $this->retVal->data = "";
-                    $this->retVal->status = 0;
+                    $model = new Review;
+                    $model->user_id = $user_id;
+                    $model->review = $comment;
+                    $model->object_id = $object_id;
+                    $model->object_type = $object_type;
+                    $model->rate = $rating;
+                    $model->time = time();
+
+                    if ($model->save(FALSE)) {
+                        $this->retVal->mesage = "Success";
+                        $this->retVal->data = "";
+                        $this->retVal->status = 1;
+                    } else {
+                        $this->retVal->mesage = "Fail";
+                        $this->retVal->data = "";
+                        $this->retVal->status = 0;
+                    }
                 }
             } catch (Exception $ex) {
                 $this->retVal->message = $ex->getMessage();
