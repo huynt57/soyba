@@ -25,7 +25,7 @@ class ReviewController extends Controller {
                     $check->time = time();
                     if ($check->save(FALSE)) {
                         $this->retVal->mesage = "Success";
-                        $this->retVal->data = "";
+                        $this->retVal->data = $check;
                         $this->retVal->status = 1;
                     } else {
                         $this->retVal->mesage = "Fail";
@@ -42,7 +42,7 @@ class ReviewController extends Controller {
                     $model->time = time();
                     if ($model->save(FALSE)) {
                         $this->retVal->mesage = "Success";
-                        $this->retVal->data = "";
+                        $this->retVal->data = $model;
                         $this->retVal->status = 1;
                     } else {
                         $this->retVal->mesage = "Fail";
