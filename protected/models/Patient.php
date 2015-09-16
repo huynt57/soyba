@@ -157,4 +157,109 @@ class Patient extends CActiveRecord {
         return $data;
     }
 
+    public function createPatientUser($name, $dob, $gender, $blood, $relation, $user_id) {
+        $patient_model = new Patient;
+        $patient_model->name = $name;
+        $patient_model->dob = $dob;
+        $patient_model->gender = $gender;
+        $patient_model->last_updated = time();
+        $patient_model->bloodType = $blood;
+        $patient_model->relationshipWithUser = $relation;
+        $patient_model->save(FALSE);
+
+        $user_patient = new UserPatient;
+        $user_patient->user_id = $user_id;
+        $user_patient->patient_id = $patient_model->patient_id;
+        $user_patient->save(FALSE);
+
+        return $patient_model->patient_id;
+    }
+
+    public function updatePatient($patient_id, $patient_name, $last_updated, $relation, $blood) {
+        $patient = Patient::model()->findByAttributes(array('patient_id' => $patient_id));
+        if ($patient) {
+            if ($patient->last_updated < $last_updated) {
+                $patient->name = $patient_name;
+                $patient->last_updated = $last_updated;
+                $patient->relationshipWithUser = $relation;
+                $patient->bloodType = $blood;
+                if ($patient->save(FALSE)) {
+                    ResponseHelper::JsonReturnSuccess("", "Success");
+                } else {
+                    ResponseHelper::JsonReturnError("", "Server Error");
+                }
+            } else {
+                ResponseHelper::JsonReturnError("", "Cannot modify because of time");
+            }
+        } else {
+            ResponseHelper::JsonReturnError("", "Patient not exist");
+        }
+    }
+
+    public function updateIS($patient_id, $sick_id, $number, $last_updated, $done, $inject_day, $vac_name, $note) {
+        $schedule = PatientInjection::model()->findByAttributes(array('patient_id' => $patient_id, 'sick_id' => $sick_id, 'number' => $number));
+        if ($schedule) {
+            if ($schedule->last_updated < $last_updated) {
+                $schedule->done = $done;
+                $schedule->inject_day = $inject_day;
+                $schedule->vaccine_name = $vac_name;
+                $schedule->note = $note;
+                $schedule->last_updated = $last_updated;
+
+                if ($schedule->save(FALSE)) {
+                    ResponseHelper::JsonReturnSuccess("", "Success");
+                }
+            } else {
+                ResponseHelper::JsonReturnSuccess("", "Cannot modify because of wrong time");
+            }
+        } else {
+            ResponseHelper::JsonReturnSuccess("", "Schedule not exist");
+        }
+    }
+
+    public function deletePatient($id) {
+        $patient = Patient::model()->findByAttributes(array('patient_id' => $id));
+        $patient->delete();
+        $patient_injection = PatientInjection::model()->findAllByAttributes(array('patient_id' => $id));
+        foreach ($patient_injection as $patient) {
+            $patient->delete();
+        }
+        $patient_sick = PatientSick::model()->findAllByAttributes(array('patient_id' => $id));
+        foreach ($patient_sick as $patient) {
+            $patient->delete();
+        }
+        $patient_user = UserPatient::model()->findAllByAttributes(array('patient_id' => $id));
+        foreach ($patient_user as $patient) {
+            $patient->delete();
+        }
+    }
+
+    public function createHeightWeight($timestamp, $height, $weight, $id) {
+        $exist = BiographyStat::model()->findByAttibutes(array('timestamp' => $timestamp));
+        if ($exist) {
+            $exist->height = $height;
+            $exist->weight = $weight;
+            $exist->patient_id = $id;
+            $exist->timestamp = $timestamp;
+            $exist->last_updated = time();
+            if ($exist->save(FALSE)) {
+                ResponseHelper::JsonReturnSuccess("", "Success");
+            } else {
+                ResponseHelper::JsonReturnError("", "Server Error");
+            }
+        } else {
+            $model = new BiographyStat;
+            $model->height = $height;
+            $model->weight = $weight;
+            $model->patient_id = $id;
+            $model->timestamp = $timestamp;
+            $model->last_updated = time();
+            if ($model->save(FALSE)) {
+                ResponseHelper::JsonReturnSuccess("", "Success");
+            } else {
+                ResponseHelper::JsonReturnError("", "Server Error");
+            }
+        }
+    }
+
 }

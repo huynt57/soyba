@@ -75,26 +75,13 @@ class PatientController extends Controller {
                 $relation = StringHelper::filterString($request->getPost('relationshipWithUser'));
                 $blood = StringHelper::filterString($request->getPost('bloodType'));
 
-                $patient_model = new Patient;
-                $patient_model->name = $name;
-                $patient_model->dob = $dob;
-                $patient_model->gender = $gender;
-                $patient_model->last_updated = time();
-                $patient_model->bloodType = $blood;
-                $patient_model->relationshipWithUser = $relation;
-                $patient_model->save(FALSE);
-
-                $user_patient = new UserPatient;
-                $user_patient->user_id = $user_id;
-                $user_patient->patient_id = $patient_model->patient_id;
-                $user_patient->save(FALSE);
-
+                $patient_id = Patient::model()->createPatientUser($name, $dob, $gender, $blood, $relation, $user_id);
                 $this->retVal->message = "Success";
-                $this->retVal->patient_id = $patient_model->patient_id;
-                $this->retVal->data = $patient_model->patient_id;
+                $this->retVal->patient_id = $patient_id;
+                $this->retVal->data = $patient_id;
                 $this->retVal->status = 1;
             } catch (exception $e) {
-                $this->retVal->message = $e->getMessage();
+                var_dump($e->getMessage());
             }
             echo CJSON::encode($this->retVal);
             Yii::app()->end();
@@ -102,7 +89,6 @@ class PatientController extends Controller {
     }
 
     public function actionUpdatePatient() {
-        $this->retVal = new stdClass();
         $request = Yii::app()->request;
         if ($request->isPostRequest && isset($_POST)) {
             try {
@@ -111,38 +97,17 @@ class PatientController extends Controller {
                 $last_updated = StringHelper::filterString($request->getPost('last_updated'));
                 $blood = StringHelper::filterString($request->getPost('bloodType'));
                 $relation = StringHelper::filterString($request->getPost('relationshipWithUser'));
-                $patient = Patient::model()->findByAttributes(array('patient_id' => $patient_id));
 
-                if ($patient) {
-                    if ($patient->last_updated < $last_updated) {
-                        $patient->name = $patient_name;
-                        $patient->last_updated = $last_updated;
-                        $patient->relationshipWithUser = $relation;
-                        $patient->bloodType = $blood;
-                        $patient->save(FALSE);
-                        $this->retVal->message = "Success";
-                        $this->retVal->status = 1;
-                        $this->retVal->data = "";
-                    } else {
-                        $this->retVal->status = 0;
-                        $this->retVal->data = "";
-                        $this->retVal->message = "Cannot modify because of time";
-                    }
-                } else {
-                    $this->retVal->status = 0;
-                    $this->retVal->data = "";
-                    $this->retVal->message = "Patient not exist";
-                }
+                Patient::model()->updatePatient($patient_id, $patient_name, $last_updated, $relation, $blood);
+                
             } catch (exception $e) {
-                $this->retVal->message = $e->getMessage();
+                var_dump($e->getMessage());
             }
-            echo CJSON::encode($this->retVal);
             Yii::app()->end();
         }
     }
 
     public function actionUpdateIS() {
-        $this->retVal = new stdClass();
         $request = Yii::app()->request;
         if ($request->isPostRequest && isset($_POST)) {
             try {
@@ -156,33 +121,11 @@ class PatientController extends Controller {
                 $vac_name = StringHelper::filterString($request->getPost('vac_name'));
                 $note = StringHelper::filterString($request->getPost('note'));
 
-                $schedule = PatientInjection::model()->findByAttributes(array('patient_id' => $patient_id, 'sick_id' => $sick_id, 'number' => $number));
-                if ($schedule) {
-                    if ($schedule->last_updated < $last_updated) {
-                        $schedule->done = $done;
-                        $schedule->inject_day = $inject_day;
-                        $schedule->vaccine_name = $vac_name;
-                        $schedule->note = $note;
-                        $schedule->last_updated = $last_updated;
-
-                        $schedule->save(FALSE);
-                        $this->retVal->status = 1;
-                        $this->retVal->data = "";
-                        $this->retVal->message = "Success";
-                    } else {
-                        $this->retVal->status = 0;
-                        $this->retVal->data = "";
-                        $this->retVal->message = "Cannot modify because of wrong time";
-                    }
-                } else {
-                    $this->retVal->status = 0;
-                        $this->retVal->data = "";
-                    $this->retVal->message = "Schedule not exist";
-                }
+                Patient::model()->updateIS($patient_id, $sick_id, $number, $last_updated, $done, $inject_day, $vac_name, $note);
             } catch (exception $e) {
-                $this->retVal->message = $e->getMessage();
+                var_dump($e->getMessage());
             }
-            echo CJSON::encode($this->retVal);
+
             Yii::app()->end();
         }
     }
@@ -204,7 +147,6 @@ class PatientController extends Controller {
     }
 
     public function actionCreateHeightWeight() {
-        $this->retVal = new stdClass();
         $request = Yii::app()->request;
         if ($request->isPostRequest && isset($_POST)) {
             try {
@@ -213,35 +155,10 @@ class PatientController extends Controller {
                 $weight = StringHelper::filterString($request->getPost('weight'));
                 $timestamp = StringHelper::filterString($request->getPost('timestamp'));
 
-                $exist = BiographyStat::model()->findByAttibutes(array('timestamp' => $timestamp));
-                if ($exist) {
-                    $exist->height = $height;
-                    $exist->weight = $weight;
-                    $exist->patient_id = $id;
-                    $exist->timestamp = $timestamp;
-                    $exist->last_updated = time();
-                    if ($exist->save(FALSE)) {
-                        $this->retVal->status = 1;
-                        $this->retVal->data = "";
-                        $this->retVal->message = "Success";
-                    }
-                } else {
-                    $model = new BiographyStat;
-                    $model->height = $height;
-                    $model->weight = $weight;
-                    $model->patient_id = $id;
-                    $model->timestamp = $timestamp;
-                    $model->last_updated = time();
-                    if ($model->save(FALSE)) {
-                        $this->retVal->status = 1;
-                        $this->retVal->data = "";
-                        $this->retVal->message = "Success";
-                    }
-                }
+                Patient::model()->createHeightWeight($timestamp, $height, $weight, $id);
             } catch (exception $e) {
-                $this->retVal->message = $e->getMessage();
+                var_dump($e->getMessage());
             }
-            echo CJSON::encode($this->retVal);
             Yii::app()->end();
         }
     }
@@ -252,27 +169,11 @@ class PatientController extends Controller {
         if ($request->isPostRequest && isset($_POST)) {
             try {
                 $id = StringHelper::filterString($request->getPost('patient_id'));
-                $patient = Patient::model()->findByAttributes(array('patient_id' => $id));
-                $patient->delete();
-                $patient_injection = PatientInjection::model()->findAllByAttributes(array('patient_id' => $id));
-                foreach ($patient_injection as $patient) {
-                    $patient->delete();
-                }
-                $patient_sick = PatientSick::model()->findAllByAttributes(array('patient_id' => $id));
-                foreach ($patient_sick as $patient) {
-                    $patient->delete();
-                }
-                $patient_user = UserPatient::model()->findAllByAttributes(array('patient_id' => $id));
-                foreach ($patient_user as $patient) {
-                    $patient->delete();
-                }
-                $this->retVal->message = "Success";
-                $this->retVal->status = 1;
-                $this->retVal->data = "";
+                Patient::model()->deletePatient($id);
+                ResponseHelper::JsonReturnSuccess("", "Success");
             } catch (exception $e) {
-                $this->retVal->message = $e->getMessage();
+                var_dump($e->getMessage());
             }
-            echo CJSON::encode($this->retVal);
             Yii::app()->end();
         }
     }
