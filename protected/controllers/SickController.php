@@ -18,7 +18,6 @@ class SickController extends Controller {
             } catch (exception $e) {
                 var_dump($e->getMessage());
             }
-            echo CJSON::encode($this->retVal);
             Yii::app()->end();
         }
     }
