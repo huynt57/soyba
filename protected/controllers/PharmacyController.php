@@ -9,37 +9,17 @@ class PharmacyController extends Controller {
     }
 
     public function actionGetPharmacy() {
-        $this->retVal = new stdClass();
         $request = Yii::app()->request;
         try {
             $number = StringHelper::filterString($request->getQuery('number', NULL));
-          //  var_dump($number);
             $json = $request->getQuery('keywords', NULL);
             $offset = StringHelper::filterString($request->getQuery('offset', NULL));
-            //   $json = '"'.$json.'"';
             $keywords = json_decode($json);
-
-            $Criteria = new CDbCriteria;
-            $Criteria->select = "*";
-            if (!empty($keywords)) {
-                foreach ($keywords as $address) {                 
-                    $Criteria->addSearchCondition('address', $address);
-                }
-            }
-            if (!empty($number)) {
-                $Criteria->limit = $number;
-            }
-            if (!empty($offset)) {
-                $Criteria->offset = $offset;
-            }
-        //    var_dump($Criteria);
-       //     die();
-            $results = Pharmacy::model()->findAll($Criteria);
-            $this->retVal->data = $results;
+            $data = Pharmacy::model()->getPharmacy($number, $offset, $keywords);
+            ResponseHelper::JsonReturnSuccess($data, "Success");
         } catch (exception $e) {
-            $this->retVal->message = $e->getMessage();
+            var_dump($e->getMessage());
         }
-        echo CJSON::encode($this->retVal);
         Yii::app()->end();
     }
 
@@ -47,11 +27,8 @@ class PharmacyController extends Controller {
         $this->retVal = new stdClass();
         $request = Yii::app()->request;
         try {
-
             $json = $request->getQuery('keywords');
-
             $keywords = json_decode($json);
-
             $Criteria = new CDbCriteria;
             $Criteria->select = "*";
             if (!empty($keywords)) {

@@ -109,4 +109,23 @@ class Pharmacy extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        public function getPharmacy($number, $offset, $keywords)
+        {
+            $Criteria = new CDbCriteria;
+            $Criteria->select = "*";
+            if (!empty($keywords)) {
+                foreach ($keywords as $address) {                 
+                    $Criteria->addSearchCondition('address', $address);
+                }
+            }
+            if (!empty($number)) {
+                $Criteria->limit = $number;
+            }
+            if (!empty($offset)) {
+                $Criteria->offset = $offset;
+            }
+            $results = Pharmacy::model()->findAll($Criteria);
+            return $results;
+        }
 }

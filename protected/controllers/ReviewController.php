@@ -9,7 +9,6 @@ class ReviewController extends Controller {
     }
 
     public function actionAddReview() {
-        $this->retVal = new stdClass();
         $request = Yii::app()->request;
         if ($request->isPostRequest && isset($_POST)) {
             try {
@@ -18,43 +17,12 @@ class ReviewController extends Controller {
                 $object_id = $request->getPost('object_id');
                 $object_type = $request->getPost('object_type');
                 $rating = $request->getPost('rating');
-                $check = Review::model()->findByAttributes(array('user_id' => $user_id, 'object_id' => $object_id, 'object_type' => $object_type));
-                if ($check) {
-                    $check->review = $comment;
-                    $check->rate = $rating;
-                    $check->time = time();
-                    if ($check->save(FALSE)) {
-                        $this->retVal->mesage = "Success";
-                        $this->retVal->data = $check;
-                        $this->retVal->status = 1;
-                    } else {
-                        $this->retVal->mesage = "Fail";
-                        $this->retVal->data = "";
-                        $this->retVal->status = 0;
-                    }
-                } else {
-                    $model = new Review;
-                    $model->user_id = $user_id;
-                    $model->review = $comment;
-                    $model->object_id = $object_id;
-                    $model->object_type = $object_type;
-                    $model->rate = $rating;
-                    $model->time = time();
-                    if ($model->save(FALSE)) {
-                        $this->retVal->mesage = "Success";
-                        $this->retVal->data = $model;
-                        $this->retVal->status = 1;
-                    } else {
-                        $this->retVal->mesage = "Fail";
-                        $this->retVal->data = "";
-                        $this->retVal->status = 0;
-                    }
-                }
+
+                Review::model()->addReview($user_id, $object_id, $comment, $rating, $object_type);
             } catch (Exception $ex) {
-                $this->retVal->message = $ex->getMessage();
+                var_dump($ex->getMessage());
             }
         }
-        echo CJSON::encode($this->retVal);
         Yii::app()->end();
     }
 
@@ -83,22 +51,16 @@ class ReviewController extends Controller {
     }
 
     public function actionGetObjectStar() {
-        $this->retVal = new stdClass();
         $request = Yii::app()->request;
-
         try {
             $object_id = $request->getQuery('object_id');
             $object_type = $request->getQuery('object_type');
             $rating = $this->countRating($object_id, $object_type);
             $count = $this->countReviewByStar($object_id, $object_type);
-            $this->retVal->mesage = "Success";
-            $this->retVal->data = array('review' => $review, 'count' => $count, 'rate' => $rating);
-            $this->retVal->status = 1;
+            ResponseHelper::JsonReturnSuccess(array('review' => $review, 'count' => $count, 'rate' => $rating), "Success");
         } catch (Exception $ex) {
-            $this->retVal->message = $ex->getMessage();
+            var_dump($ex->getMessage());
         }
-
-        echo CJSON::encode($this->retVal);
         Yii::app()->end();
     }
 
@@ -113,7 +75,6 @@ class ReviewController extends Controller {
     }
 
     public function actionDeleteReview() {
-        $this->retVal = new stdClass();
         $request = Yii::app()->request;
         if ($request->isPostRequest && isset($_POST)) {
             try {
@@ -121,19 +82,14 @@ class ReviewController extends Controller {
                 $review = Review::model()->findByAttributes(array('id' => $review_id));
                 if ($review) {
                     $review->delete();
-                    $this->retVal->mesage = "Success";
-                    $this->retVal->data = "";
-                    $this->retVal->status = 1;
+                    ResponseHelper::JsonReturnSuccess("", "Success");
                 } else {
-                    $this->retVal->mesage = "Server Error";
-                    $this->retVal->data = "";
-                    $this->retVal->status = 0;
+                    ResponseHelper::JsonReturnError("", "Server Error");
                 }
             } catch (Exception $ex) {
-                $this->retVal->message = $ex->getMessage();
+                var_dump($ex->getMessage());
             }
         }
-        echo CJSON::encode($this->retVal);
         Yii::app()->end();
     }
 

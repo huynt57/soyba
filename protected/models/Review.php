@@ -114,4 +114,31 @@ class Review extends CActiveRecord {
         return $result;
     }
 
+    public function addReview($user_id, $object_id, $comment, $rating, $object_type) {
+        $check = Review::model()->findByAttributes(array('user_id' => $user_id, 'object_id' => $object_id, 'object_type' => $object_type));
+        if ($check) {
+            $check->review = $comment;
+            $check->rate = $rating;
+            $check->time = time();
+            if ($check->save(FALSE)) {
+                ResponseHelper::JsonReturnSuccess($check, "Success");
+            } else {
+                ResponseHelper::JsonReturnError("", "Failed");
+            }
+        } else {
+            $model = new Review;
+            $model->user_id = $user_id;
+            $model->review = $comment;
+            $model->object_id = $object_id;
+            $model->object_type = $object_type;
+            $model->rate = $rating;
+            $model->time = time();
+            if ($model->save(FALSE)) {
+                ResponseHelper::JsonReturnSuccess($model, "Success");
+            } else {
+                 ResponseHelper::JsonReturnError("", "Failed");
+            }
+        }
+    }
+
 }
