@@ -101,5 +101,14 @@ class StringHelper {
         }
         return $str;
     }
+    
+     public static function filterArrayString($str) {
+
+        if (is_array($str)) {
+            foreach ($str AS $k => $v)
+                $str[$k] = self::filterString($v);
+            return $str;
+        }
+    }
 
 }
