@@ -25,26 +25,32 @@ class SuperController extends Controller {
                 $patient_data = Patient::model()->getPatientInfo($user_id);
                 $sick_data = array();
                 $inject_data = array();
+                $remind_data = array();
                 foreach ($patient_data as $patient) {
                     $sick = PatientSick::model()->findAllByAttributes(array('patient_id' => $patient["patient_id"]));
                     // var_dump($sick);
                     $inject = PatientInjection::model()->findAllByAttributes(array('patient_id' => $patient["patient_id"]));
                     // var_dump($inject);
+                    $remind = MedicineRemind::model()->getMedicineRemindOfPatient($patient["patient_id"]);
                     array_push($inject_data, $inject);
                     array_push($sick_data, $sick);
+                    array_push($remind_data, $remind);
                     // die();
                 }
                 $this->retVal->patient_data = $patient_data;
                 $this->retVal->sick_data = $sick_data;
                 $this->retVal->inject_data = $inject_data;
-                $data = array();
-                $patient_arr = array("patient_data" => $patient_data);
-                $sick_arr = array("sick_data" => $sick_data);
-                $inject_arr = array("inject_data" => $inject_data);
-                array_push($data, $patient_arr);
-                array_push($data, $sick_arr);
-                array_push($data, $inject_arr);
-                $data_arr = array('data' => $data);
+                $this->retVal->remind_data = $remind_data;
+//                $data = array();
+//                $patient_arr = array("patient_data" => $patient_data);
+//                $sick_arr = array("sick_data" => $sick_data);
+//                $inject_arr = array("inject_data" => $inject_data);
+//                $remind_arr = array("remind_data" => $remind_data);
+//                array_push($data, $patient_arr);
+//                array_push($data, $sick_arr);
+//                array_push($data, $inject_arr);
+//                array_push($data, $remind_arr);
+                //$data_arr = array('data' => $data);
                 $this->retVal->message = "Success";
                 $this->retVal->status = 1;
             } catch (exception $e) {
@@ -65,21 +71,24 @@ class SuperController extends Controller {
                 $patient_data = Patient::model()->getPatientInfo($user_id);
                 $sick_data = array();
                 $inject_data = array();
+                $remind_data = array();
                 foreach ($patient_data as $patient) {
                     $sick = PatientSick::model()->findAllByAttributes(array('patient_id' => $patient["patient_id"]));
                     // var_dump($sick);
                     $inject = PatientInjection::model()->findAllByAttributes(array('patient_id' => $patient["patient_id"]));
                     // var_dump($inject);
+                    $remind = MedicineRemind::model()->getMedicineRemindOfPatient($patient["patient_id"]);
                     array_push($inject_data, $inject);
                     array_push($sick_data, $sick);
+                    array_push($remind_data, $remind);
                     // die();
                 }
-                $data = array("patient_data" => $patient_data, "sick_data" => $sick_data, "inject_data" => $inject_data);
-                $data_arr = array('data' => $data, 'message' => 'Success', 'status' => 1);
+                $data = array("patient_data" => $patient_data, "sick_data" => $sick_data, "inject_data" => $inject_data, 'remind_data' => $remind_data);
+                ResponseHelper::JsonReturnSuccess($data, "Success");
             } catch (exception $e) {
                 
             }
-            echo CJSON::encode($data_arr);
+
             Yii::app()->end();
         }
     }

@@ -128,9 +128,10 @@ class Doctors extends CActiveRecord {
         $model->updated_at = time();
         $model->status = 0;
         if ($model->save(FALSE)) {
-            return TRUE;
+            ResponseHelper::JsonReturnSuccess($model->id, "Success");
+        } else {
+            ResponseHelper::JsonReturnError("", "Server Error");
         }
-        return FALSE;
     }
 
 }
