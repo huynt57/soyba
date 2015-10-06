@@ -17,6 +17,9 @@
  * @property integer $updated_at
  * @property double $lat
  * @property double $lng
+ * @property integer $ward
+ * @property integer $district
+ * @property integer $province
  */
 class Doctors extends CActiveRecord {
 
@@ -34,14 +37,13 @@ class Doctors extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('id', 'required'),
-            array('id, status, created_at, updated_at', 'numerical', 'integerOnly' => true),
+            array('status, created_at, updated_at, ward, district, province', 'numerical', 'integerOnly' => true),
             array('lat, lng', 'numerical'),
             array('phone, email, specialist, register_number', 'length', 'max' => 255),
             array('name, address, description', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, name, address, status, phone, email, specialist, register_number, description, created_at, updated_at, lat, lng', 'safe', 'on' => 'search'),
+            array('id, name, address, status, phone, email, specialist, register_number, description, created_at, updated_at, lat, lng, ward, district, province', 'safe', 'on' => 'search'),
         );
     }
 
@@ -73,6 +75,9 @@ class Doctors extends CActiveRecord {
             'updated_at' => 'Updated At',
             'lat' => 'Lat',
             'lng' => 'Lng',
+            'ward' => 'Ward',
+            'district' => 'District',
+            'province' => 'Province',
         );
     }
 
@@ -106,6 +111,9 @@ class Doctors extends CActiveRecord {
         $criteria->compare('updated_at', $this->updated_at);
         $criteria->compare('lat', $this->lat);
         $criteria->compare('lng', $this->lng);
+        $criteria->compare('ward', $this->ward);
+        $criteria->compare('district', $this->district);
+        $criteria->compare('province', $this->province);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
