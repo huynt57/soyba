@@ -20,7 +20,21 @@ class DoctorController extends Controller {
             $request = Yii::app()->request;
             $limit = StringHelper::filterString($request->getQuery('number'));
             $offset = StringHelper::filterString($request->getQuery('offset'));
-            Doctors::model()->getDoctor($attr);
+            $result = Doctors::model()->getDoctor($limit, $offset);
+            ResponseHelper::JsonReturnSuccess($result, 'Success');
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
+    public function actionGetDoctorByUser() {
+        try {
+            $request = Yii::app()->request;
+            $limit = StringHelper::filterString($request->getQuery('number'));
+            $offset = StringHelper::filterString($request->getQuery('offset'));
+            $user_id = StringHelper::filterString($request->getQuery('user_id'));
+            $result = Doctors::model()->getDoctorByUser($limit, $offset, $user_id);
+            ResponseHelper::JsonReturnSuccess($result, 'Success');
         } catch (Exception $ex) {
             var_dump($ex->getMessage());
         }

@@ -145,6 +145,25 @@ class PatientController extends Controller {
             Yii::app()->end();
         }
     }
+    
+    public function actionDeleteHeightWeight()
+    {
+        $request = Yii::app()->request;
+        if ($request->isPostRequest && isset($_POST)) {
+            try {
+                $id = StringHelper::filterString($request->getPost('id'));
+               
+                if(Patient::model()->deleteHeightWeight($id)) {
+                    ResponseHelper::JsonReturnSuccess('', 'Success');
+                } else {
+                    ResponseHelper::JsonReturnError('', 'Server Error !');
+                }
+            } catch (exception $e) {
+                var_dump($e->getMessage());
+            }
+            Yii::app()->end();
+        }
+    }
 
     public function actionCreateHeightWeight() {
         $request = Yii::app()->request;

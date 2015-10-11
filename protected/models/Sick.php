@@ -112,7 +112,7 @@ class Sick extends CActiveRecord {
 
     public function createScheduleSick($sick_id, $patient_id) {
         $sick_infos = InjectionScheduler::model()->findAllByAttributes(array('sick_id' => $sick_id));
-        $patient_info = Patient::model()->findByAttributes(array('patient_id' => $patient_id));
+        $patient_info = Patient::model()->findByPk($patient_id);
 
         foreach ($sick_infos as $sick_info) {
             $model = new PatientInjection;

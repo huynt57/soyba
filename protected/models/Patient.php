@@ -221,6 +221,10 @@ class Patient extends CActiveRecord {
         $patient = Patient::model()->findByAttributes(array('patient_id' => $id));
         $patient->delete();
         $patient_injection = PatientInjection::model()->findAllByAttributes(array('patient_id' => $id));
+        $patient_remind = MedicineRemind::model()->findAllByAttributes(array('patient_id' => $id));
+        foreach ($patient_remind as $item) {
+            $item->delete();
+        }
         foreach ($patient_injection as $patient) {
             $patient->delete();
         }
@@ -233,9 +237,19 @@ class Patient extends CActiveRecord {
             $patient->delete();
         }
     }
+    
+    public function deleteHeightWeight($id)
+    {
+        $model = BiographyStat::model()->findByPk($id);
+        if($model->delete())
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
 
     public function createHeightWeight($timestamp, $height, $weight, $id) {
-        $exist = BiographyStat::model()->findByAttibutes(array('timestamp' => $timestamp));
+        $exist = BiographyStat::model()->findByAttributes(array('timestamp' => $timestamp));
         if ($exist) {
             $exist->height = $height;
             $exist->weight = $weight;
@@ -255,7 +269,7 @@ class Patient extends CActiveRecord {
             $model->timestamp = $timestamp;
             $model->last_updated = time();
             if ($model->save(FALSE)) {
-                ResponseHelper::JsonReturnSuccess("", "Success");
+                ResponseHelper::JsonReturnSuccess($model->id, "Success");
             } else {
                 ResponseHelper::JsonReturnError("", "Server Error");
             }

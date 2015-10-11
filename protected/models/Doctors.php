@@ -17,6 +17,7 @@
  * @property integer $updated_at
  * @property double $lat
  * @property double $lng
+ * @property integer $user_id
  */
 class Doctors extends CActiveRecord {
 
@@ -34,14 +35,13 @@ class Doctors extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('id', 'required'),
-            array('id, status, created_at, updated_at', 'numerical', 'integerOnly' => true),
+            array('status, created_at, updated_at, user_id', 'numerical', 'integerOnly' => true),
             array('lat, lng', 'numerical'),
             array('phone, email, specialist, register_number', 'length', 'max' => 255),
             array('name, address, description', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, name, address, status, phone, email, specialist, register_number, description, created_at, updated_at, lat, lng', 'safe', 'on' => 'search'),
+            array('id, name, address, status, phone, email, specialist, register_number, description, created_at, updated_at, lat, lng, user_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -73,6 +73,7 @@ class Doctors extends CActiveRecord {
             'updated_at' => 'Updated At',
             'lat' => 'Lat',
             'lng' => 'Lng',
+            'user_id' => 'User',
         );
     }
 
@@ -106,6 +107,7 @@ class Doctors extends CActiveRecord {
         $criteria->compare('updated_at', $this->updated_at);
         $criteria->compare('lat', $this->lat);
         $criteria->compare('lng', $this->lng);
+        $criteria->compare('user_id', $this->user_id);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -132,6 +134,23 @@ class Doctors extends CActiveRecord {
         } else {
             ResponseHelper::JsonReturnError("", "Server Error");
         }
+    }
+
+    public function getDoctor($limit, $offset) {
+        $criteria = new CDbCriteria;
+        $criteria->limit = $limit;
+        $criteria->offset = $offset;
+        $result = Doctors::model()->findAll($criteria);
+        return $result;
+    }
+
+    public function getDoctorByUser($limit, $offset, $user_id) {
+        $criteria = new CDbCriteria;
+        $criteria->limit = $limit;
+        $criteria->offset = $offset;
+        $criteria->condition = "user_id = $user_id";
+        $result = Doctors::model()->findAll($criteria);
+        return $result;
     }
 
 }
