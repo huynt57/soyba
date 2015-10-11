@@ -47,14 +47,13 @@ class UserController extends Controller {
                         $this->retVal->user_data = $user_exist_facebook->user_id;
                         $this->retVal->data = $user_exist_facebook->user_id;
                         $this->retVal->status = 1;
-                        
                     }
                 } else if ($user_exist_google && $user_exist_google->google_id != NULL && $google_id != NULL) {
                     $user_exist_google->setAttributes($attr);
                     if ($user_exist_google->save(FALSE)) {
                         $this->retVal->message = "Success";
                         $this->retVal->user_data = $user_exist_google->user_id;
-                         $this->retVal->data = $user_exist_google->user_id;
+                        $this->retVal->data = $user_exist_google->user_id;
                         $this->retVal->status = 1;
                     }
                 } else {
@@ -113,9 +112,8 @@ class UserController extends Controller {
             Yii::app()->end();
         }
     }
-    
-    public function actionUpdateEmailAndPhone()
-    {
+
+    public function actionUpdateEmailAndPhone() {
         $this->retVal = new stdClass();
         $request = Yii::app()->request;
         if ($request->isPostRequest && isset($_POST)) {
@@ -123,11 +121,9 @@ class UserController extends Controller {
                 $user_id = StringHelper::filterString($request->getPost('user_id'));
                 $email = StringHelper::filterString($request->getPost('email'));
                 $phone = StringHelper::filterString($request->getPost('phone'));
-                
+
                 $user = User::model()->findByAttributes(array('user_id' => $user_id));
-                if($user)
-                {
-                    
+                if ($user) {
                     
                 } else {
                     $this->retVal->data = "";
@@ -142,8 +138,6 @@ class UserController extends Controller {
             Yii::app()->end();
         }
     }
-    
-    
 
     // Uncomment the following methods and override them if needed
     /*

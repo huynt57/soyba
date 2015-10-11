@@ -138,6 +138,7 @@ class Doctors extends CActiveRecord {
         $model = new Doctors();
         $model->setAttributes($attr);
         $model->updated_at = time();
+        $model->created_at = time();
         $model->status = 0;
         if ($model->save(FALSE)) {
             ResponseHelper::JsonReturnSuccess($model->id, "Success");
