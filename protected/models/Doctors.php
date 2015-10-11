@@ -17,7 +17,13 @@
  * @property integer $updated_at
  * @property double $lat
  * @property double $lng
+<<<<<<< HEAD
  * @property integer $user_id
+=======
+ * @property integer $ward
+ * @property integer $district
+ * @property integer $province
+>>>>>>> 906cc2abbe22795d8530df72ad2645f39205ea3a
  */
 class Doctors extends CActiveRecord {
 
@@ -35,13 +41,21 @@ class Doctors extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
+<<<<<<< HEAD
             array('status, created_at, updated_at, user_id', 'numerical', 'integerOnly' => true),
+=======
+            array('status, created_at, updated_at, ward, district, province', 'numerical', 'integerOnly' => true),
+>>>>>>> 906cc2abbe22795d8530df72ad2645f39205ea3a
             array('lat, lng', 'numerical'),
             array('phone, email, specialist, register_number', 'length', 'max' => 255),
             array('name, address, description', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
+<<<<<<< HEAD
             array('id, name, address, status, phone, email, specialist, register_number, description, created_at, updated_at, lat, lng, user_id', 'safe', 'on' => 'search'),
+=======
+            array('id, name, address, status, phone, email, specialist, register_number, description, created_at, updated_at, lat, lng, ward, district, province', 'safe', 'on' => 'search'),
+>>>>>>> 906cc2abbe22795d8530df72ad2645f39205ea3a
         );
     }
 
@@ -73,7 +87,13 @@ class Doctors extends CActiveRecord {
             'updated_at' => 'Updated At',
             'lat' => 'Lat',
             'lng' => 'Lng',
+<<<<<<< HEAD
             'user_id' => 'User',
+=======
+            'ward' => 'Ward',
+            'district' => 'District',
+            'province' => 'Province',
+>>>>>>> 906cc2abbe22795d8530df72ad2645f39205ea3a
         );
     }
 
@@ -107,7 +127,13 @@ class Doctors extends CActiveRecord {
         $criteria->compare('updated_at', $this->updated_at);
         $criteria->compare('lat', $this->lat);
         $criteria->compare('lng', $this->lng);
+<<<<<<< HEAD
         $criteria->compare('user_id', $this->user_id);
+=======
+        $criteria->compare('ward', $this->ward);
+        $criteria->compare('district', $this->district);
+        $criteria->compare('province', $this->province);
+>>>>>>> 906cc2abbe22795d8530df72ad2645f39205ea3a
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
