@@ -70,6 +70,7 @@ class UserController extends Controller {
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
             }
+            header('Content-type: application/json');
             echo CJSON::encode($this->retVal);
             Yii::app()->end();
         }
@@ -107,6 +108,7 @@ class UserController extends Controller {
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
             }
+            header('Content-type: application/json');
             echo CJSON::encode($this->retVal);
             Yii::app()->end();
         }
@@ -135,6 +137,7 @@ class UserController extends Controller {
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
             }
+            header('Content-type: application/json');
             echo CJSON::encode($this->retVal);
             Yii::app()->end();
         }

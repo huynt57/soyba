@@ -17,9 +17,9 @@
  * @property integer $updated_at
  * @property double $lat
  * @property double $lng
- * @property integer $ward
- * @property integer $district
- * @property integer $province
+ * @property string $ward
+ * @property string $district
+ * @property string $province
  * @property integer $user_id
  */
 class Doctors extends CActiveRecord {
@@ -38,9 +38,10 @@ class Doctors extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('status, created_at, updated_at, ward, district, province, user_id', 'numerical', 'integerOnly' => true),
+            array('status, created_at, updated_at, user_id', 'numerical', 'integerOnly' => true),
             array('lat, lng', 'numerical'),
             array('phone, email, specialist, register_number', 'length', 'max' => 255),
+            array('ward, district, province', 'length', 'max' => 11),
             array('name, address, description', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
@@ -113,9 +114,9 @@ class Doctors extends CActiveRecord {
         $criteria->compare('updated_at', $this->updated_at);
         $criteria->compare('lat', $this->lat);
         $criteria->compare('lng', $this->lng);
-        $criteria->compare('ward', $this->ward);
-        $criteria->compare('district', $this->district);
-        $criteria->compare('province', $this->province);
+        $criteria->compare('ward', $this->ward, true);
+        $criteria->compare('district', $this->district, true);
+        $criteria->compare('province', $this->province, true);
         $criteria->compare('user_id', $this->user_id);
 
         return new CActiveDataProvider($this, array(

@@ -22,6 +22,7 @@ class PatientController extends Controller {
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
             }
+            header('Content-type: application/json');
             echo CJSON::encode($this->retVal);
             Yii::app()->end();
         }
@@ -42,6 +43,7 @@ class PatientController extends Controller {
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
             }
+            header('Content-type: application/json');
             echo CJSON::encode($this->retVal);
             Yii::app()->end();
         }
@@ -58,6 +60,7 @@ class PatientController extends Controller {
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
             }
+            header('Content-type: application/json');
             echo CJSON::encode($this->retVal);
             Yii::app()->end();
         }
@@ -83,6 +86,7 @@ class PatientController extends Controller {
             } catch (exception $e) {
                 var_dump($e->getMessage());
             }
+            header('Content-type: application/json');
             echo CJSON::encode($this->retVal);
             Yii::app()->end();
         }
@@ -141,6 +145,7 @@ class PatientController extends Controller {
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
             }
+            header('Content-type: application/json');
             echo CJSON::encode($this->retVal);
             Yii::app()->end();
         }

@@ -17,7 +17,6 @@ class SuperController extends Controller {
     }
 
     public function actionSuperAPI() {
-        $this->retVal = new stdClass();
         $request = Yii::app()->request;
         if ($request->isPostRequest && isset($_POST)) {
             try {
@@ -34,13 +33,16 @@ class SuperController extends Controller {
                     $remind = MedicineRemind::model()->getMedicineRemindOfPatient($patient["patient_id"]);
                     array_push($inject_data, $inject);
                     array_push($sick_data, $sick);
-                    array_push($remind_data, $remind);
+                    foreach ($remind as $item) {
+                        array_push($remind_data, $item);
+                    }
+
                     // die();
                 }
-                $this->retVal->patient_data = $patient_data;
-                $this->retVal->sick_data = $sick_data;
-                $this->retVal->inject_data = $inject_data;
-                $this->retVal->remind_data = $remind_data;
+                
+                $returnArr = array("patient_data"=>$patient_data, "sick_data"=>$sick_data, "inject_data"=>$inject_data, "remind_data"=>$remind_data);
+                ResponseHelper::JsonReturnSuccess($returnArr, 'Success');
+              
 //                $data = array();
 //                $patient_arr = array("patient_data" => $patient_data);
 //                $sick_arr = array("sick_data" => $sick_data);
@@ -51,13 +53,10 @@ class SuperController extends Controller {
 //                array_push($data, $inject_arr);
 //                array_push($data, $remind_arr);
                 //$data_arr = array('data' => $data);
-                $this->retVal->message = "Success";
-                $this->retVal->status = 1;
+               
             } catch (exception $e) {
-                $this->retVal->message = $e->getMessage();
+                var_dump($e->getMessage());
             }
-            echo CJSON::encode($this->retVal);
-
             Yii::app()->end();
         }
     }
@@ -148,6 +147,7 @@ class SuperController extends Controller {
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
             }
+            header('Content-type: application/json');
             echo CJSON::encode($this->retVal);
             Yii::app()->end();
         }
