@@ -4,9 +4,11 @@
  * This is the model class for table "tbl_district".
  *
  * The followings are the available columns in table 'tbl_district':
- * @property integer $id
- * @property string $district
- * @property integer $province
+ * @property string $districtid
+ * @property string $name
+ * @property string $type
+ * @property string $location
+ * @property string $provinceid
  */
 class District extends CActiveRecord
 {
@@ -26,11 +28,13 @@ class District extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('province', 'numerical', 'integerOnly'=>true),
-			array('district', 'safe'),
+			array('districtid, name, type, location, provinceid', 'required'),
+			array('districtid, provinceid', 'length', 'max'=>5),
+			array('name', 'length', 'max'=>100),
+			array('type, location', 'length', 'max'=>30),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, district, province', 'safe', 'on'=>'search'),
+			array('districtid, name, type, location, provinceid', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,9 +55,11 @@ class District extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'district' => 'District',
-			'province' => 'Province',
+			'districtid' => 'Districtid',
+			'name' => 'Name',
+			'type' => 'Type',
+			'location' => 'Location',
+			'provinceid' => 'Provinceid',
 		);
 	}
 
@@ -75,9 +81,11 @@ class District extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('district',$this->district,true);
-		$criteria->compare('province',$this->province);
+		$criteria->compare('districtid',$this->districtid,true);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('type',$this->type,true);
+		$criteria->compare('location',$this->location,true);
+		$criteria->compare('provinceid',$this->provinceid,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

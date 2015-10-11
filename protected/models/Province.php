@@ -4,8 +4,9 @@
  * This is the model class for table "tbl_province".
  *
  * The followings are the available columns in table 'tbl_province':
- * @property integer $id
- * @property string $province
+ * @property string $provinceid
+ * @property string $name
+ * @property string $type
  */
 class Province extends CActiveRecord
 {
@@ -25,10 +26,13 @@ class Province extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('province', 'safe'),
+			array('provinceid, name, type', 'required'),
+			array('provinceid', 'length', 'max'=>5),
+			array('name', 'length', 'max'=>100),
+			array('type', 'length', 'max'=>30),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, province', 'safe', 'on'=>'search'),
+			array('provinceid, name, type', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,8 +53,9 @@ class Province extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'province' => 'Province',
+			'provinceid' => 'Provinceid',
+			'name' => 'Name',
+			'type' => 'Type',
 		);
 	}
 
@@ -72,8 +77,9 @@ class Province extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('province',$this->province,true);
+		$criteria->compare('provinceid',$this->provinceid,true);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('type',$this->type,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

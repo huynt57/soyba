@@ -4,10 +4,11 @@
  * This is the model class for table "tbl_ward".
  *
  * The followings are the available columns in table 'tbl_ward':
- * @property integer $id
- * @property string $ward
- * @property integer $district
- * @property integer $province
+ * @property string $wardid
+ * @property string $name
+ * @property string $type
+ * @property string $location
+ * @property string $districtid
  */
 class Ward extends CActiveRecord
 {
@@ -27,11 +28,13 @@ class Ward extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('district, province', 'numerical', 'integerOnly'=>true),
-			array('ward', 'safe'),
+			array('wardid, name, type, location, districtid', 'required'),
+			array('wardid, districtid', 'length', 'max'=>5),
+			array('name', 'length', 'max'=>100),
+			array('type, location', 'length', 'max'=>30),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, ward, district, province', 'safe', 'on'=>'search'),
+			array('wardid, name, type, location, districtid', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,10 +55,11 @@ class Ward extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'ward' => 'Ward',
-			'district' => 'District',
-			'province' => 'Province',
+			'wardid' => 'Wardid',
+			'name' => 'Name',
+			'type' => 'Type',
+			'location' => 'Location',
+			'districtid' => 'Districtid',
 		);
 	}
 
@@ -77,10 +81,11 @@ class Ward extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('ward',$this->ward,true);
-		$criteria->compare('district',$this->district);
-		$criteria->compare('province',$this->province);
+		$criteria->compare('wardid',$this->wardid,true);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('type',$this->type,true);
+		$criteria->compare('location',$this->location,true);
+		$criteria->compare('districtid',$this->districtid,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
