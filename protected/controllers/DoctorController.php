@@ -5,6 +5,7 @@ class DoctorController extends Controller {
     public function actionIndex() {
         $this->render('index');
     }
+    
 
     public function actionAddDoctor() {
         try {
@@ -35,6 +36,28 @@ class DoctorController extends Controller {
             $user_id = StringHelper::filterString($request->getQuery('user_id'));
             $result = Doctors::model()->getDoctorByUser($limit, $offset, $user_id);
             ResponseHelper::JsonReturnSuccess($result, 'Success');
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
+    public function actionCountRecord() {
+        try {
+            $data = Doctors::model()->findAll();
+            $cnt = count($data);
+            ResponseHelper::JsonReturnSuccess($cnt, 'Success');
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
+    public function actionCountRecordByUser() {
+        try {
+            $request = Yii::app()->request;
+            $user_id = StringHelper::filterString($request->getPost('user_id'));
+            $data = Doctors::model()->findAllByAttributes(array('user_id' => $user_id));
+            $cnt = count($data);
+            ResponseHelper::JsonReturnSuccess($cnt, 'Success');
         } catch (Exception $ex) {
             var_dump($ex->getMessage());
         }
