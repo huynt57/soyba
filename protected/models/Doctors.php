@@ -178,16 +178,12 @@ class Doctors extends CActiveRecord {
         $data = Doctors::model()->findAllByAttributes(array('district' => $district));
         return $data;
     }
-    
-    public function searchByKeywords($keywords)
-    {
-        $keywords_arr = json_decode($keywords, TRUE);
+
+    public function searchByKeywords($keywords) {
         $criteria = new CDbCriteria;
-        foreach ($keywords_arr as $item) {
-            $criteria->addSearchCondition('name', $item, TRUE, 'OR', 'LIKE');
-            $criteria->addSearchCondition('address', $item, TRUE, 'OR', 'LIKE');
-            $criteria->addSearchCondition('description', $item, TRUE, 'OR', 'LIKE');
-        }
+        $criteria->addSearchCondition('name', $keywords, TRUE, 'OR', 'LIKE');
+        $criteria->addSearchCondition('address', $keywords, TRUE, 'OR', 'LIKE');
+        $criteria->addSearchCondition('description', $keywords, TRUE, 'OR', 'LIKE');
         return Doctors::model()->findAll($criteria);
     }
 
