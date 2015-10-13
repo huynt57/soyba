@@ -65,7 +65,7 @@ class DoctorController extends Controller {
     public function actionSearchByKeywords() {
         try {
             $request = Yii::app()->request;
-            $keywords = StringHelper::filterString($request->getPost('$keywords'));
+            $keywords = StringHelper::filterString($request->getQuery('keywords'));
             $data = Doctors::model()->searchByKeywords($keywords);
             ResponseHelper::JsonReturnSuccess($data, 'Success');
         } catch (Exception $ex) {
@@ -77,7 +77,9 @@ class DoctorController extends Controller {
         try {
             $request = Yii::app()->request;
             $province = StringHelper::filterString($request->getQuery('province'));
-            $data = Doctors::model()->findByProvince($province);
+            $limit = StringHelper::filterString($request->getQuery('number'));
+            $offset = StringHelper::filterString($request->getQuery('offset'));
+            $data = Doctors::model()->findByProvince($province, $limit, $offset);
             ResponseHelper::JsonReturnSuccess($data, 'Success');
         } catch (Exception $ex) {
             var_dump($ex->getMessage());
@@ -88,7 +90,9 @@ class DoctorController extends Controller {
         try {
             $request = Yii::app()->request;
             $district = StringHelper::filterString($request->getQuery('district'));
-            $data = Doctors::model()->findByDistrict($district);
+            $limit = StringHelper::filterString($request->getQuery('number'));
+            $offset = StringHelper::filterString($request->getQuery('offset'));
+            $data = Doctors::model()->findByDistrict($district, $limit, $offset);
             ResponseHelper::JsonReturnSuccess($data, 'Success');
         } catch (Exception $ex) {
             var_dump($ex->getMessage());
@@ -99,7 +103,9 @@ class DoctorController extends Controller {
         try {
             $request = Yii::app()->request;
             $ward = StringHelper::filterString($request->getQuery('ward'));
-            $data = Doctors::model()->findByWard($ward);
+            $limit = StringHelper::filterString($request->getQuery('number'));
+            $offset = StringHelper::filterString($request->getQuery('offset'));
+            $data = Doctors::model()->findByWard($ward, $limit, $offset);
             ResponseHelper::JsonReturnSuccess($data, 'Success');
         } catch (Exception $ex) {
             var_dump($ex->getMessage());

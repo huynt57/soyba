@@ -164,18 +164,33 @@ class Doctors extends CActiveRecord {
         return $result;
     }
 
-    public function findByProvince($province) {
-        $data = Doctors::model()->findAllByAttributes(array('province' => $province));
+    public function findByProvince($province, $limit, $offset) {
+        $criteria = new CDbCriteria;
+        $criteria->limit = $limit;
+        $criteria->offset = $offset;
+        $criteria->condition = 'province=:province';
+        $criteria->params = array(':province' => $province);
+        $data = Doctors::model()->findAll($criteria);
         return $data;
     }
 
-    public function findByWard($ward) {
-        $data = Doctors::model()->findAllByAttributes(array('ward' => $ward));
+    public function findByWard($ward, $limit, $offset) {
+        $criteria = new CDbCriteria;
+        $criteria->limit = $limit;
+        $criteria->offset = $offset;
+        $criteria->condition = 'ward=:ward';
+        $criteria->params = array(':ward' => $ward);
+        $data = Doctors::model()->findAll($criteria);
         return $data;
     }
 
-    public function findByDistrict($district) {
-        $data = Doctors::model()->findAllByAttributes(array('district' => $district));
+    public function findByDistrict($district, $limit, $offset) {
+        $criteria = new CDbCriteria;
+        $criteria->limit = $limit;
+        $criteria->offset = $offset;
+        $criteria->condition = 'district=:district';
+        $criteria->params = array(':district' => $district);
+        $data = Doctors::model()->findAll($criteria);
         return $data;
     }
 
