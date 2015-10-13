@@ -202,4 +202,20 @@ class Doctors extends CActiveRecord {
         return Doctors::model()->findAll($criteria);
     }
 
+    public function findByAddress($province, $district, $ward, $limit, $offset) {
+        $criteria = new CDbCriteria;
+        if (!empty($province)) {
+            $criteria->addCondition("province=$province");
+        }
+        if (!empty($ward)) {
+            $criteria->addCondition("ward=$ward");
+        }
+        if (!empty($district)) {
+            $criteria->addCondition("district=$district");
+        }
+        $criteria->limit = $limit;
+        $criteria->offset = $offset;
+        return Doctors::model()->findAll($criteria);
+    }
+
 }

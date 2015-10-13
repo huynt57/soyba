@@ -111,6 +111,22 @@ class DoctorController extends Controller {
             var_dump($ex->getMessage());
         }
     }
+    
+    public function actionGetDoctorByAddress()
+    {
+         try {
+            $request = Yii::app()->request;
+            $ward = StringHelper::filterString($request->getQuery('ward'));
+            $district = StringHelper::filterString($request->getQuery('district'));
+             $province = StringHelper::filterString($request->getQuery('province'));
+            $limit = StringHelper::filterString($request->getQuery('number'));
+            $offset = StringHelper::filterString($request->getQuery('offset'));
+            $data = Doctors::model()->findByAddress($province, $district, $ward, $limit, $offset);
+            ResponseHelper::JsonReturnSuccess($data, 'Success');
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
 
     // Uncomment the following methods and override them if needed
     /*
