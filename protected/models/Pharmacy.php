@@ -128,4 +128,9 @@ class Pharmacy extends CActiveRecord
             $results = Pharmacy::model()->findAll($Criteria);
             return $results;
         }
+        
+        public function createPharmacy()
+        {
+            
+        }
 }

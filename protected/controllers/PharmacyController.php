@@ -41,6 +41,7 @@ class PharmacyController extends Controller {
         } catch (exception $e) {
             $this->retVal->message = $e->getMessage();
         }
+        header('Content-type: application/json');
         echo CJSON::encode($this->retVal);
         Yii::app()->end();
     }
@@ -64,13 +65,19 @@ class PharmacyController extends Controller {
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
             }
+            header('Content-type: application/json');
             echo CJSON::encode($this->retVal);
             Yii::app()->end();
         }
     }
-    
-    
-    
+
+    public function actionCreatePharmacy() {
+        try {
+            $attr = StringHelper::filterArrayString($_POST);
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
 
     // Uncomment the following methods and override them if needed
     /*
