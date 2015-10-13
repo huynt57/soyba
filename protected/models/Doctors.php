@@ -164,4 +164,31 @@ class Doctors extends CActiveRecord {
         return $result;
     }
 
+    public function findByProvince($province) {
+        $data = Doctors::model()->findAllByAttributes(array('province' => $province));
+        return $data;
+    }
+
+    public function findByWard($ward) {
+        $data = Doctors::model()->findAllByAttributes(array('ward' => $ward));
+        return $data;
+    }
+
+    public function findByDistrict($district) {
+        $data = Doctors::model()->findAllByAttributes(array('district' => $district));
+        return $data;
+    }
+    
+    public function searchByKeywords($keywords)
+    {
+        $keywords_arr = json_decode($keywords, TRUE);
+        $criteria = new CDbCriteria;
+        foreach ($keywords_arr as $item) {
+            $criteria->addSearchCondition('name', $item, TRUE, 'OR', 'LIKE');
+            $criteria->addSearchCondition('address', $item, TRUE, 'OR', 'LIKE');
+            $criteria->addSearchCondition('description', $item, TRUE, 'OR', 'LIKE');
+        }
+        return Doctors::model()->findAll($criteria);
+    }
+
 }

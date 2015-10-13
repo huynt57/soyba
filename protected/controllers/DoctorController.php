@@ -5,7 +5,6 @@ class DoctorController extends Controller {
     public function actionIndex() {
         $this->render('index');
     }
-    
 
     public function actionAddDoctor() {
         try {
@@ -58,6 +57,50 @@ class DoctorController extends Controller {
             $data = Doctors::model()->findAllByAttributes(array('user_id' => $user_id));
             $cnt = count($data);
             ResponseHelper::JsonReturnSuccess($cnt, 'Success');
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
+    public function actionSearchByKeywords() {
+        try {
+            $request = Yii::app()->request;
+            $keywords = StringHelper::filterString($request->getPost('$keywords'));
+            $data = Doctors::model()->searchByKeywords($keywords);
+            ResponseHelper::JsonReturnSuccess($data, 'Success');
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
+    public function actionGetDoctorByProvince() {
+        try {
+            $request = Yii::app()->request;
+            $province = StringHelper::filterString($request->getQuery('province'));
+            $data = Doctors::model()->findByProvince($province);
+            ResponseHelper::JsonReturnSuccess($data, 'Success');
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
+    public function actionGetDoctorByDistrict() {
+        try {
+            $request = Yii::app()->request;
+            $district = StringHelper::filterString($request->getQuery('district'));
+            $data = Doctors::model()->findByDistrict($district);
+            ResponseHelper::JsonReturnSuccess($data, 'Success');
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
+    public function actionGetDoctorByWard() {
+        try {
+            $request = Yii::app()->request;
+            $ward = StringHelper::filterString($request->getQuery('ward'));
+            $data = Doctors::model()->findByWard($ward);
+            ResponseHelper::JsonReturnSuccess($data, 'Success');
         } catch (Exception $ex) {
             var_dump($ex->getMessage());
         }
