@@ -139,6 +139,32 @@ class UserController extends Controller {
         }
     }
 
+    public function actionUpdateInfoUser() {
+        $request = Yii::app()->request;
+        if ($request->isPostRequest && isset($_POST)) {
+            try {
+//                $user_id = StringHelper::filterString($request->getPost('user_id'));
+//                $email = StringHelper::filterString($request->getPost('email'));
+//                $phone = StringHelper::filterString($request->getPost('phone'));
+//                $ward = StringHelper::filterString($request->getPost('ward'));
+//                $province = StringHelper::filterString($request->getPost('province'));
+//                $district = StringHelper::filterString($request->getPost('district'));
+//                $address = StringHelper::filterString($request->getPost('address'));
+                $attr = StringHelper::filterArrayString($_POST);
+
+                if (User::model()->updateInfo($attr)) {
+                    ResponseHelper::JsonReturnSuccess("", 'Success');
+                } else {
+                    ResponseHelper::JsonReturnError("", "Something wrong");
+                }
+            } catch (exception $e) {
+                var_dump($e->getMessage());
+            }
+
+            Yii::app()->end();
+        }
+    }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()
