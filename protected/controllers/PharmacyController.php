@@ -74,6 +74,11 @@ class PharmacyController extends Controller {
     public function actionCreatePharmacy() {
         try {
             $attr = StringHelper::filterArrayString($_POST);
+            if (Pharmacy::model()->createPharmacy($attr)) {
+                ResponseHelper::JsonReturnSuccess("", "Success");
+            } else {
+                ResponseHelper::JsonReturnError("", "Error");
+            }
         } catch (Exception $ex) {
             var_dump($ex->getMessage());
         }
