@@ -83,6 +83,28 @@ class PharmacyController extends Controller {
             var_dump($ex->getMessage());
         }
     }
+    
+    public function actionCountRecord() {
+        try {
+            $data = Pharmacy::model()->findAll();
+            $cnt = count($data);
+            ResponseHelper::JsonReturnSuccess($cnt, 'Success');
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
+    public function actionCountRecordByUser() {
+        try {
+            $request = Yii::app()->request;
+            $user_id = StringHelper::filterString($request->getPost('user_id'));
+            $data = Pharmacy::model()->findAllByAttributes(array('user_id' => $user_id));
+            $cnt = count($data);
+            ResponseHelper::JsonReturnSuccess($cnt, 'Success');
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
 
     // Uncomment the following methods and override them if needed
     /*
