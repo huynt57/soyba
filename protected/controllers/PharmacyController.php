@@ -117,7 +117,7 @@ class PharmacyController extends Controller {
         }
     }
 
-    public function actionSearcPharmacyByAddressAndKeywords() {
+    public function actionSearchPharmacyByAddressAndKeywords() {
         try {
             $request = Yii::app()->request;
             $ward = StringHelper::filterString($request->getQuery('ward'));
