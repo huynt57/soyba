@@ -13,6 +13,9 @@
  * @property string $contact_num
  * @property integer $type
  * @property integer $user_id
+ * @property string $ward
+ * @property string $province
+ * @property string $district
  */
 class Pharmacy extends CActiveRecord {
 
@@ -31,10 +34,10 @@ class Pharmacy extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('type, user_id', 'numerical', 'integerOnly' => true),
-            array('name, address, laititude, longitude, state, contact_num', 'length', 'max' => 255),
+            array('name, address, laititude, longitude, state, contact_num, ward, province, district', 'length', 'max' => 255),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, name, address, laititude, longitude, state, contact_num, type, user_id', 'safe', 'on' => 'search'),
+            array('id, name, address, laititude, longitude, state, contact_num, type, user_id, ward, province, district', 'safe', 'on' => 'search'),
         );
     }
 
@@ -62,6 +65,9 @@ class Pharmacy extends CActiveRecord {
             'contact_num' => 'Contact Num',
             'type' => 'Type',
             'user_id' => 'User',
+            'ward' => 'Ward',
+            'province' => 'Province',
+            'district' => 'District',
         );
     }
 
@@ -91,6 +97,9 @@ class Pharmacy extends CActiveRecord {
         $criteria->compare('contact_num', $this->contact_num, true);
         $criteria->compare('type', $this->type);
         $criteria->compare('user_id', $this->user_id);
+        $criteria->compare('ward', $this->ward, true);
+        $criteria->compare('province', $this->province, true);
+        $criteria->compare('district', $this->district, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -132,6 +141,29 @@ class Pharmacy extends CActiveRecord {
             return TRUE;
         }
         return FALSE;
+    }
+
+    public function searchByAddressAndKeywords($province, $district, $ward, $limit, $offset, $keywords) {
+        $criteria = new CDbCriteria;
+        if (!empty($province)) {
+            $criteria->addCondition("province=$province");
+        }
+        if (!empty($ward)) {
+            $criteria->addCondition("ward=$ward");
+        }
+        if (!empty($district)) {
+            $criteria->addCondition("district=$district");
+        }
+        if (!empty($keywords)) {
+            $criteria->addSearchCondition('name', $keywords, TRUE, 'OR', 'LIKE');
+            $criteria->addSearchCondition('address', $keywords, TRUE, 'OR', 'LIKE');
+            $criteria->addSearchCondition('contact_num', $keywords, TRUE, 'OR', 'LIKE');
+        }
+        $criteria->limit = $limit;
+        $criteria->offset = $offset;
+        $data = Doctors::model()->findAll($criteria);
+        $cnt = count($data);
+        return array('cnt'=>$cnt, 'data'=>$data);
     }
 
 }

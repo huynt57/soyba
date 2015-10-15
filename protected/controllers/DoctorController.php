@@ -111,18 +111,34 @@ class DoctorController extends Controller {
             var_dump($ex->getMessage());
         }
     }
-    
-    public function actionGetDoctorByAddress()
-    {
-         try {
+
+    public function actionGetDoctorByAddress() {
+        try {
             $request = Yii::app()->request;
             $ward = StringHelper::filterString($request->getQuery('ward'));
             $district = StringHelper::filterString($request->getQuery('district'));
-             $province = StringHelper::filterString($request->getQuery('province'));
+            $province = StringHelper::filterString($request->getQuery('province'));
             $limit = StringHelper::filterString($request->getQuery('number'));
             $offset = StringHelper::filterString($request->getQuery('offset'));
             $data = Doctors::model()->findByAddress($province, $district, $ward, $limit, $offset);
             ResponseHelper::JsonReturnSuccess($data, 'Success');
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
+    public function actionSearchDoctorByAddressAndKeywords() {
+        try {
+            $request = Yii::app()->request;
+            $ward = StringHelper::filterString($request->getQuery('ward'));
+            $district = StringHelper::filterString($request->getQuery('district'));
+            $province = StringHelper::filterString($request->getQuery('province'));
+            $limit = StringHelper::filterString($request->getQuery('number'));
+            $offset = StringHelper::filterString($request->getQuery('offset'));
+            $keywords = StringHelper::filterString($request->getQuery('keywords'));
+            $data = Doctors::model()->searchByAddressAndKeywords($province, $district, $ward, $limit, $offset, $keywords);
+            header('Content-type: application/json');
+            echo CJSON::encode(array('status' => 1, 'count' => $data['cnt'], 'data' => $data['data'], 'message' => 'Success'));
         } catch (Exception $ex) {
             var_dump($ex->getMessage());
         }

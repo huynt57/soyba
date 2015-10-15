@@ -83,7 +83,7 @@ class PharmacyController extends Controller {
             var_dump($ex->getMessage());
         }
     }
-    
+
     public function actionCountRecord() {
         try {
             $data = Pharmacy::model()->findAll();
@@ -101,6 +101,35 @@ class PharmacyController extends Controller {
             $data = Pharmacy::model()->findAllByAttributes(array('user_id' => $user_id));
             $cnt = count($data);
             ResponseHelper::JsonReturnSuccess($cnt, 'Success');
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
+    public function actionGetPharmacyByUser() {
+        try {
+            $request = Yii::app()->request;
+            $user_id = StringHelper::filterString($request->getQuery('user_id'));
+            $data = Pharmacy::model()->findAllByAttributes(array('user_id' => $user_id));
+            ResponseHelper::JsonReturnSuccess($data, 'Successss');
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
+    public function actionSearcPharmacyByAddressAndKeywords() {
+        try {
+            $request = Yii::app()->request;
+            $ward = StringHelper::filterString($request->getQuery('ward'));
+            $district = StringHelper::filterString($request->getQuery('district'));
+            $province = StringHelper::filterString($request->getQuery('province'));
+            $limit = StringHelper::filterString($request->getQuery('number'));
+            $offset = StringHelper::filterString($request->getQuery('offset'));
+            $keywords = StringHelper::filterString($request->getQuery('keywords'));
+            $data = Pharmacy::model()->searchByAddressAndKeywords($province, $district, $ward, $limit, $offset, $keywords);
+
+            header('Content-type: application/json');
+            echo CJSON::encode(array('status' => 1, 'count' => $data['cnt'], 'data' => $data['data'], 'message' => 'Success'));
         } catch (Exception $ex) {
             var_dump($ex->getMessage());
         }
