@@ -80,29 +80,38 @@ class UserController extends Controller {
         $request = Yii::app()->request;
         if ($request->isPostRequest && isset($_POST)) {
             try {
+                $check = FALSE;
                 if (isset($_POST['facebook_id'])) {
                     $facebook_id = StringHelper::filterString($request->getPost('facebook_id'));
                     $user_id = User::model()->findByAttributes(array('facebook_id' => $facebook_id));
-                    $data = User::model()->findByAttributes(array('user_id' => $user_id->user_id));
-                    $this->retVal->user_data = $data;
-                    $this->retVal->data = $data;
-                    $this->retVal->status = 1;
-                    $this->retVal->message = "Success";
+                    if ($user_id) {
+                        $data = User::model()->findByAttributes(array('user_id' => $user_id->user_id));
+                        $check = TRUE;
+                    }
                 } else if (isset($_POST['google_id'])) {
                     $google_id = StringHelper::filterString($request->getPost('google_id'));
                     $user_id = User::model()->findByAttributes(array('google_id' => $google_id));
-                    $data = User::model()->findByAttributes(array('user_id' => $user_id->user_id));
+                    if ($user_id) {
+                        $data = User::model()->findByAttributes(array('user_id' => $user_id->user_id));
+                        $check = TRUE;
+                    }
+                } else if (isset($_POST['user_id'])) {
+                    $user_id = StringHelper::filterString($request->getPost('user_id'));
+                    if ($user_id) {
+                        $data = User::model()->findByAttributes(array('user_id' => $user_id->user_id));
+                        $check = TRUE;
+                    }
+                }
+                if ($check) {
                     $this->retVal->user_data = $data;
                     $this->retVal->data = $data;
                     $this->retVal->status = 1;
                     $this->retVal->message = "Success";
                 } else {
-                    $user_id = StringHelper::filterString($request->getPost('user_id'));
-                    $data = User::model()->findByAttributes(array('user_id' => $user_id));
-                    $this->retVal->user_data = $data;
-                    $this->retVal->data = $data;
-                    $this->retVal->status = 1;
-                    $this->retVal->message = "Success";
+                    $this->retVal->user_data = NULL;
+                    $this->retVal->data = NULL;
+                    $this->retVal->status = 0;
+                    $this->retVal->message = "User not exist";
                 }
             } catch (exception $e) {
                 $this->retVal->message = $e->getMessage();
