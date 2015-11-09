@@ -21,6 +21,7 @@
  * @property integer $meal
  * @property string $more_instruction
  * @property integer $last_updated
+ * @property integer $doctor_id
  */
 class MedicineRemind extends CActiveRecord {
 
@@ -38,12 +39,13 @@ class MedicineRemind extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('patient_id, sick_id, is_enabled, notify_hour_type, hour_interval, day_interval, dosage_unit, meal, last_updated', 'numerical', 'integerOnly' => true),
+            array('id', 'required'),
+            array('id, patient_id, sick_id, is_enabled, notify_hour_type, hour_interval, day_interval, dosage_unit, meal, last_updated, doctor_id', 'numerical', 'integerOnly' => true),
             array('dosage', 'numerical'),
             array('name, notify_times_in_day, notify_days_in_week, start_date, end_date, more_instruction', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, patient_id, sick_id, name, is_enabled, notify_hour_type, notify_times_in_day, hour_interval, notify_days_in_week, start_date, end_date, day_interval, dosage, dosage_unit, meal, more_instruction, last_updated', 'safe', 'on' => 'search'),
+            array('id, patient_id, sick_id, name, is_enabled, notify_hour_type, notify_times_in_day, hour_interval, notify_days_in_week, start_date, end_date, day_interval, dosage, dosage_unit, meal, more_instruction, last_updated, doctor_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -79,6 +81,7 @@ class MedicineRemind extends CActiveRecord {
             'meal' => 'Meal',
             'more_instruction' => 'More Instruction',
             'last_updated' => 'Last Updated',
+            'doctor_id' => 'Doctor',
         );
     }
 
@@ -116,6 +119,7 @@ class MedicineRemind extends CActiveRecord {
         $criteria->compare('meal', $this->meal);
         $criteria->compare('more_instruction', $this->more_instruction, true);
         $criteria->compare('last_updated', $this->last_updated);
+        $criteria->compare('doctor_id', $this->doctor_id);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
