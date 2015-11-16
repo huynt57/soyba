@@ -144,6 +144,17 @@ class DoctorController extends Controller {
         }
     }
 
+    public function actionGetDoctorById() {
+        try {
+            $request = Yii::app()->request;
+            $doctor_id = StringHelper::filterString($request->getQuery('doctor_id'));
+            $data = Doctors::model()->findByPk($doctor_id);
+            ResponseHelper::JsonReturnSuccess($data, 'Success');
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()
