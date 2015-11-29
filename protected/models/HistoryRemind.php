@@ -100,6 +100,7 @@ class HistoryRemind extends CActiveRecord {
         return parent::model($className);
     }
 
+<<<<<<< HEAD
     public function getHistoryByPatient($patient_id) {
         $patient = Patient::model()->findByPk($patient_id);
         $reminds = MedicineRemind::model()->findAllByAttributes(array('patient_id' => $patient->patient_id));
@@ -116,10 +117,18 @@ class HistoryRemind extends CActiveRecord {
         $model->setAttributes($post);
         if ($model->save(FALSE)) {
             return $model->id;
+=======
+    public function add($attr) {
+        $model = new HistoryRemind;
+        $model->setAttributes($attr);
+        if ($model->save(FALSE)) {
+            return TRUE;
+>>>>>>> d58cb7318a3f20d35f763274fdd13e4053bbf17b
         }
         return FALSE;
     }
 
+<<<<<<< HEAD
     public function edit($post) {
         $model = HistoryRemind::model()->findByPk($post['id']);
         if ($model) {
@@ -136,9 +145,31 @@ class HistoryRemind extends CActiveRecord {
         $model = HistoryRemind::model()->findByPk($history_id);
         if($model->delete())
         {
+=======
+    public function delete($id) {
+        $model = HistoryRemind::model()->findByPk($id);
+        if ($model->delete()) {
             return TRUE;
         }
         return FALSE;
     }
+
+    public function edit($attr) {
+        $model = HistoryRemind::model()->findByPk($attr['id']);
+        $model->setAttributes($attr);
+        if ($model->save(FALSE)) {
+>>>>>>> d58cb7318a3f20d35f763274fdd13e4053bbf17b
+            return TRUE;
+        }
+        return FALSE;
+    }
+<<<<<<< HEAD
+=======
+
+    public function getAllHistoryOfARemind($remind_id) {
+        $model = HistoryRemind::model()->findAllByAttributes(array('remind_id' => $remind_id));
+        return $model;
+    }
+>>>>>>> d58cb7318a3f20d35f763274fdd13e4053bbf17b
 
 }
