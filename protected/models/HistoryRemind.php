@@ -114,6 +114,8 @@ class HistoryRemind extends CActiveRecord {
     public function add($post) {
         $model = new HistoryRemind;
         $model->setAttributes($post);
+        $model->created_at = time();
+        $model->updated_at = time();
         if ($model->save(FALSE)) {
             return $model->id;
         }
@@ -123,7 +125,8 @@ class HistoryRemind extends CActiveRecord {
     public function edit($post) {
         $model = HistoryRemind::model()->findByPk($post['id']);
         if ($model) {
-            $model->saveAttributes($post);
+            $model->setAttributes($post);
+            $model->updated_at = time();
             if ($model->save(FALSE)) {
                 return TRUE;
             }
