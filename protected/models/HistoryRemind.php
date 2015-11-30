@@ -102,13 +102,17 @@ class HistoryRemind extends CActiveRecord {
 
     public function getHistoryByPatient($patient_id) {
         $patient = Patient::model()->findByPk($patient_id);
-        $reminds = MedicineRemind::model()->findAllByAttributes(array('patient_id' => $patient->patient_id));
-        $returnArr = array();
-        foreach ($reminds as $remind) {
-            $history = HistoryRemind::model()->findAllByAttributes(array('remind_id' => $remind->remind_id));
-            $returnArr[] = $history;
+        if ($patient) {
+            $reminds = MedicineRemind::model()->findAllByAttributes(array('patient_id' => $patient->patient_id));
+            $returnArr = array();
+            if ($reminds) {
+                foreach ($reminds as $remind) {
+                    $history = HistoryRemind::model()->findAllByAttributes(array('remind_id' => $remind->remind_id));
+                    $returnArr[] = $history;
+                }
+                return $returnArr;
+            }
         }
-        return $returnArr;
     }
 
     public function add($post) {

@@ -49,7 +49,7 @@ class HistoryRemindController extends Controller {
 
         try {
             $request = Yii::app()->request;
-            $history_id = StringHelper::filterString($request->getQuery('history_id'));
+            $history_id = StringHelper::filterString($request->getQuery('id'));
             $result = HistoryRemind::model()->delete($history_id);
             if ($result) {
                 ResponseHelper::JsonReturnSuccess('', 'Success');
