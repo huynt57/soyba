@@ -33,6 +33,11 @@ class MedlatecController extends Controller {
         ResponseHelper::JsonReturnSuccess($data, 'Success');
     }
 
+    public function actionGetServices() {
+        $data = ServiceMedlatec::model()->findAll();
+        ResponseHelper::JsonReturnSuccess($data, 'Success');
+    }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()
