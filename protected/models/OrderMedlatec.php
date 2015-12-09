@@ -1,24 +1,32 @@
 <?php
 
 /**
- * This is the model class for table "tbl_history_remind".
+ * This is the model class for table "tbl_order_medlatec".
  *
- * The followings are the available columns in table 'tbl_history_remind':
+ * The followings are the available columns in table 'tbl_order_medlatec':
  * @property integer $id
- * @property integer $remind_id
+ * @property string $name
+ * @property string $phone
+ * @property string $email
+ * @property string $address
+ * @property string $ward
+ * @property string $province
+ * @property string $district
+ * @property string $time
+ * @property string $requirement
+ * @property integer $status
+ * @property integer $active
  * @property integer $created_at
  * @property integer $updated_at
- * @property integer $status
- * @property integer $original_time
- * @property integer $taken_time
+ * @property integer $user_meboo
  */
-class HistoryRemind extends CActiveRecord {
+class OrderMedlatec extends CActiveRecord {
 
     /**
      * @return string the associated database table name
      */
     public function tableName() {
-        return 'tbl_history_remind';
+        return 'tbl_order_medlatec';
     }
 
     /**
@@ -28,10 +36,12 @@ class HistoryRemind extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('remind_id, created_at, updated_at, status, original_time, taken_time', 'numerical', 'integerOnly' => true),
+            array('status, active, created_at, updated_at, user_meboo', 'numerical', 'integerOnly' => true),
+            array('name, phone, email, ward, province, district, time', 'length', 'max' => 255),
+            array('address, requirement', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, remind_id, created_at, updated_at, status, original_time, taken_time', 'safe', 'on' => 'search'),
+            array('id, name, phone, email, address, ward, province, district, time, requirement, status, active, created_at, updated_at, user_meboo', 'safe', 'on' => 'search'),
         );
     }
 
@@ -51,12 +61,20 @@ class HistoryRemind extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'remind_id' => 'Remind',
+            'name' => 'Name',
+            'phone' => 'Phone',
+            'email' => 'Email',
+            'address' => 'Address',
+            'ward' => 'Ward',
+            'province' => 'Province',
+            'district' => 'District',
+            'time' => 'Time',
+            'requirement' => 'Requirement',
+            'status' => 'Status',
+            'active' => 'Active',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
-            'status' => 'Status',
-            'original_time' => 'Original Time',
-            'taken_time' => 'Taken Time',
+            'user_meboo' => 'User Meboo',
         );
     }
 
@@ -78,12 +96,20 @@ class HistoryRemind extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
-        $criteria->compare('remind_id', $this->remind_id);
+        $criteria->compare('name', $this->name, true);
+        $criteria->compare('phone', $this->phone, true);
+        $criteria->compare('email', $this->email, true);
+        $criteria->compare('address', $this->address, true);
+        $criteria->compare('ward', $this->ward, true);
+        $criteria->compare('province', $this->province, true);
+        $criteria->compare('district', $this->district, true);
+        $criteria->compare('time', $this->time, true);
+        $criteria->compare('requirement', $this->requirement, true);
+        $criteria->compare('status', $this->status);
+        $criteria->compare('active', $this->active);
         $criteria->compare('created_at', $this->created_at);
         $criteria->compare('updated_at', $this->updated_at);
-        $criteria->compare('status', $this->status);
-        $criteria->compare('original_time', $this->original_time);
-        $criteria->compare('taken_time', $this->taken_time);
+        $criteria->compare('user_meboo', $this->user_meboo);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -94,61 +120,29 @@ class HistoryRemind extends CActiveRecord {
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
      * @param string $className active record class name.
-     * @return HistoryRemind the static model class
+     * @return OrderMedlatec the static model class
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
 
-    public function getHistoryByPatient($patient_id) {
-        $patient = Patient::model()->findByPk($patient_id);
-        if ($patient) {
-            $reminds = MedicineRemind::model()->findAllByAttributes(array('patient_id' => $patient->patient_id));
-            $returnArr = array();
-            if ($reminds) {
-                foreach ($reminds as $remind) {
-                    $history = HistoryRemind::model()->findAllByAttributes(array('remind_id' => $remind->id));
-                    $returnArr[] = $history;
-                }
-                return $returnArr;
-            }
-        }
-    }
-
     public function add($post) {
-        $model = new HistoryRemind;
+        $model = new OrderMedlatec;
         $model->setAttributes($post);
-        $model->created_at = time();
-        $model->updated_at = time();
         if ($model->save(FALSE)) {
-            return $model->id;
-        }
-        return FALSE;
-    }
-
-    public function edit($post) {
-        $model = HistoryRemind::model()->findByPk($post['id']);
-        if ($model) {
-            $model->setAttributes($post);
-            $model->updated_at = time();
-            if ($model->save(FALSE)) {
-                return TRUE;
-            }
-        }
-        return FALSE;
-    }
-
-    public function delete($id) {
-        $model = HistoryRemind::model()->findByPk($id);
-        if ($model->delete()) {
             return TRUE;
         }
         return FALSE;
     }
-
-    public function getAllHistoryOfARemind($remind_id) {
-        $model = HistoryRemind::model()->findAllByAttributes(array('remind_id' => $remind_id));
-        return $model;
+    
+    public function getOrderByUser($user_id, $limit, $offset)
+    {
+        $criteria = new CDbCriteria;
+        $criteria->limit = $limit;
+        $criteria->offset = $offset;
+        $criteria->condition = "user_meboo = $user_id";
+        $data = OrderMedlatec::model()->findAll($criteria);
+        return $data;
     }
 
 }
