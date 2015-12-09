@@ -19,6 +19,7 @@
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $user_meboo
+ * @property integer $service_id
  */
 class OrderMedlatec extends CActiveRecord {
 
@@ -36,12 +37,12 @@ class OrderMedlatec extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('status, active, created_at, updated_at, user_meboo', 'numerical', 'integerOnly' => true),
+            array('status, active, created_at, updated_at, user_meboo, service_id', 'numerical', 'integerOnly' => true),
             array('name, phone, email, ward, province, district, time', 'length', 'max' => 255),
             array('address, requirement', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, name, phone, email, address, ward, province, district, time, requirement, status, active, created_at, updated_at, user_meboo', 'safe', 'on' => 'search'),
+            array('id, name, phone, email, address, ward, province, district, time, requirement, status, active, created_at, updated_at, user_meboo, service_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -75,6 +76,7 @@ class OrderMedlatec extends CActiveRecord {
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'user_meboo' => 'User Meboo',
+            'service_id' => 'Service',
         );
     }
 
@@ -110,6 +112,7 @@ class OrderMedlatec extends CActiveRecord {
         $criteria->compare('created_at', $this->created_at);
         $criteria->compare('updated_at', $this->updated_at);
         $criteria->compare('user_meboo', $this->user_meboo);
+        $criteria->compare('service_id', $this->service_id);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -134,9 +137,8 @@ class OrderMedlatec extends CActiveRecord {
         }
         return FALSE;
     }
-    
-    public function getOrderByUser($user_id, $limit, $offset)
-    {
+
+    public function getOrderByUser($user_id, $limit, $offset) {
         $criteria = new CDbCriteria;
         $criteria->limit = $limit;
         $criteria->offset = $offset;
