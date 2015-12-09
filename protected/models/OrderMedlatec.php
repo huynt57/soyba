@@ -12,7 +12,6 @@
  * @property string $ward
  * @property string $province
  * @property string $district
- * @property string $time
  * @property string $requirement
  * @property integer $status
  * @property integer $active
@@ -20,6 +19,8 @@
  * @property integer $updated_at
  * @property integer $user_meboo
  * @property integer $service_id
+ * @property integer $time_confirm
+ * @property integer $time_meet
  */
 class OrderMedlatec extends CActiveRecord {
 
@@ -37,12 +38,12 @@ class OrderMedlatec extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('status, active, created_at, updated_at, user_meboo, service_id', 'numerical', 'integerOnly' => true),
-            array('name, phone, email, ward, province, district, time', 'length', 'max' => 255),
+            array('status, active, created_at, updated_at, user_meboo, service_id, time_confirm, time_meet', 'numerical', 'integerOnly' => true),
+            array('name, phone, email, ward, province, district', 'length', 'max' => 255),
             array('address, requirement', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, name, phone, email, address, ward, province, district, time, requirement, status, active, created_at, updated_at, user_meboo, service_id', 'safe', 'on' => 'search'),
+            array('id, name, phone, email, address, ward, province, district, requirement, status, active, created_at, updated_at, user_meboo, service_id, time_confirm, time_meet', 'safe', 'on' => 'search'),
         );
     }
 
@@ -69,7 +70,6 @@ class OrderMedlatec extends CActiveRecord {
             'ward' => 'Ward',
             'province' => 'Province',
             'district' => 'District',
-            'time' => 'Time',
             'requirement' => 'Requirement',
             'status' => 'Status',
             'active' => 'Active',
@@ -77,6 +77,8 @@ class OrderMedlatec extends CActiveRecord {
             'updated_at' => 'Updated At',
             'user_meboo' => 'User Meboo',
             'service_id' => 'Service',
+            'time_confirm' => 'Time Confirm',
+            'time_meet' => 'Time Meet',
         );
     }
 
@@ -105,7 +107,6 @@ class OrderMedlatec extends CActiveRecord {
         $criteria->compare('ward', $this->ward, true);
         $criteria->compare('province', $this->province, true);
         $criteria->compare('district', $this->district, true);
-        $criteria->compare('time', $this->time, true);
         $criteria->compare('requirement', $this->requirement, true);
         $criteria->compare('status', $this->status);
         $criteria->compare('active', $this->active);
@@ -113,6 +114,8 @@ class OrderMedlatec extends CActiveRecord {
         $criteria->compare('updated_at', $this->updated_at);
         $criteria->compare('user_meboo', $this->user_meboo);
         $criteria->compare('service_id', $this->service_id);
+        $criteria->compare('time_confirm', $this->time_confirm);
+        $criteria->compare('time_meet', $this->time_meet);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
