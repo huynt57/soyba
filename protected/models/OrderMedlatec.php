@@ -132,6 +132,8 @@ class OrderMedlatec extends CActiveRecord {
     public function add($post) {
         $model = new OrderMedlatec;
         $model->setAttributes($post);
+        $model->created_at = time();
+        $model->updated_at = time();
         if ($model->save(FALSE)) {
             return TRUE;
         }
