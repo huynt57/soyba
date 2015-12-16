@@ -138,7 +138,7 @@ class OrderMedlatec extends CActiveRecord {
         $model->created_at = time();
         $model->updated_at = time();
         if ($model->save(FALSE)) {
-            return TRUE;
+            return $model->id;
         }
         return FALSE;
     }

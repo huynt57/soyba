@@ -8,8 +8,9 @@ class MedlatecController extends Controller {
 
     public function actionOrder() {
         $post = StringHelper::filterArrayString($_POST);
-        if (OrderMedlatec::model()->add($post)) {
-            ResponseHelper::JsonReturnSuccess('', 'Success');
+        $result = OrderMedlatec::model()->add($post);
+        if ($result != FALSE) {
+            ResponseHelper::JsonReturnSuccess($result, 'Success');
         } else {
             ResponseHelper::JsonReturnError('', 'Error');
         }
