@@ -38,6 +38,22 @@ class MedlatecController extends Controller {
         ResponseHelper::JsonReturnSuccess($data, 'Success');
     }
 
+    public function actionPushNotification() {
+        
+    }
+
+    public function actionGetResultsOfOrder() {
+        $request = Yii::app()->request;
+        try {
+            $order_id = StringHelper::filterString($request->getQuery('order_id'));
+            $data = OrderMedlatec::model()->findAllByAttributes(array('order_id' => $order_id));
+            ResponseHelper::JsonReturnSuccess($data, 'Success');
+        } catch (exception $e) {
+            $this->retVal->message = $e->getMessage();
+        }
+        Yii::app()->end();
+    }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()

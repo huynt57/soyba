@@ -44,7 +44,7 @@ class UserController extends Controller {
                     $user_exist_facebook->setAttributes($attr);
                     if ($user_exist_facebook->save(FALSE)) {
                         $this->retVal->message = "Success";
-                        $this->retVal->user_data = $user_exist_facebook->user_id;
+                       
                         $this->retVal->data = $user_exist_facebook->user_id;
                         $this->retVal->status = 1;
                     }
@@ -52,7 +52,7 @@ class UserController extends Controller {
                     $user_exist_google->setAttributes($attr);
                     if ($user_exist_google->save(FALSE)) {
                         $this->retVal->message = "Success";
-                        $this->retVal->user_data = $user_exist_google->user_id;
+                       
                         $this->retVal->data = $user_exist_google->user_id;
                         $this->retVal->status = 1;
                     }
@@ -61,7 +61,7 @@ class UserController extends Controller {
                     $user_model->setAttributes($attr);
                     if ($user_model->save(FALSE)) {
                         $this->retVal->message = "Success";
-                        $this->retVal->user_data = $user_model->user_id;
+                        
                         $this->retVal->data = $user_model->user_id;
                         $this->retVal->status = 1;
                     }
@@ -98,17 +98,17 @@ class UserController extends Controller {
                 } else if (isset($_POST['user_id'])) {
                     $user_id = StringHelper::filterString($request->getPost('user_id'));
                     if ($user_id) {
-                        $data = User::model()->findByAttributes(array('user_id' => $user_id->user_id));
+                        $data = User::model()->findByAttributes(array('user_id' => $user_id));
                         $check = TRUE;
                     }
                 }
                 if ($check) {
-                    $this->retVal->user_data = $data;
+                   
                     $this->retVal->data = $data;
                     $this->retVal->status = 1;
                     $this->retVal->message = "Success";
                 } else {
-                    $this->retVal->user_data = NULL;
+                   
                     $this->retVal->data = NULL;
                     $this->retVal->status = 0;
                     $this->retVal->message = "User not exist";

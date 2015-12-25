@@ -19,6 +19,8 @@
  * @property string $district
  * @property string $address
  * @property string $phone
+ * @property string $device_token
+ * @property string $platform
  */
 class User extends CActiveRecord {
 
@@ -36,13 +38,13 @@ class User extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('facebook_id, google_id, gender, photo, ward, province, district, phone', 'length', 'max' => 255),
+            array('facebook_id, google_id, gender, photo, ward, province, district, phone, platform', 'length', 'max' => 255),
             array('facebook_access_token', 'length', 'max' => 500),
             array('last_updated, email, name', 'length', 'max' => 200),
-            array('description, address', 'safe'),
+            array('description, address, device_token', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('user_id, facebook_id, google_id, gender, facebook_access_token, photo, last_updated, email, name, description, ward, province, district, address, phone', 'safe', 'on' => 'search'),
+            array('user_id, facebook_id, google_id, gender, facebook_access_token, photo, last_updated, email, name, description, ward, province, district, address, phone, device_token, platform', 'safe', 'on' => 'search'),
         );
     }
 
@@ -76,6 +78,8 @@ class User extends CActiveRecord {
             'district' => 'District',
             'address' => 'Address',
             'phone' => 'Phone',
+            'device_token' => 'Device Token',
+            'platform' => 'Platform',
         );
     }
 
@@ -111,6 +115,8 @@ class User extends CActiveRecord {
         $criteria->compare('district', $this->district, true);
         $criteria->compare('address', $this->address, true);
         $criteria->compare('phone', $this->phone, true);
+        $criteria->compare('device_token', $this->device_token, true);
+        $criteria->compare('platform', $this->platform, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
