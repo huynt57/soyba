@@ -21,6 +21,7 @@
  * @property integer $service_id
  * @property integer $time_confirm
  * @property integer $time_meet
+ * @property string $price
  */
 class OrderMedlatec extends CActiveRecord {
 
@@ -40,10 +41,10 @@ class OrderMedlatec extends CActiveRecord {
         return array(
             array('status, active, created_at, updated_at, user_meboo, service_id, time_confirm, time_meet', 'numerical', 'integerOnly' => true),
             array('name, phone, email, ward, province, district', 'length', 'max' => 255),
-            array('address, requirement', 'safe'),
+            array('address, requirement, price', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, name, phone, email, address, ward, province, district, requirement, status, active, created_at, updated_at, user_meboo, service_id, time_confirm, time_meet', 'safe', 'on' => 'search'),
+            array('id, name, phone, email, address, ward, province, district, requirement, status, active, created_at, updated_at, user_meboo, service_id, time_confirm, time_meet, price', 'safe', 'on' => 'search'),
         );
     }
 
@@ -79,6 +80,7 @@ class OrderMedlatec extends CActiveRecord {
             'service_id' => 'Service',
             'time_confirm' => 'Time Confirm',
             'time_meet' => 'Time Meet',
+            'price' => 'Price',
         );
     }
 
@@ -116,6 +118,7 @@ class OrderMedlatec extends CActiveRecord {
         $criteria->compare('service_id', $this->service_id);
         $criteria->compare('time_confirm', $this->time_confirm);
         $criteria->compare('time_meet', $this->time_meet);
+        $criteria->compare('price', $this->price, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -149,7 +152,24 @@ class OrderMedlatec extends CActiveRecord {
         $criteria->offset = $offset;
         $criteria->condition = "user_meboo = $user_id";
         $data = OrderMedlatec::model()->findAll($criteria);
-        return $data;
+        $returnArr = array();
+        $attrLabel = $this->attributeLabels();
+        foreach ($data as $item) {
+            $itemArr = array();
+            foreach ($attrLabel as $key => $value) {
+                $itemArr[$key] = $item->$key;
+            }
+            $service = ServiceMedlatec::model()->findByPk($item->service_id);
+            if(!empty($service))
+            {
+                $service_name = $service->service_name;
+            } else {
+                $service_name = null;
+            }
+            $itemArr['service_name'] = $service_name;
+            $returnArr[] = $itemArr;
+        }
+        return $returnArr;
     }
 
 }

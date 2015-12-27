@@ -34,10 +34,12 @@ class UserController extends Controller {
                 $photo = StringHelper::filterString($request->getPost('photo'));
                 $name = StringHelper::filterString($request->getPost('name'));
                 $email = StringHelper::filterString($request->getPost('email'));
+                $device_token = StringHelper::filterString($request->getPost('device_token'));
+                $platform = StringHelper::filterString($request->getPost('platform'));
                 $attr = array('facebook_id' => $facebook_id, 'google_id' => $google_id,
                     'user_id' => $user_id, 'gender' => $gender,
                     'facebook_access_token' => $facebook_access_token, 'photo' => $photo, 'name' => $name,
-                    'email' => $email, 'last_updated' => time());
+                    'email' => $email,'device_token'=>$device_token, 'platform'=>$platform, 'last_updated' => time());
                 $user_exist_facebook = User::model()->findByAttributes(array('facebook_id' => $facebook_id));
                 $user_exist_google = User::model()->findByAttributes(array('google_id' => $google_id));
                 if ($user_exist_facebook && $user_exist_facebook->facebook_id != NULL && $facebook_id != NULL) {

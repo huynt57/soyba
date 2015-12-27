@@ -47,10 +47,10 @@ class MedlatecController extends Controller {
         $request = Yii::app()->request;
         try {
             $order_id = StringHelper::filterString($request->getQuery('order_id'));
-            $data = OrderMedlatec::model()->findAllByAttributes(array('order_id' => $order_id));
+            $data = ResultMedlatec::model()->findAllByAttributes(array('order_id' => $order_id));
             ResponseHelper::JsonReturnSuccess($data, 'Success');
         } catch (exception $e) {
-            $this->retVal->message = $e->getMessage();
+            var_dump($e->getMessage());
         }
         Yii::app()->end();
     }
