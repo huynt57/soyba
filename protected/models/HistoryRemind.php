@@ -138,7 +138,7 @@ class HistoryRemind extends CActiveRecord {
         return FALSE;
     }
 
-    public function delete($id) {
+    public function deleteHR($id) {
         $model = HistoryRemind::model()->findByPk($id);
         if ($model->delete()) {
             return TRUE;

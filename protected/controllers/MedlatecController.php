@@ -55,6 +55,13 @@ class MedlatecController extends Controller {
         Yii::app()->end();
     }
 
+    public function actionGetOrderById() {
+        $request = Yii::app()->request;
+        $order_id = StringHelper::filterString($request->getQuery('order_id'));
+        $data = OrderMedlatec::model()->getOrderDetail($order_id);
+        ResponseHelper::JsonReturnSuccess($data, 'Success');
+    }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()

@@ -160,8 +160,7 @@ class OrderMedlatec extends CActiveRecord {
                 $itemArr[$key] = $item->$key;
             }
             $service = ServiceMedlatec::model()->findByPk($item->service_id);
-            if(!empty($service))
-            {
+            if (!empty($service)) {
                 $service_name = $service->service_name;
             } else {
                 $service_name = null;
@@ -170,6 +169,25 @@ class OrderMedlatec extends CActiveRecord {
             $returnArr[] = $itemArr;
         }
         return $returnArr;
+    }
+
+    public function getOrderDetail($order_id) {
+        $order = OrderMedlatec::model()->findByPk($order_id);
+        $attrs = $this->attributeLabels();
+        $itemArr = array();
+        foreach ($attrs as $key => $value) {
+            $itemArr[$key] = $order->$key;
+        }
+        $service = ServiceMedlatec::model()->findByPk($order->service_id);
+
+        if (!empty($service)) {
+            $service_name = $service->service_name;
+        } else {
+            $service_name = null;
+        }
+        $itemArr['service_name'] = $service_name;
+
+        return $itemArr;
     }
 
 }
