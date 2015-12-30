@@ -62,6 +62,18 @@ class MedlatecController extends Controller {
         ResponseHelper::JsonReturnSuccess($data, 'Success');
     }
 
+    public function actionCancelOrder() {
+        $request = Yii::app()->request;
+        $order_id = StringHelper::filterString($request->getQuery('order_id'));
+        $order = OrderMedlatec::model()->findByPk($order_id);
+        $order->status = -1;
+        if ($order->save(FALSE)) {
+            ResponseHelper::JsonReturnSuccess('', 'Success');
+        } else {
+            ResponseHelper::JsonReturnError('', 'Error !');
+        }
+    }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()
