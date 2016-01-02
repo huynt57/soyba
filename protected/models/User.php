@@ -5,8 +5,8 @@
  *
  * The followings are the available columns in table 'tbl_user':
  * @property integer $user_id
- * @property string $facebook_id
- * @property string $google_id
+ * @property string $attr['facebook_id']
+ * @property string $attr['google_id']
  * @property string $gender
  * @property string $facebook_access_token
  * @property string $photo
@@ -144,6 +144,38 @@ class User extends CActiveRecord {
             }
         } else {
             return FALSE;
+        }
+    }
+
+    public function createUser($attr) {
+        $user_exist_facebook = User::model()->findByAttributes(array('facebook_id' => $attr['facebook_id']));
+        $user_exist_google = User::model()->findByAttributes(array('google_id' => $attr['google_id']));
+        if ($user_exist_facebook && $user_exist_facebook->facebook_id != NULL && $attr['facebook_id'] != NULL) {
+            $user_exist_facebook->setAttributes($attr);
+            $user_exist_facebook->last_updated = time();
+
+            if ($user_exist_facebook->save(FALSE)) {
+                if (DeviceTk::model()->setTokenUser($attr['device_token'], $user_exist_facebook->user_id)) {
+                    return $user_exist_facebook->user_id;
+                }
+            }
+        } else if ($user_exist_google && $user_exist_google->google_id != NULL && $attr['google_id'] != NULL) {
+            $user_exist_google->setAttributes($attr);
+            $user_exist_google->last_updated = time();
+            if ($user_exist_google->save(FALSE)) {
+                if (DeviceTk::model()->setTokenUser($attr['device_token'], $user_exist_google->user_id)) {
+                    return $user_exist_google->user_id;
+                }
+            }
+        } else {
+            $user_model = new User;
+            $user_model->setAttributes($attr);
+            $user_model->last_updated = time();
+            if ($user_model->save(FALSE)) {
+                if (DeviceTk::model()->setTokenUser($attr['device_token'], $user_model->user_id)) {
+                    return $user_model->user_id;
+                }
+            }
         }
     }
 

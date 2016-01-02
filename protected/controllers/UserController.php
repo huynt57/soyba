@@ -26,53 +26,16 @@ class UserController extends Controller {
         $request = Yii::app()->request;
         if ($request->isPostRequest && isset($_POST)) {
             try {
-                $google_id = StringHelper::filterString($request->getPost('google_id'));
-                $facebook_id = StringHelper::filterString($request->getPost('facebook_id'));
-                $user_id = StringHelper::filterString($request->getPost('user_id'));
-                $gender = StringHelper::filterString($request->getPost('gender'));
-                $facebook_access_token = StringHelper::filterString($request->getPost('facebook_access_token'));
-                $photo = StringHelper::filterString($request->getPost('photo'));
-                $name = StringHelper::filterString($request->getPost('name'));
-                $email = StringHelper::filterString($request->getPost('email'));
-                $device_token = StringHelper::filterString($request->getPost('device_token'));
-                $platform = StringHelper::filterString($request->getPost('platform'));
-                $attr = array('facebook_id' => $facebook_id, 'google_id' => $google_id,
-                    'user_id' => $user_id, 'gender' => $gender,
-                    'facebook_access_token' => $facebook_access_token, 'photo' => $photo, 'name' => $name,
-                    'email' => $email,'device_token'=>$device_token, 'platform'=>$platform, 'last_updated' => time());
-                $user_exist_facebook = User::model()->findByAttributes(array('facebook_id' => $facebook_id));
-                $user_exist_google = User::model()->findByAttributes(array('google_id' => $google_id));
-                if ($user_exist_facebook && $user_exist_facebook->facebook_id != NULL && $facebook_id != NULL) {
-                    $user_exist_facebook->setAttributes($attr);
-                    if ($user_exist_facebook->save(FALSE)) {
-                        $this->retVal->message = "Success";
-                       
-                        $this->retVal->data = $user_exist_facebook->user_id;
-                        $this->retVal->status = 1;
-                    }
-                } else if ($user_exist_google && $user_exist_google->google_id != NULL && $google_id != NULL) {
-                    $user_exist_google->setAttributes($attr);
-                    if ($user_exist_google->save(FALSE)) {
-                        $this->retVal->message = "Success";
-                       
-                        $this->retVal->data = $user_exist_google->user_id;
-                        $this->retVal->status = 1;
-                    }
+                $attr = StringHelper::filterArrayString($_POST);
+                $result = User::model()->createUser($attr);
+                if ($result) {
+                    ResponseHelper::JsonReturnSuccess($result, 'Success');
                 } else {
-                    $user_model = new User;
-                    $user_model->setAttributes($attr);
-                    if ($user_model->save(FALSE)) {
-                        $this->retVal->message = "Success";
-                        
-                        $this->retVal->data = $user_model->user_id;
-                        $this->retVal->status = 1;
-                    }
+                    ResponseHelper::JsonReturnError('', 'Error');
                 }
             } catch (exception $e) {
-                $this->retVal->message = $e->getMessage();
+                var_dump($e->getMessage());
             }
-            header('Content-type: application/json');
-            echo CJSON::encode($this->retVal);
             Yii::app()->end();
         }
     }
@@ -105,12 +68,12 @@ class UserController extends Controller {
                     }
                 }
                 if ($check) {
-                   
+
                     $this->retVal->data = $data;
                     $this->retVal->status = 1;
                     $this->retVal->message = "Success";
                 } else {
-                   
+
                     $this->retVal->data = NULL;
                     $this->retVal->status = 0;
                     $this->retVal->message = "User not exist";
