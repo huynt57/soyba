@@ -115,6 +115,26 @@ class ResultMedlatec extends CActiveRecord {
         return parent::model($className);
     }
 
+    public function parseResult($result) {
+        $itemArr = array();
+        $attrLabel = $this->attributeLabels();
+        foreach ($attrLabel as $key => $value) {
+            $itemArr[$key] = $result->$key;
+            $itemArr['files'] = ResultFile::model()->findAllByAttributes(array('result_id' => $result->id));
+        }
+        return $itemArr;
+    }
+
+    public function getResultOfOrder($order_id) {
+        $results = ResultMedlatec::model()->findAllByAttributes(array('order_id' => $order_id));
+        $returnArr = array();
+        foreach ($results as $item) {
+            $itemArr = $this->parseResult($item);
+            $returnArr[] = $itemArr;
+        }
+        return $returnArr;
+    }
+
     public function getResultByUser($user_id, $limit, $offset) {
 //        $orders = OrderMedlatec::model()->findAllByAttributes(array('user_id' => $user_id));
 //        $returnArr = array();

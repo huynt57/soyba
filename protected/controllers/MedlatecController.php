@@ -47,7 +47,7 @@ class MedlatecController extends Controller {
         $request = Yii::app()->request;
         try {
             $order_id = StringHelper::filterString($request->getQuery('order_id'));
-            $data = ResultMedlatec::model()->findAllByAttributes(array('order_id' => $order_id));
+            $data = ResultMedlatec::model()->getResultOfOrder($order_id);
             ResponseHelper::JsonReturnSuccess($data, 'Success');
         } catch (exception $e) {
             var_dump($e->getMessage());
