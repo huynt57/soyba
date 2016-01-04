@@ -73,6 +73,8 @@ class MedlatecController extends Controller {
             ResponseHelper::JsonReturnError('', 'Error !');
         }
     }
+    
+    
 
     // Uncomment the following methods and override them if needed
     /*

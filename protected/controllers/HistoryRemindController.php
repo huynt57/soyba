@@ -67,6 +67,21 @@ class HistoryRemindController extends Controller {
         ResponseHelper::JsonReturnSuccess($data, 'Success');
     }
 
+    public function actionDeleteAllHistoryOfRemind() {
+        try {
+            $request = Yii::app()->request;
+            $remind_id = StringHelper::filterString($request->getQuery('remin_id'));
+            $result = HistoryRemind::model()->deleteAllHistoryOfARemind($remind_id);
+            if ($result) {
+                ResponseHelper::JsonReturnSuccess('', 'Success');
+            } else {
+                ResponseHelper::JsonReturnError('', 'Error !');
+            }
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()

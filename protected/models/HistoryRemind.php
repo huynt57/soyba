@@ -151,4 +151,15 @@ class HistoryRemind extends CActiveRecord {
         return $model;
     }
 
+    public function deleteAllHistoryOfARemind($remind_id) {
+        $model = HistoryRemind::model()->findAllByAttributes(array('remind_id' => $remind_id));
+        $flag = TRUE;
+        foreach ($model as $item) {
+            if (!$item->delete) {
+                $flag = FALSE;
+            }
+        }
+        return $flag;
+    }
+
 }

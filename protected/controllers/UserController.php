@@ -139,6 +139,27 @@ class UserController extends Controller {
         }
     }
 
+    public function actionAddToken() {
+        $request = Yii::app()->request;
+        if ($request->isPostRequest && isset($_POST)) {
+            try {
+                $device_token = StringHelper::filterString($request->getPost('device_token'));
+                $platform = StringHelper::filterString($request->getPost('platform'));
+                $user_id = StringHelper::filterString($request->getPost('user_id'));
+
+                if (DeviceTk::model()->setTokenUser($device_token, $user_id, $platform)) {
+                    ResponseHelper::JsonReturnSuccess('', 'Success');
+                } else {
+                    ResponseHelper::JsonReturnError('', 'Server Error');
+                }
+            } catch (exception $e) {
+                var_dump($e->getMessage());
+            }
+
+            Yii::app()->end();
+        }
+    }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()
