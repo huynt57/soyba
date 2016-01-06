@@ -190,4 +190,10 @@ class OrderMedlatec extends CActiveRecord {
         return $itemArr;
     }
 
+    public function getOrderAndResult($order_id) {
+        $order_info = $this->getOrderDetail($order_id);
+        $result_info = ResultMedlatec::model()->getResultOfOrder($order_id);
+        return array('order_info' => $order_info, 'result_info' => $result_info);
+    }
+
 }

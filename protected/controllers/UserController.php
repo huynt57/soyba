@@ -22,7 +22,7 @@ class UserController extends Controller {
     }
 
     public function actionCreateUser() {
-        $this->retVal = new stdClass();
+     //   $this->retVal = new stdClass();
         $request = Yii::app()->request;
         if ($request->isPostRequest && isset($_POST)) {
             try {

@@ -163,7 +163,7 @@ class Pharmacy extends CActiveRecord {
         $criteria->offset = $offset;
         $data = Doctors::model()->findAll($criteria);
         $cnt = count($data);
-        return array('cnt'=>$cnt, 'data'=>$data);
+        return array('cnt' => $cnt, 'data' => $data);
     }
 
 }

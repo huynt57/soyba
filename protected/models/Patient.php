@@ -11,6 +11,13 @@
  * @property string $last_updated
  * @property string $relationshipWithUser
  * @property string $bloodType
+ * @property string $district
+ * @property string $province
+ * @property string $ward
+ * @property string $email
+ * @property string $phone
+ * @property string $address
+ * @property string $identity
  */
 class Patient extends CActiveRecord {
 
@@ -21,11 +28,6 @@ class Patient extends CActiveRecord {
         return 'tbl_patient';
     }
 
-    protected function afterFind() {
-        $this->patient_id = (int) $this->patient_id;
-        parent::afterFind();
-    }
-
     /**
      * @return array validation rules for model attributes.
      */
@@ -33,13 +35,12 @@ class Patient extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('patient_id', 'numerical', 'integerOnly' => true),
-            array('name, dob, gender', 'length', 'max' => 255),
+            array('name, dob, gender, district, province, ward, email, phone, identity', 'length', 'max' => 255),
             array('last_updated', 'length', 'max' => 200),
-            array('relationshipWithUser, bloodType', 'safe'),
+            array('relationshipWithUser, bloodType, address', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('patient_id, name, dob, gender, last_updated, relationshipWithUser, bloodType', 'safe', 'on' => 'search'),
+            array('patient_id, name, dob, gender, last_updated, relationshipWithUser, bloodType, district, province, ward, email, phone, address, identity', 'safe', 'on' => 'search'),
         );
     }
 
@@ -65,6 +66,13 @@ class Patient extends CActiveRecord {
             'last_updated' => 'Last Updated',
             'relationshipWithUser' => 'Relationship With User',
             'bloodType' => 'Blood Type',
+            'district' => 'District',
+            'province' => 'Province',
+            'ward' => 'Ward',
+            'email' => 'Email',
+            'phone' => 'Phone',
+            'address' => 'Address',
+            'identity' => 'Identity',
         );
     }
 
@@ -92,6 +100,13 @@ class Patient extends CActiveRecord {
         $criteria->compare('last_updated', $this->last_updated, true);
         $criteria->compare('relationshipWithUser', $this->relationshipWithUser, true);
         $criteria->compare('bloodType', $this->bloodType, true);
+        $criteria->compare('district', $this->district, true);
+        $criteria->compare('province', $this->province, true);
+        $criteria->compare('ward', $this->ward, true);
+        $criteria->compare('email', $this->email, true);
+        $criteria->compare('phone', $this->phone, true);
+        $criteria->compare('address', $this->address, true);
+        $criteria->compare('identity', $this->identity, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -157,22 +172,25 @@ class Patient extends CActiveRecord {
         return $data;
     }
 
-    public function createPatientUser($name, $dob, $gender, $blood, $relation, $user_id) {
+    public function createPatientUser($attr) {
+        $flag = FALSE;
+        $flag_2 = FALSE;
         $patient_model = new Patient;
-        $patient_model->name = $name;
-        $patient_model->dob = $dob;
-        $patient_model->gender = $gender;
-        $patient_model->last_updated = time();
-        $patient_model->bloodType = $blood;
-        $patient_model->relationshipWithUser = $relation;
-        $patient_model->save(FALSE);
+        $patient_model->setAttributes($attr);
+        if ($patient_model->save(FALSE)) {
+            $flag = TRUE;
+        }
 
         $user_patient = new UserPatient;
-        $user_patient->user_id = $user_id;
+        $user_patient->user_id = $attr['user_id'];
         $user_patient->patient_id = $patient_model->patient_id;
-        $user_patient->save(FALSE);
-
-        return $patient_model->patient_id;
+        if ($user_patient->save(FALSE)) {
+            $flag_2 = TRUE;
+        }
+        if ($flag && $flag_2) {
+            return $patient_model->patient_id;
+        }
+        return FALSE;
     }
 
     public function updatePatient($patient_id, $patient_name, $last_updated, $relation, $blood) {
@@ -237,12 +255,10 @@ class Patient extends CActiveRecord {
             $patient->delete();
         }
     }
-    
-    public function deleteHeightWeight($id)
-    {
+
+    public function deleteHeightWeight($id) {
         $model = BiographyStat::model()->findByPk($id);
-        if($model->delete())
-        {
+        if ($model->delete()) {
             return TRUE;
         }
         return FALSE;

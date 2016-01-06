@@ -71,18 +71,14 @@ class PatientController extends Controller {
         $request = Yii::app()->request;
         if ($request->isPostRequest && isset($_POST)) {
             try {
-                $name = StringHelper::filterString($request->getPost('name'));
-                $dob = StringHelper::filterString($request->getPost('dob'));
-                $gender = StringHelper::filterString($request->getPost('gender'));
-                $user_id = StringHelper::filterString($request->getPost('user_id'));
-                $relation = StringHelper::filterString($request->getPost('relationshipWithUser'));
-                $blood = StringHelper::filterString($request->getPost('bloodType'));
-
-                $patient_id = Patient::model()->createPatientUser($name, $dob, $gender, $blood, $relation, $user_id);
-                $this->retVal->message = "Success";
-                $this->retVal->patient_id = $patient_id;
-                $this->retVal->data = $patient_id;
-                $this->retVal->status = 1;
+                $attr = StringHelper::filterArrayString($_POST);
+                $patient_id = Patient::model()->createPatientUser($attr);
+                if ($patient_id) {
+                    $this->retVal->message = "Success";
+                    $this->retVal->patient_id = $patient_id;
+                    $this->retVal->data = $patient_id;
+                    $this->retVal->status = 1;
+                }
             } catch (exception $e) {
                 var_dump($e->getMessage());
             }
@@ -103,7 +99,6 @@ class PatientController extends Controller {
                 $relation = StringHelper::filterString($request->getPost('relationshipWithUser'));
 
                 Patient::model()->updatePatient($patient_id, $patient_name, $last_updated, $relation, $blood);
-                
             } catch (exception $e) {
                 var_dump($e->getMessage());
             }
@@ -150,15 +145,14 @@ class PatientController extends Controller {
             Yii::app()->end();
         }
     }
-    
-    public function actionDeleteHeightWeight()
-    {
+
+    public function actionDeleteHeightWeight() {
         $request = Yii::app()->request;
         if ($request->isPostRequest && isset($_POST)) {
             try {
                 $id = StringHelper::filterString($request->getPost('id'));
-               
-                if(Patient::model()->deleteHeightWeight($id)) {
+
+                if (Patient::model()->deleteHeightWeight($id)) {
                     ResponseHelper::JsonReturnSuccess('', 'Success');
                 } else {
                     ResponseHelper::JsonReturnError('', 'Server Error !');

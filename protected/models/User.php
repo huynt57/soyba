@@ -5,8 +5,8 @@
  *
  * The followings are the available columns in table 'tbl_user':
  * @property integer $user_id
- * @property string $attr['facebook_id']
- * @property string $attr['google_id']
+ * @property string $facebook_id
+ * @property string $google_id
  * @property string $gender
  * @property string $facebook_access_token
  * @property string $photo
@@ -21,6 +21,7 @@
  * @property string $phone
  * @property string $device_token
  * @property string $platform
+ * @property string $identity
  */
 class User extends CActiveRecord {
 
@@ -38,13 +39,13 @@ class User extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('facebook_id, google_id, gender, photo, ward, province, district, phone, platform', 'length', 'max' => 255),
+            array('facebook_id, google_id, gender, photo, ward, province, district, phone, platform, identity', 'length', 'max' => 255),
             array('facebook_access_token', 'length', 'max' => 500),
             array('last_updated, email, name', 'length', 'max' => 200),
             array('description, address, device_token', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('user_id, facebook_id, google_id, gender, facebook_access_token, photo, last_updated, email, name, description, ward, province, district, address, phone, device_token, platform', 'safe', 'on' => 'search'),
+            array('user_id, facebook_id, google_id, gender, facebook_access_token, photo, last_updated, email, name, description, ward, province, district, address, phone, device_token, platform, identity', 'safe', 'on' => 'search'),
         );
     }
 
@@ -80,6 +81,7 @@ class User extends CActiveRecord {
             'phone' => 'Phone',
             'device_token' => 'Device Token',
             'platform' => 'Platform',
+            'identity' => 'Identity',
         );
     }
 
@@ -117,6 +119,7 @@ class User extends CActiveRecord {
         $criteria->compare('phone', $this->phone, true);
         $criteria->compare('device_token', $this->device_token, true);
         $criteria->compare('platform', $this->platform, true);
+        $criteria->compare('identity', $this->identity, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
