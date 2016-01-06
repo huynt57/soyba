@@ -159,6 +159,27 @@ class UserController extends Controller {
             Yii::app()->end();
         }
     }
+    
+    public function actionDeleteToken()
+    {
+        $request = Yii::app()->request;
+        if ($request->isPostRequest && isset($_POST)) {
+            try {
+                $device_token = StringHelper::filterString($request->getPost('device_token'));
+                $user_id = StringHelper::filterString($request->getPost('user_id'));
+
+                if (DeviceTk::model()->deleteToken($device_token, $user_id)) {
+                    ResponseHelper::JsonReturnSuccess('', 'Success');
+                } else {
+                    ResponseHelper::JsonReturnError('', 'Server Error');
+                }
+            } catch (exception $e) {
+                var_dump($e->getMessage());
+            }
+
+            Yii::app()->end();
+        }
+    }
 
     // Uncomment the following methods and override them if needed
     /*

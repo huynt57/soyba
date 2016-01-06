@@ -108,7 +108,7 @@ class DeviceTk extends CActiveRecord {
     public function setTokenUser($token, $user_id, $platform) {
         $check = DeviceTk::model()->findByAttributes(array('device_token' => $token));
         if ($check) {
-            $check->device_token = $token;
+           // $check->device_token = $token;
             $check->user_id = $user_id;
             $check->platform = $platform;
             $check->updated_at = time();
@@ -127,6 +127,19 @@ class DeviceTk extends CActiveRecord {
             }
         }
 
+        return FALSE;
+    }
+    
+    public function deleteToken($device_token, $user_id)
+    {
+        $token = DeviceTk::model()->findByAttributes(array('device_token'=>$device_token, 'user_id'=>$user_id));
+        if($token)
+        {
+            if($token->delete())
+            {
+                return TRUE;
+            }
+        }
         return FALSE;
     }
 

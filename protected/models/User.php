@@ -155,26 +155,23 @@ class User extends CActiveRecord {
             $user_exist_facebook->last_updated = time();
 
             if ($user_exist_facebook->save(FALSE)) {
-                if (DeviceTk::model()->setTokenUser($attr['device_token'], $user_exist_facebook->user_id)) {
-                    return $user_exist_facebook->user_id;
-                }
+
+                return $user_exist_facebook->user_id;
             }
         } else if ($user_exist_google && $user_exist_google->google_id != NULL && $attr['google_id'] != NULL) {
             $user_exist_google->setAttributes($attr);
             $user_exist_google->last_updated = time();
             if ($user_exist_google->save(FALSE)) {
-                if (DeviceTk::model()->setTokenUser($attr['device_token'], $user_exist_google->user_id)) {
-                    return $user_exist_google->user_id;
-                }
+
+                return $user_exist_google->user_id;
             }
         } else {
             $user_model = new User;
             $user_model->setAttributes($attr);
             $user_model->last_updated = time();
             if ($user_model->save(FALSE)) {
-                if (DeviceTk::model()->setTokenUser($attr['device_token'], $user_model->user_id)) {
-                    return $user_model->user_id;
-                }
+
+                return $user_model->user_id;
             }
         }
     }
