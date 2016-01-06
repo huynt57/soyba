@@ -151,9 +151,13 @@ class User extends CActiveRecord {
     }
 
     public function createUser($attr) {
-        $user_exist_facebook = User::model()->findByAttributes(array('facebook_id' => $attr['facebook_id']));
-        $user_exist_google = User::model()->findByAttributes(array('google_id' => $attr['google_id']));
-        if ($user_exist_facebook && $user_exist_facebook->facebook_id != NULL && $attr['facebook_id'] != NULL) {
+        if (isset($attr['facebook_id'])) {
+            $user_exist_facebook = User::model()->findByAttributes(array('facebook_id' => $attr['facebook_id']));
+        }
+        if (isset($attr['google_id'])) {
+            $user_exist_google = User::model()->findByAttributes(array('google_id' => $attr['google_id']));
+        }
+        if (isset($user_exist_facebook) && $user_exist_facebook->facebook_id != NULL && $attr['facebook_id'] != NULL) {
             $user_exist_facebook->setAttributes($attr);
             $user_exist_facebook->last_updated = time();
 
@@ -161,7 +165,7 @@ class User extends CActiveRecord {
 
                 return $user_exist_facebook->user_id;
             }
-        } else if ($user_exist_google && $user_exist_google->google_id != NULL && $attr['google_id'] != NULL) {
+        } else if (isset($user_exist_google) && $user_exist_google->google_id != NULL && $attr['google_id'] != NULL) {
             $user_exist_google->setAttributes($attr);
             $user_exist_google->last_updated = time();
             if ($user_exist_google->save(FALSE)) {
