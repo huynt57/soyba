@@ -155,6 +155,20 @@ class DoctorController extends Controller {
         }
     }
 
+    public function actionGetNearDoctor() {
+        try {
+            $request = Yii::app()->request;
+            $lat = StringHelper::filterString($request->getQuery('lat'));
+            $lng = StringHelper::filterString($request->getQuery('lng'));
+            $limit = StringHelper::filterString($request->getQuery('limit'));
+            $offset = StringHelper::filterString($request->getQuery('offset'));
+            $data = Doctors::model()->getNearDoctors($lat, $lng, $limit, $offset);
+            ResponseHelper::JsonReturnSuccess($data, 'Success');
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()

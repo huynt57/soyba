@@ -171,16 +171,16 @@ class Pharmacy extends CActiveRecord {
         if (!empty($lat) && !empty($lng)) {
             $criteria->select = "t.*, (2 * (3959 * ATAN2(
           SQRT(
-            POWER(SIN((RADIANS(" . $lat . " - `t`.`lat` ) ) / 2 ), 2 ) +
-            COS(RADIANS(`t`.`lat`)) *
+            POWER(SIN((RADIANS(" . $lat . " - `t`.`laititude` ) ) / 2 ), 2 ) +
+            COS(RADIANS(`t`.`laititude`)) *
             COS(RADIANS(" . $lat . ")) *
-            POWER(SIN((RADIANS(" . $lng . " - `t`.`lng` ) ) / 2 ), 2 )
+            POWER(SIN((RADIANS(" . $lng . " - `t`.`longitude` ) ) / 2 ), 2 )
           ),
           SQRT(1-(
-            POWER(SIN((RADIANS(" . $lat . " - `t`.`lat` ) ) / 2 ), 2 ) +
-            COS(RADIANS(`t`.`lat`)) *
+            POWER(SIN((RADIANS(" . $lat . " - `t`.`laititude` ) ) / 2 ), 2 ) +
+            COS(RADIANS(`t`.`laititude`)) *
             COS(RADIANS(" . $lat . ")) *
-            POWER(SIN((RADIANS(" . $lng . " - `t`.`lng` ) ) / 2 ), 2 )
+            POWER(SIN((RADIANS(" . $lng . " - `t`.`longitude` ) ) / 2 ), 2 )
           ))
         )
       )) as

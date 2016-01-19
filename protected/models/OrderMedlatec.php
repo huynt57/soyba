@@ -22,6 +22,7 @@
  * @property integer $time_confirm
  * @property integer $time_meet
  * @property string $price
+ * @property string $identity
  */
 class OrderMedlatec extends CActiveRecord {
 
@@ -40,11 +41,11 @@ class OrderMedlatec extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('status, active, created_at, updated_at, user_meboo, service_id, time_confirm, time_meet', 'numerical', 'integerOnly' => true),
-            array('name, phone, email, ward, province, district', 'length', 'max' => 255),
+            array('name, phone, email, ward, province, district, identity', 'length', 'max' => 255),
             array('address, requirement, price', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, name, phone, email, address, ward, province, district, requirement, status, active, created_at, updated_at, user_meboo, service_id, time_confirm, time_meet, price', 'safe', 'on' => 'search'),
+            array('id, name, phone, email, address, ward, province, district, requirement, status, active, created_at, updated_at, user_meboo, service_id, time_confirm, time_meet, price, identity', 'safe', 'on' => 'search'),
         );
     }
 
@@ -81,6 +82,7 @@ class OrderMedlatec extends CActiveRecord {
             'time_confirm' => 'Time Confirm',
             'time_meet' => 'Time Meet',
             'price' => 'Price',
+            'identity' => 'Identity',
         );
     }
 
@@ -119,6 +121,7 @@ class OrderMedlatec extends CActiveRecord {
         $criteria->compare('time_confirm', $this->time_confirm);
         $criteria->compare('time_meet', $this->time_meet);
         $criteria->compare('price', $this->price, true);
+        $criteria->compare('identity', $this->identity, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

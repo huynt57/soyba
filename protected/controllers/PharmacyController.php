@@ -140,7 +140,10 @@ class PharmacyController extends Controller {
             $request = Yii::app()->request;
             $lat = StringHelper::filterString($request->getQuery('lat'));
             $lng = StringHelper::filterString($request->getQuery('lng'));
-            $data = Pharmacy::model()->getNearPharmacy($lat, $lng);
+            $limit = StringHelper::filterString($request->getQuery('limit'));
+            $offset = StringHelper::filterString($request->getQuery('offset'));
+            $data = Pharmacy::model()->getNearPharmacy($lat, $lng, $limit, $offset);
+            ResponseHelper::JsonReturnSuccess($data, 'success');
         } catch (Exception $ex) {
             var_dump($ex->getMessage());
         }
