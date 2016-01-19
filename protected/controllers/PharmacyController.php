@@ -135,6 +135,17 @@ class PharmacyController extends Controller {
         }
     }
 
+    public function actionGetNearPharmacy() {
+        try {
+            $request = Yii::app()->request;
+            $lat = StringHelper::filterString($request->getQuery('lat'));
+            $lng = StringHelper::filterString($request->getQuery('lng'));
+            $data = Pharmacy::model()->getNearPharmacy($lat, $lng);
+        } catch (Exception $ex) {
+            var_dump($ex->getMessage());
+        }
+    }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()

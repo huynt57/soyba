@@ -166,4 +166,33 @@ class Pharmacy extends CActiveRecord {
         return array('cnt' => $cnt, 'data' => $data);
     }
 
+    public function getNearPharmacy($lat, $lng, $limit, $offset) {
+        $criteria = new CDbCriteria;
+        if (!empty($lat) && !empty($lng)) {
+            $criteria->select = "t.*, (2 * (3959 * ATAN2(
+          SQRT(
+            POWER(SIN((RADIANS(" . $lat . " - `t`.`lat` ) ) / 2 ), 2 ) +
+            COS(RADIANS(`t`.`lat`)) *
+            COS(RADIANS(" . $lat . ")) *
+            POWER(SIN((RADIANS(" . $lng . " - `t`.`lng` ) ) / 2 ), 2 )
+          ),
+          SQRT(1-(
+            POWER(SIN((RADIANS(" . $lat . " - `t`.`lat` ) ) / 2 ), 2 ) +
+            COS(RADIANS(`t`.`lat`)) *
+            COS(RADIANS(" . $lat . ")) *
+            POWER(SIN((RADIANS(" . $lng . " - `t`.`lng` ) ) / 2 ), 2 )
+          ))
+        )
+      )) as
+            distance";
+            $criteria->having = 'distance < 3';
+            $criteria->group = 't.id';
+        }
+        $criteria->order = 'id DESC';
+        $criteria->limit = $limit;
+        $criteria->offset = $offset;
+        $data = Pharmacy::model()->findAll($criteria);
+        return $data;
+    }
+
 }
