@@ -263,7 +263,7 @@ class Doctors extends CActiveRecord {
             $criteria->having = 'distance < 3';
             $criteria->group = 't.id';
         }
-        $criteria->order = 'id DESC';
+        $criteria->order = 'distance ASC';
         $criteria->limit = $limit;
         $criteria->offset = $offset;
         $data = Doctors::model()->findAll($criteria);

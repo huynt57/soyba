@@ -188,7 +188,7 @@ class Pharmacy extends CActiveRecord {
             $criteria->having = 'distance < 3';
             $criteria->group = 't.id';
         }
-        $criteria->order = 'id DESC';
+        $criteria->order = 'distance ASC';
         $criteria->limit = $limit;
         $criteria->offset = $offset;
         $data = Pharmacy::model()->findAll($criteria);
