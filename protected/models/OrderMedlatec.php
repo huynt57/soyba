@@ -145,6 +145,8 @@ class OrderMedlatec extends CActiveRecord {
         //$order->time_confirm = StringHelper::dateToTime($post['time_confirm']);
         $model->created_at = time();
         $model->updated_at = time();
+        $model->time_meet = time();
+        $model->time_confirm = time();
         if ($model->save(FALSE)) {
             return $model->id;
         }
