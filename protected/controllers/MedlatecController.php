@@ -35,7 +35,7 @@ class MedlatecController extends Controller {
     }
 
     public function actionGetServices() {
-        $data = ServiceMedlatec::model()->findAll();
+        $data = ServiceMedlatec::model()->findAllByAttributes(array('status' => -3));
         ResponseHelper::JsonReturnSuccess($data, 'Success');
     }
 
