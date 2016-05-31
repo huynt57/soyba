@@ -10,6 +10,13 @@
  * @property string $favorable
  * @property string $description
  * @property integer $status
+ * @property integer $created_at
+ * @property integer $updated_at
+ * @property string $service_price_after
+ * @property string $relative_favorable
+ * @property string $absolute_favorable
+ * @property string $condition
+ * @property integer $provider_id
  */
 class ServiceMedlatec extends CActiveRecord
 {
@@ -29,13 +36,11 @@ class ServiceMedlatec extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id', 'required'),
-			array('id, status', 'numerical', 'integerOnly'=>true),
-			array('service_name, service_price', 'length', 'max'=>255),
-			array('favorable, description', 'safe'),
+			array('status, created_at, updated_at, provider_id', 'numerical', 'integerOnly'=>true),
+			array('service_name, service_price, favorable, description, service_price_after, relative_favorable, absolute_favorable, condition', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, service_name, service_price, favorable, description, status', 'safe', 'on'=>'search'),
+			array('id, service_name, service_price, favorable, description, status, created_at, updated_at, service_price_after, relative_favorable, absolute_favorable, condition, provider_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,6 +67,13 @@ class ServiceMedlatec extends CActiveRecord
 			'favorable' => 'Favorable',
 			'description' => 'Description',
 			'status' => 'Status',
+			'created_at' => 'Created At',
+			'updated_at' => 'Updated At',
+			'service_price_after' => 'Service Price After',
+			'relative_favorable' => 'Relative Favorable',
+			'absolute_favorable' => 'Absolute Favorable',
+			'condition' => 'Condition',
+			'provider_id' => 'Provider',
 		);
 	}
 
@@ -89,6 +101,13 @@ class ServiceMedlatec extends CActiveRecord
 		$criteria->compare('favorable',$this->favorable,true);
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('status',$this->status);
+		$criteria->compare('created_at',$this->created_at);
+		$criteria->compare('updated_at',$this->updated_at);
+		$criteria->compare('service_price_after',$this->service_price_after,true);
+		$criteria->compare('relative_favorable',$this->relative_favorable,true);
+		$criteria->compare('absolute_favorable',$this->absolute_favorable,true);
+		$criteria->compare('condition',$this->condition,true);
+		$criteria->compare('provider_id',$this->provider_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

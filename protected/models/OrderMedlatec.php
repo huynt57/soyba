@@ -23,6 +23,7 @@
  * @property integer $time_meet
  * @property string $price
  * @property string $identity
+ * @property integer $provider_id
  */
 class OrderMedlatec extends CActiveRecord {
 
@@ -40,12 +41,12 @@ class OrderMedlatec extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('status, active, created_at, updated_at, user_meboo, service_id, time_confirm, time_meet', 'numerical', 'integerOnly' => true),
+            array('status, active, created_at, updated_at, user_meboo, service_id, time_confirm, time_meet, provider_id', 'numerical', 'integerOnly' => true),
             array('name, phone, email, ward, province, district, identity', 'length', 'max' => 255),
             array('address, requirement, price', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, name, phone, email, address, ward, province, district, requirement, status, active, created_at, updated_at, user_meboo, service_id, time_confirm, time_meet, price, identity', 'safe', 'on' => 'search'),
+            array('id, name, phone, email, address, ward, province, district, requirement, status, active, created_at, updated_at, user_meboo, service_id, time_confirm, time_meet, price, identity, provider_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -83,6 +84,7 @@ class OrderMedlatec extends CActiveRecord {
             'time_meet' => 'Time Meet',
             'price' => 'Price',
             'identity' => 'Identity',
+            'provider_id' => 'Provider',
         );
     }
 
@@ -122,6 +124,7 @@ class OrderMedlatec extends CActiveRecord {
         $criteria->compare('time_meet', $this->time_meet);
         $criteria->compare('price', $this->price, true);
         $criteria->compare('identity', $this->identity, true);
+        $criteria->compare('provider_id', $this->provider_id);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
