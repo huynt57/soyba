@@ -35,7 +35,9 @@ class MedlatecController extends Controller {
     }
 
     public function actionGetServices() {
-        $data = ServiceMedlatec::model()->findAllByAttributes(array('status' => -3));
+        $request = Yii::app()->request;
+        $provider_id = StringHelper::filterString($request->getQuery('provider_id'));
+        $data = ServiceMedlatec::model()->findAllByAttributes(array('status' => -3, 'provider_id'=>$provider_id));
         ResponseHelper::JsonReturnSuccess($data, 'Success');
     }
 

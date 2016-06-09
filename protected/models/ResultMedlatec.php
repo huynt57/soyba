@@ -12,9 +12,10 @@
  * @property string $diagnose
  * @property string $file
  * @property integer $status
- * @property integer $updated_at
  * @property integer $created_at
+ * @property integer $updated_at
  * @property integer $order_id
+ * @property integer $provider_id
  */
 class ResultMedlatec extends CActiveRecord {
 
@@ -32,13 +33,12 @@ class ResultMedlatec extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('id', 'required'),
-            array('id, service, status, updated_at, created_at, order_id', 'numerical', 'integerOnly' => true),
+            array('service, status, created_at, updated_at, order_id, provider_id', 'numerical', 'integerOnly' => true),
             array('patient_name, time, doctor', 'length', 'max' => 255),
             array('diagnose, file', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, patient_name, service, time, doctor, diagnose, file, status, updated_at, created_at, order_id', 'safe', 'on' => 'search'),
+            array('id, patient_name, service, time, doctor, diagnose, file, status, created_at, updated_at, order_id, provider_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -65,9 +65,10 @@ class ResultMedlatec extends CActiveRecord {
             'diagnose' => 'Diagnose',
             'file' => 'File',
             'status' => 'Status',
-            'updated_at' => 'Updated At',
             'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
             'order_id' => 'Order',
+            'provider_id' => 'Provider',
         );
     }
 
@@ -96,9 +97,10 @@ class ResultMedlatec extends CActiveRecord {
         $criteria->compare('diagnose', $this->diagnose, true);
         $criteria->compare('file', $this->file, true);
         $criteria->compare('status', $this->status);
-        $criteria->compare('updated_at', $this->updated_at);
         $criteria->compare('created_at', $this->created_at);
+        $criteria->compare('updated_at', $this->updated_at);
         $criteria->compare('order_id', $this->order_id);
+        $criteria->compare('provider_id', $this->provider_id);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
