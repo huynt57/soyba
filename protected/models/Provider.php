@@ -114,7 +114,10 @@ class Provider extends CActiveRecord {
     public function add($post) {
         $model = new Provider;
         $model->setAttributes($post);
+        $model->active = 0;
+        //MailQueue::model()->add();
         if ($model->save(FALSE)) {
+            MailQueue::model()->addMailQueue('Có một đơn vị cung cấp dịch vụ y tế đã đăng ký tới Meboo', 'hotro@meboo.vn', 'meboo admin', 'huynt57@gmail.com', 'Có một đơn đặt hàng mới dịch vụ medlatec');
             return TRUE;
         }
         return FALSE;
@@ -123,6 +126,7 @@ class Provider extends CActiveRecord {
     public function registerStaff($post) {
         $model = new ProviderStaff();
         $model->setAttributes($post);
+        
         if ($model->save(FALSE)) {
             return TRUE;
         }

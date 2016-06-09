@@ -148,6 +148,7 @@ class OrderMedlatec extends CActiveRecord {
         $model->time_meet = time();
         $model->time_confirm = time();
         if ($model->save(FALSE)) {
+            MailQueue::model()->addMailQueue('Có một đơn đặt hàng mới dịch vụ medlatec', 'hotro@meboo.vn', 'meboo admin', 'huynt57@gmail.com', 'Có một đơn đặt hàng mới dịch vụ medlatec');
             return $model->id;
         }
         return FALSE;

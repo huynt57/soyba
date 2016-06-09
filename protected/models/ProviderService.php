@@ -106,6 +106,9 @@ class ProviderService extends CActiveRecord {
     public function add($post) {
         $model = new ServiceMedlatec;
         $model->setAttributes($post);
+        $model->created_at = time();
+        $model->updated_at = time();
+        $model->active = 0;
         if ($model->save(FALSE)) {
             return TRUE;
         }
