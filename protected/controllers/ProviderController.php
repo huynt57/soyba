@@ -6,6 +6,19 @@ class ProviderController extends Controller
 	{
 		$this->render('index');
 	}
+        
+        public function actionGetServices()
+        {
+            $request = Yii::app()->request;
+            try {
+                $limit = StringHelper::filterString($request->getQuery('limit'));
+                $offset = StringHelper::filterString($request->getQuery('offset'));
+                $data = ServiceMedlatec::model()->getServices($limit, $offset);
+                ResponseHelper::JsonReturnSuccess($data, 'Success');
+            } catch (Exception $ex) {
+
+            }
+        }
 
 	// Uncomment the following methods and override them if needed
 	/*
