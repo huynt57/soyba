@@ -167,6 +167,7 @@ class Pharmacy extends CActiveRecord {
     }
 
     public function getNearPharmacy($lat, $lng, $limit, $offset) {
+        $retVal = array();
         $criteria = new CDbCriteria;
         if (!empty($lat) && !empty($lng)) {
             $criteria->select = "t.*, (2 * (3959 * ATAN2(
@@ -192,7 +193,19 @@ class Pharmacy extends CActiveRecord {
         $criteria->limit = $limit;
         $criteria->offset = $offset;
         $data = Pharmacy::model()->findAll($criteria);
-        return $data;
+        $attrs = $this->attributeLabels();
+        foreach($data as $item)
+        {
+            $itemArr = array();
+            foreach($attrs as $key => $value)
+            {
+                $itemArr[$key] = $item->$key;
+            }
+            $itemArr['stars'] = Review::model()->sumRating($item->id, 2);
+            $itemArr['reviews'] = Review::model()->countReview($item->id, 2);
+            $retVal[] = $itemArr;
+        }
+        return $retVal;
     }
 
 }

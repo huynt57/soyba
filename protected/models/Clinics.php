@@ -108,12 +108,25 @@ class Clinics extends CActiveRecord {
     }
 
     public function getClinics($limit, $offset) {
+        $retVal = array();
         $criteria = new CDbCriteria;
         $criteria->limit = $limit;
         $criteria->offset = $offset;
         $criteria->order = 'clinic_id DESC';
         $data = Clinics::model()->findAll($criteria);
-        return $data;
+        $attrs = $this->attributeLabels();
+        foreach($data as $item)
+        {
+            $itemArr = array();
+            foreach($attrs as $key => $value)
+            {
+                $itemArr[$key] = $item->$key;
+            }
+            $itemArr['stars'] = Review::model()->sumRating($item->clinic_id, 3);
+            $itemArr['reviews'] = Review::model()->countReview($item->clinic_id, 3);
+            $retVal[] = $itemArr;
+        }
+        return $retVal;
     }
 
     public function searchByAddressAndKeywords($province, $district, $ward, $limit, $offset, $keywords) {

@@ -72,7 +72,8 @@ class PatientController extends Controller {
         if ($request->isPostRequest && isset($_POST)) {
             try {
                 $attr = StringHelper::filterArrayString($_POST);
-                $patient_id = Patient::model()->createPatientUser($attr);
+                $url = UploadHelper::getUrlUploadSingleImage($_FILES['image'], $attr['user_id']);
+                $patient_id = Patient::model()->createPatientUser($attr, $url);
                 if ($patient_id) {
                     $this->retVal->message = "Success";
                     $this->retVal->patient_id = $patient_id;

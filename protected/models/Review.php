@@ -106,6 +106,14 @@ class Review extends CActiveRecord {
         $sum = Yii::app()->db->createCommand($sql)->queryScalar();
         return $sum;
     }
+    
+    public function countReview($object_id, $object_type)
+    {
+        $criteria = new CDbCriteria;
+        $criteria->condition = "object_id = $object_id AND object_type = $object_type";
+        $count = Review::model()->count($criteria);
+        return $count;
+    }
 
     public function getReview($object_id, $object_type, $limit, $offset) {
         $sql = "SELECT tbl_review.* , tbl_user.name, tbl_user.photo FROM tbl_review INNER JOIN tbl_user ON tbl_review.user_id = tbl_user.user_id WHERE tbl_review.object_id = $object_id"
@@ -113,6 +121,8 @@ class Review extends CActiveRecord {
         $result = Yii::app()->db->createCommand($sql)->queryAll();
         return $result;
     }
+    
+    
 
     public function addReview($user_id, $object_id, $comment, $rating, $object_type) {
         $check = Review::model()->findByAttributes(array('user_id' => $user_id, 'object_id' => $object_id, 'object_type' => $object_type));

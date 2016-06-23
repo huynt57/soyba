@@ -242,6 +242,7 @@ class Doctors extends CActiveRecord {
     }
 
     public function getNearDoctors($lat, $lng, $limit, $offset) {
+        $retVal = array();
         $criteria = new CDbCriteria;
         if (!empty($lat) && !empty($lng)) {
             $criteria->select = "t.*, (2 * (3959 * ATAN2(
@@ -267,7 +268,19 @@ class Doctors extends CActiveRecord {
         $criteria->limit = $limit;
         $criteria->offset = $offset;
         $data = Doctors::model()->findAll($criteria);
-        return $data;
+        $attrs = $this->attributeLabels();
+        foreach($data as $item)
+        {
+            $itemArr = array();
+            foreach($attrs as $key => $value)
+            {
+                $itemArr[$key] = $item->$key;
+            }
+            $itemArr['stars'] = Review::model()->sumRating($item->id, 1);
+            $itemArr['reviews'] = Review::model()->countReview($item->id, 1);
+            $retVal[] = $itemArr;
+        }
+        return $retVal;
     }
 
 }
