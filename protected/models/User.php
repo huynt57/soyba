@@ -183,4 +183,59 @@ class User extends CActiveRecord {
         }
     }
 
+    public function getPatientData($user_id) {
+        $patient_data = Patient::model()->getPatientInfo($user_id);
+        $sick_data = array();
+        $inject_data = array();
+        $remind_data = array();
+        foreach ($patient_data as $patient) {
+            $sick = PatientSick::model()->findAllByAttributes(array('patient_id' => $patient["patient_id"]));
+
+            $inject = PatientInjection::model()->findAllByAttributes(array('patient_id' => $patient["patient_id"]));
+
+            $remind = MedicineRemind::model()->getMedicineRemindOfPatient($patient["patient_id"]);
+            array_push($inject_data, $inject);
+            array_push($sick_data, $sick);
+            foreach ($remind as $item) {
+                array_push($remind_data, $item);
+            }
+        }
+
+        $returnArr = array("patient_data" => $patient_data, "sick_data" => $sick_data, "inject_data" => $inject_data, "remind_data" => $remind_data);
+        return $returnArr;
+    }
+
+    public function createUserNew($attr) {
+        if (isset($attr['facebook_id'])) {
+            $user_exist_facebook = User::model()->findByAttributes(array('facebook_id' => $attr['facebook_id']));
+        }
+        if (isset($attr['google_id'])) {
+            $user_exist_google = User::model()->findByAttributes(array('google_id' => $attr['google_id']));
+        }
+        if (isset($user_exist_facebook) && $user_exist_facebook->facebook_id != NULL && $attr['facebook_id'] != NULL) {
+            $user_exist_facebook->setAttributes($attr);
+            $user_exist_facebook->last_updated = time();
+
+            if ($user_exist_facebook->save(FALSE)) {
+
+                return array('user' => $user_exist_facebook, 'other' => $this->getPatientData($user_exist_facebook->user_id));
+            }
+        } else if (isset($user_exist_google) && $user_exist_google->google_id != NULL && $attr['google_id'] != NULL) {
+            $user_exist_google->setAttributes($attr);
+            $user_exist_google->last_updated = time();
+            if ($user_exist_google->save(FALSE)) {
+
+                return array('user' => $user_exist_google, 'other' => $this->getPatientData($user_exist_google->user_id));
+            }
+        } else {
+            $user_model = new User;
+            $user_model->setAttributes($attr);
+            $user_model->last_updated = time();
+            if ($user_model->save(FALSE)) {
+
+                return array('user' => $user_model, 'other' => $this->getPatientData($user_model->user_id));
+            }
+        }
+    }
+
 }

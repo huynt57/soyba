@@ -11,10 +11,29 @@ class UserController extends Controller {
         $this->render('index');
     }
 
-    public function actionLogin() {
-        $this->layoutPath = Yii::getPathOfAlias('webroot') . "/themes/classic/views/layouts";
-        $this->layout = 'empty';
-        $this->render('login');
+//    public function actionLogin() {
+//        $this->layoutPath = Yii::getPathOfAlias('webroot') . "/themes/classic/views/layouts";
+//        $this->layout = 'empty';
+//        $this->render('login');
+//    }
+    
+    public function actionLogin()
+    {
+        $request = Yii::app()->request;
+        if ($request->isPostRequest && isset($_POST)) {
+            try {
+                $attr = StringHelper::filterArrayString($_POST);
+                $result = User::model()->createUserNew($attr);
+                if ($result) {
+                    ResponseHelper::JsonReturnSuccess($result, 'Success');
+                } else {
+                    ResponseHelper::JsonReturnError('', 'Error');
+                }
+            } catch (exception $e) {
+                var_dump($e->getMessage());
+            }
+            Yii::app()->end();
+        }
     }
 
     public function actionLoginGoogle() {
